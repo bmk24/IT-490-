@@ -1,0 +1,167 @@
+@font-face {
+  font-family: "CustomFont";
+  src: url('mario.woff') format('woff'),
+   url('mario.woff2') format('woff2');
+  }
+h1{
+  font-family: "CustomFont", sans-serif;
+text-align: center;
+}
+tml, body {
+  height: 100%;
+}
+
+html {
+  display: table;
+  margin: auto;
+}
+
+body {
+  display: table-cell;
+  vertical-align: middle;
+}
+#credits{
+  text-align: center;
+
+}
+#startButton{
+  position:absolute;
+  top:150px;
+  left:340px;
+  height:70px;
+  width:150px;
+    z-index: 2000;
+
+    background: transparent;
+    border: none !important;
+    font-size:0;
+}
+#aboutButton{
+  position:absolute;
+  top:230px;
+  left:340px;
+  height:70px;
+  width:150px;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden; 
+  z-index: 200;
+
+}
+canvas {
+    border: 1px solid black;
+    z-index: 0;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  audio{
+    width:0px;
+    height: 0px;
+  }
+  html{height:800px;
+    pointer-events: none;
+    z-index: -2;
+  }
+  body{
+    pointer-events: none;
+    z-index: -1;
+
+    height: 800px;
+    width: 400px;
+    overflow: hidden;
+  }
+  #m{
+    color:#e52521;
+  }
+  #a{
+    color:#43b047;
+  }
+  #r{
+    color:#fbd000;
+  }
+  #i{
+    color:#049cd8;
+  }
+  #o{
+    color:#43b047;
+  }
+  .scrolloff {
+    pointer-events: none;
+}
+#lean_overlay {
+  position: fixed;
+  z-index:100;
+  top: 0px;
+  left: 0px;
+  height:100%;
+  width:100%;
+  background: #000;
+  display: none;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  margin-left: auto;
+  margin-right: auto;
+  top:175px;
+  width: 850px; /* Full width */
+  height: 450px; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5px auto; /* 15% from the top and centered */
+  border: 1px solid #888;
+  height:250px;
+width: 250px;
+}
+
+/* The Close Button */
+.close {
+  /* Position it in the top right corner outside of the modal */
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+#submit{
+  position: relative;
+  bottom:0;
+}
+/* Close button on hover */
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)}
+  to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+  from {transform: scale(0)}
+  to {transform: scale(1)}
+}
