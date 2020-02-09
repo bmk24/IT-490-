@@ -1,13 +1,16 @@
 @font-face {
-  font-family: "CustomFont";
-  src: url('mario.woff') format('woff'),
-   url('mario.woff2') format('woff2');
+  font-family: CustomFont;
+  src: url(mario.woff),
+   url('mario.woff2');
   }
+  @font-face {
+    font-family: CustomFont2;
+    src: url('smb1font.ttf') format('truetype');    }
 h1{
-  font-family: "CustomFont", sans-serif;
+  font-family: "CustomFont2";
 text-align: center;
 }
-tml, body {
+html, body {
   height: 100%;
 }
 
@@ -55,9 +58,16 @@ canvas {
     z-index: 0;
     padding-left: 0;
     padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
+   left:20rem;
     display: block;
+    position: fixed;
+    top:5rem;
+  }
+  #game{
+    z-index: 0;
+  }
+  #gameMid{
+    z-index: 1;
   }
   audio{
     width:0px;
@@ -76,19 +86,19 @@ canvas {
     overflow: hidden;
   }
   #m{
-    color:#e52521;
+    color: black;
   }
   #a{
-    color:#43b047;
+    color: black;
   }
   #r{
-    color:#fbd000;
+    color: black;
   }
   #i{
-    color:#049cd8;
+    color: black;
   }
   #o{
-    color:#43b047;
+    color: black;
   }
   .scrolloff {
     pointer-events: none;

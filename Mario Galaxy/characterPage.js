@@ -74,7 +74,7 @@ for (i = 600; i < 650; i++) {//brick row 1
 }
 context.fillText("Choose Character", (canvas.width/2), (canvas.height/2)-150);
 
-context.font = "30px CustomFont";
+context.font = "30px CustomFont2";
 context.fillStyle = "#e52521";
 context.textAlign = "center";
 context.fillText("Mario", 300, (canvas.height/2)+20);
@@ -83,7 +83,7 @@ context.fillText("Luigi", 300, (canvas.height/2)-60);
 context.fillText("Yoshi", 500, (canvas.height/2)-60);
 context.fillStyle = "#fbd000";
 
-context.fillText("Luigi", 500, (canvas.height/2)+20);
+context.fillText("Wario", 500, (canvas.height/2)+20);
 
 var marioState = 0;
 var luigiState = 0;

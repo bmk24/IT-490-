@@ -4,57 +4,26 @@
     <title>Mario Galaxy</title>
 
     <link rel="stylesheet" href="css/main-01.css">
-
     <script
     src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
     crossorigin="anonymous"></script>
     <link rel="stylesheet" href="tingle.css">
     <script src="tingle.js"></script>
-
   <script type="text/javascript" src="loaders.js"></script>
-  <script type="text/javascript" src="characterPage.js"></script>
+  <script type="text/javascript" src="/js/spriteLoader.js"></script>
 
-  <script type="text/javascript" src="canvas.js"></script>
+  <script type="text/javascript" src="characterPage.js"></script>
+  <script type="text/javascript" src="/js/canvas.js"></script>
 </head>
 <body id="body">
 
-<h1><span id="m">M</span><span id="a">A</span><span id="r">R</span><span id="i">I</span><span id="o">O</span> <span id="i">G</span><span id="r">A</span><span id="m">L</span><span id="o">A</span><span id="r">X</span><span id="i">Y</span></h1>
-    <canvas id="game" height="400" width="800"></canvas>			
-</div>
+    <canvas id="game" height="400" width="800"></canvas>
+    <canvas id="gameMid" height="400" width="800"></canvas>			
+			
 <audio controls id="theme">
     <source src="music/theme_song.mp3" muted="muted" autoplay="true" type="audio/mpeg">
   </audio>
-
-  <!-- The Modal -->
-  <div id="id01" class="modal">
-    <span onclick="document.getElementById('id01').style.display='none'"
-  class="close" title="Close Modal">&times;</span>
-  
-    <!-- Modal Content -->
-    <form class="modal-content animate" action="/action_page.php">
-   
-  
-      <div class="modal-content">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
-  
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-  
-      
-      </div>
-  
-      <div class="container" style="background-color:#f1f1f1">
-        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        <button type="submit" id="submit">Login</button>
-
-        <!--span class="psw">Forgot <a href="#">password?</a></!--span-->
-      </div>
-    </form>    
-
-
-  </div>
 </body>
 </html>
 
