@@ -17,7 +17,7 @@ Download file to accessible directory.
 cd to directory where file is.
 
 
-chmoda+x CurrencyAPI.py
+chmod a+x CurrencyAPI.py
 ## Usage
 python3 CurrencyAPI.py
 # Network Fix
