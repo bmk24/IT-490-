@@ -32,19 +32,19 @@ Ability to create folder in same directory as networkFix.sh bash script called n
 
 ### Installing
 
--Place networkFix.sh file in home directory or any other easily accesible location.
+Place networkFix.sh file in home directory or any other easily accesible location.
 
--Place second router compatible 01-netcfg.yaml config file in the same directory as networkFix.sh
+Place second router compatible 01-netcfg.yaml config file in the same directory as networkFix.sh
 
--mkdir networkFix (in directory where networkFix.sh is)
+mkdir networkFix (in directory where networkFix.sh is)
 
--cd /etc/netplan/
+cd /etc/netplan/
 
--ls -l (make note of size of current config file)
+ls -l (make note of size of current config file)
 
--nano [path to networkFix.sh]
+nano [path to networkFix.sh]
 
--edit if statement and replace 366 with the size number of the current config file in /etc/netplan/ and save file
+edit if statement and replace 366 with the size number of the current config file in /etc/netplan/ and save file
 
 *note the second config file must differ from the first in size. Can add in comments to increase the size.
 
