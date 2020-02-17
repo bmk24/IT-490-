@@ -39,7 +39,7 @@ def callback(ch, method, properties, body):
 
     #creates python readable message data
     body=json.loads(body)
-	fromCurrency=body['currency']
+    fromCurrency=body['currency']
     amount=body['amount']
     toCurrency='USD'
 	
