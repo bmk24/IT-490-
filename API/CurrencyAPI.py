@@ -60,7 +60,7 @@ def callback(ch, method, properties, body):
     difference=float(currentResponse['rates'][toCurrency]['rate'])-float(historicalResponse['rates'][toCurrency]['rate'])
 	#finds percent difference
     percent=difference/float(currentResponse['rates'][toCurrency]['rate'])
-    response={"currency":fromCurrency,"difference":percent*10000}
+    response={"currency":fromCurrency,"difference":percent*1000}
 	
 	#adds % difference to queue for database
     channel.basic_publish(exchange='', routing_key='ApiToDatab', body=json.dumps(response))
