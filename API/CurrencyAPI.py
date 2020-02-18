@@ -47,7 +47,7 @@ def callback(ch, method, properties, body):
     currentResponse=json.loads((currencyGet(fromCurrency,toCurrency,amount).text))
 	
 	#converts returned datatime to datetime object
-    time=datetime.datetime.strptime(currentResponse['updated_date'],"%Y-%M-%d")
+    time=datetime.datetime.strptime(currentResponse['updated_date'],"%Y-%m-%d")
 	
 	#length of time in seconds to look at in the past
     timePeriod=2592000
@@ -57,9 +57,9 @@ def callback(ch, method, properties, body):
 	#gets historical currency values
     historicalResponse=json.loads(historicalGet(fromCurrency,toCurrency,amount,str(monthAgo.year)+'-'+str(monthAgo.month)+'-'+str(monthAgo.day)).text)
 	#Finds difference between old and new currency values
-    difference=float(currentResponse['rates'][fromCurrency]['rate'])-float(historicalResponse['rates'][fromCurrency]['rate'])
+    difference=float(currentResponse['rates'][toCurrency]['rate'])-float(historicalResponse['rates'][toCurrency]['rate'])
 	#finds percent difference
-    percent=difference/float(currentResponse['rates'][fromCurrency]['rate'])
+    percent=difference/float(currentResponse['rates'][toCurrency]['rate'])
     response={"currency":fromCurrency,"difference":percent*10000}
 	
 	#adds % difference to queue for database
