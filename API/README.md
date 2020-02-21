@@ -45,8 +45,9 @@ rabbitmqadmin declare queue name=DataToApi durable=true
 
 ## Usage
 python3 CurrencyAPI.py
+
 python3 data.py
-(requires queues ApiToDatab and DataToApi queues to be declared on ra
+(requires queues ApiToDatab and DataToApi queues to be declared on rabbitmq vm and the rabbitmq must be running)
 
 # Network Fix
 Used for quickly changing the static ips of virtualbox vms.
