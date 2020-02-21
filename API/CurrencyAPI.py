@@ -4,7 +4,7 @@ import requests, json, pika, datetime
 
 #initiates rabbitMQ connection
 credentials = pika.PlainCredentials('tim', 'test')
-connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.1.76',5672,'/',credentials))
+connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.1.68',5672,'/',credentials))
 channel=connection.channel()
 
 #gets current currency values from api
@@ -43,26 +43,33 @@ def callback(ch, method, properties, body):
     amount=body['amount']
     toCurrency='USD'
 	
-	#gets current currency values
+    #gets current currency values
     currentResponse=json.loads((currencyGet(fromCurrency,toCurrency,amount).text))
-	
-	#converts returned datatime to datetime object
+    
+    #converts returned datatime to datetime object
     time=datetime.datetime.strptime(currentResponse['updated_date'],"%Y-%m-%d")
-	
-	#length of time in seconds to look at in the past
+    
+    #length of time in seconds to look at in the past
     timePeriod=2592000
     monthAgo=datetime.datetime(time.year,time.month,time.day,time.hour,time.second).timestamp()-timePeriod
     monthAgo=datetime.date.fromtimestamp(monthAgo)
-	
-	#gets historical currency values
+    #gets historical currency values
     historicalResponse=json.loads(historicalGet(fromCurrency,toCurrency,amount,str(monthAgo.year)+'-'+str(monthAgo.month)+'-'+str(monthAgo.day)).text)
-	#Finds difference between old and new currency values
+    #Finds difference between old and new currency values
     difference=float(currentResponse['rates'][toCurrency]['rate'])-float(historicalResponse['rates'][toCurrency]['rate'])
-	#finds percent difference
+    #finds percent difference
     percent=difference/float(currentResponse['rates'][toCurrency]['rate'])
     response={"currency":fromCurrency,"difference":percent*1000}
-	
-	#adds % difference to queue for database
+    #adds % difference to queue for database after rounding the value to the nearest
+    #divisible by 5 number
+    print(response['difference'])
+    roundedDifference=int(round(response['difference']))
+    start=roundedDifference-roundedDifference % 5
+    stop=start+5
+    if roundedDifference-start<=3:
+      response["difference"]=start
+    else:
+      response["difference"]=stop
     channel.basic_publish(exchange='', routing_key='ApiToDatab', body=json.dumps(response))
 
 
