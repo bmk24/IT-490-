@@ -1,51 +1,68 @@
 
-
-window.onload = function ()
-{   
-
-    var canvas  = document.getElementById("game");
-    var context = canvas.getContext('2d');
-
-    var brickBlock = new Image();
-    var skyBlock = new Image();
-    var tubeUp = new Image();
-    var mushroom = new Image();
-    var platformBlock = new Image();
-    var metalBlock = new Image();
-    var mysteryBlock = new Image();
-    var coinBlock = new Image();
-
-
-    var marioLeft1 = new Image();
-    var marioLeft2 = new Image();
-    var luigiLeft1 = new Image();
-    var luigiLeft2 = new Image();
-    var warioLeft1 = new Image();
-    var warioLeft2 = new Image();
-    var yoshiLeft1 = new Image();
-    var yoshiLeft2 = new Image();
-
-
-    brickBlock.src = '/img/tile000.png';
-    skyBlock.src = '/img/tile696.png';
-    tubeUp.src = '/img/tubeUp.png';
-    mushroom.src = '/img/tile016.png';
-    platformBlock.src = '/img/tile001.png';
-    metalBlock.src = '/img/tile003.png';
-    mysteryBlock.src = '/img/tile024.png';
-    coinBlock.src = '/img/tile057.png';
-    marioLeft1.src = '/img/mario_w_l.png';
-    marioLeft2.src = '/img/mario_w_l2.png';
-    luigiLeft1.src = '/img/luigi_w_l.png';
-    luigiLeft2.src = '/img/luigi_w_l2.png';
-    warioLeft1.src = '/img/wario_w_l.png';
-    warioLeft2.src = '/img/wario_w_l2.png';
-    yoshiLeft1.src = '/img/yoshi_w_l.png';
-    yoshiLeft2.src = '/img/yoshi_w_l2.png';
-
-    brickBlock.onload,skyBlock.onload,tubeUp.onload,mushroom.onload,platformBlock.onload,metalBlock.onload,mysteryBlock.onload,coinBlock.onload,marioLeft1.onload,marioLeft2.onload,luigiLeft1.onload,luigiLeft2.onload,warioLeft1.onload,warioLeft2.onload,yoshiLeft1.onload,yoshiLeft2.onload = function (e)
-    {
-   mainScreen(canvas,context,brickBlock,skyBlock,tubeUp,mushroom,platformBlock,metalBlock,mysteryBlock,coinBlock);
-} 
+goomba_smb1.onload,mysteryBlock1.onload,mysteryBlock2.onload,marioU2_smb1.onload,marioU1_smb1.onload,tubeMid.onload,bushMid.onload,bushLeft.onload,bushRight.onload,hillTop.onload,hillLeft.onload,hillRight.onload,hillDimple.onload,hillMid.onload,greyMetal.onload,tubeLeft.onload,hillSmall.onload,hillBig.onload,bushSmall.onload,bushMedium.onload,bushLarge.onload,rampBlock.onload,marioL_smb1.onload,marioL1_smb1.onload,marioL2_smb1.onload,marioR_smb1.onload,marioR1_smb1.onload,marioR2_smb1.onload,tubeRight.onload,mushroom.onload,platformBlock.onload,metalBlock.onload,mysteryBlock.onload,coinBlock.onload,brickBlock.onload,skyBlock,onload = function(e) {
+  console.log("Resources Initialization");
+    init();
 }
+goomba_smb1.onload,mysteryBlock1.onload,mysteryBlock2.onload,marioU2_smb1.onload,marioU1_smb1.onload,tubeMid.onload,bushMid.onload,bushLeft.onload,bushRight.onload,hillTop.onload,hillLeft.onload,hillRight.onload,hillDimple.onload,hillMid.onload,greyMetal.onload,tubeLeft.onload,hillSmall.onload,hillBig.onload,bushSmall.onload,bushMedium.onload,bushLarge.onload,rampBlock.onload,marioL_smb1.onload,marioL1_smb1.onload,marioL2_smb1.onload,marioR_smb1.onload,marioR1_smb1.onload,marioR2_smb1.onload,tubeRight.onload,mushroom.onload,platformBlock.onload,metalBlock.onload,mysteryBlock.onload,coinBlock.onload,brickBlock.onerror = function(){
+ console.log("Error loading " + this.src); 
+}
+function init(){
+canvas  = document.getElementById("game");
+context = canvas.getContext('2d');
+canvas2  = document.getElementById("gameMid");
+context2 = canvas.getContext('2d');
+canvasBack  = document.getElementById("gameMid");
+contextBack = canvas.getContext('2d');
+canvas.width = 720;
+canvas.height = 480;
+canvas2.width = 720;
+canvas2.height = 480;
+canvasBack.width = 720;
+canvasBack.height = 480;
+console.log("Canvas Initialization");
+console.log("Game Engine Initialization");
+/* Setup of the engine */
 
+window.requestAnimFrame =
+window.requestAnimationFrame ||
+window.webkitRequestAnimationFrame ||
+window.mozRequestAnimationFrame ||
+window.oRequestAnimationFrame ||
+window.msRequestAnimationFrame ||
+function(callback) {
+console.log("yes");
+ 
+return window.setTimeout(callback, 1000 / 60);
+};
+console.log("Window Animation Initialization");
+
+
+
+context2.drawImage(marioR_smb1,20,20);
+
+var game = new Galaxy();
+game.viewPortConstructor(canvas.width, canvas.height);
+
+
+//if (startGame == 1){
+game.load_map(map);//}
+
+
+game.viewPortLim = true;
+
+
+
+var Loop = function() {
+game.update();
+game.draw(context);
+
+window.requestAnimFrame(Loop);
+
+
+};
+Loop();
+
+//playerAnim();
+
+
+}

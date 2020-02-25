@@ -1,4 +1,0 @@
-Things to Do:
-
-Disable scrolling, mouse interaction 
-
