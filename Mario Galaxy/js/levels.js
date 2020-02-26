@@ -166,7 +166,7 @@ Keys
          spriteType: 'goomba',
          jumping: false,
          loc: {x:200 , y:175},
-         vel: {x: 0.4 , y:0},
+         vel: {x: -0.4 , y:0},
          on_floor : false
             },
       spriteSize: 16,

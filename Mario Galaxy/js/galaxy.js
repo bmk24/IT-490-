@@ -746,7 +746,7 @@ Galaxy.prototype.move_goomba = function (goomba) {
        // console.log(tX);
       /**************Enemy Solid Object Finder***************/
       var goombaX = (goomba.player.loc.x);// + goomba.spriteSize / 2);
-console.log(goombaX);
+//console.log(goombaX);
       var t1 = 0;
 for (var y = 0; y < game.goomba.obsticle.length; y++) {
    var tempx1 =  xObsticle[y];
@@ -755,21 +755,37 @@ var tempx2 = x2Obsticle[y];
 if (goombaX >= tempx1 && goombaX <= tempx2){
 t1 = 1;
 }
+
+
+
+var z1 = (goomba.player.loc.x + goomba.spriteSize / 2 - this.camera.x);
+var z2 = (this.player.loc.x + this.spriteSize / 2 - this.camera.x);
+
+var q1 = this.player.loc.y;
+var q2 = goomba.player.loc.y;
+
+
+if (z1 >= (z2-10) && z1 <= (z2+10)){
+    if((q2 >= (q1 -5)) && (q2 <= (q1+5))){
+        //console.log("in");
+    
+    //console.log("Goomba Kill you");
+    //console.log(this.player.loc.y,goomba.player.loc.y);
+    playerStop = 0;
+    playerBlock = 0;
+    playerBlock1 = 0;
+    playerLastX = 0;
+    playerLastY = 0;
+    this.player.loc.x = 0;
+    this.load_map(map);
+}
+}
      }
      if (t1 == 1){
-        console.log("rut roh");
-     
-            goomba.player.vel.x *= -1;
-        
-    
+            goomba.player.vel.x *= -1; 
 }
-     
-    
             goomba.player.loc.x += goomba.player.vel.x;
             goomba.player.loc.y += goomba.player.vel.y;   
-
-
-
         };
 
 Galaxy.prototype.draw_goomba = function (goomba){
