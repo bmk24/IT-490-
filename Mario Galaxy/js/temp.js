@@ -147,3 +147,36 @@ Galaxy.prototype.move_goomba = function (goomba) {
             return (this.currentLevel.data[y] && this.currentLevel.data[y][x]) ? this.currentLevel.data[y][x] : 0;
             };
         //Goomba at @x190
+
+
+
+        for (var y = 0; y < this.currentLevel.data.length; y++) {
+
+            for (var x = 0; x < this.currentLevel.data[y].length; x++) {
+         
+                if ((!fore && !this.currentLevel.data[y][x].fore) || (fore && this.currentLevel.data[y][x].fore)) {
+         
+                    var xNext = (x * this.spriteSize) - this.camera.x;
+                    var yNext = (y * this.spriteSize) - this.camera.y;
+                    
+                    if(xNext < -this.spriteSize
+                    || yNext < -this.spriteSize
+                    || xNext > this.viewport.x
+                    || yNext > this.viewport.y 
+                    ) continue;
+                    this.draw_tile(
+                        xNext,
+                        yNext,
+                        this.currentLevel.data[y][x],
+                        context,
+                        y,
+                        x
+                    );
+                }
+            }
+         }
+
+
+         for (var y = 0; y < game.goomba.obsticle.length; y++) {
+             console.log(y)
+         }

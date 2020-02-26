@@ -128,18 +128,30 @@ Keys
     
     goomba: {
        key :{
-          left : true,
-          right: false
+          left : false,
+          right: true
        },
+      
+   
+   obsticle: [
+      {id : 1,x1:0,x2:10},
+
+      {id : 2,x1:440,x2:500},
+     {id : 3,x1:600,x2:660}
+
+
+   ],
+
+      hazards: 2,
       goomba1:  { x:200, y:100 },
       goomba2: { x:200, y:100 },
       goomba3: { x:200, y:100 },
       playerSpeed: {
-         left: 0.2,
-         right: 0.2
+         left: 0.1,
+         right: 0.1
       },
       defaultVelocity: {
-         x: 1.5,
+         x: .4,
          y: 16
       },
       gravity: {
@@ -154,7 +166,7 @@ Keys
          spriteType: 'goomba',
          jumping: false,
          loc: {x:200 , y:175},
-         vel: {x:0.2 , y:0},
+         vel: {x: 0.4 , y:0},
          on_floor : false
             },
       spriteSize: 16,

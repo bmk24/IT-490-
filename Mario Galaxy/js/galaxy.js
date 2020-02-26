@@ -7,14 +7,15 @@ var playerLastX = 0;
 var playerLastY = 0;
 var frame_set;
 var game;
+
+var xObsticle = [];
+var x2Obsticle = [];
 var Galaxy = function () {
     game = this;
    context.scale(2, 2);
 //context2.scale(2, 2);
 contextBack.fillStyle = "#5D94FB";
 contextBack.fillRect(0, 0, canvasBack.width, canvasBack.height);
-
-
 
 
 this.bigProblem   = false;
@@ -71,6 +72,7 @@ this.player = {
  
    can_jump: true
 };
+
 window.onkeydown = this.keydown.bind(this);
 window.onkeyup   = this.keyup.bind(this);
 };
@@ -147,6 +149,14 @@ case 39:
 
 Galaxy.prototype.load_map = function (map) {
 game = map;
+
+/**************Enemy Solid Object Finder***************/
+for (var y = 0; y < game.goomba.obsticle.length; y++) {
+    xObsticle[y] = game.goomba.obsticle[y].x1;
+x2Obsticle[y] = game.goomba.obsticle[y].x2;
+}
+/**************Enemy Solid Object Finder***************/
+
 if (typeof map      === 'undefined'
 || typeof map.data === 'undefined'
 || typeof map.keys === 'undefined') {
@@ -580,8 +590,7 @@ this.last_tile = tile.id;
 };
 
 Galaxy.prototype.update_player = function (that) {
-if (that.player.spriteType == 'goomba'){}
-else{
+
 if (this.key.left) {
 
 if(playerBlock1 >= this.player.loc.x){console.log("over")}
@@ -611,12 +620,12 @@ if (this.key.right) {
 //this.Goomba();
 
 this.move_player(that);
-}
+
 };
 
 Galaxy.prototype.draw_player = function (that) {
     var _this = that;
-//console.log(this.camera.x);
+//console.log(_this.player.loc.x);
     playerLocationX = (_this.player.loc.x + _this.spriteSize / 2 - this.camera.x);
     playerLocationY = (_this.player.loc.y + _this.spriteSize / 2 - this.camera.y)-6;
     playerLastX = playerLocationX;
@@ -698,51 +707,7 @@ Galaxy.prototype.loop = function(time_stamp) {
         /***************** Mystery Block Animation ********************/       
       }
   };
-Galaxy.prototype.Goomba = function(that){
-    var _this = that;
-//_this.player.vel.x = Math.min(Math.max(_this.player.vel.x, - _this.defaultVelocity.x), _this.defaultVelocity.x);
-//_this.player.vel.x *= .9;
-var tX = _this.player.loc.x - _this.player.vel.x;
-//console.log(tX);
-var tY = _this.player.loc.y;
-//_this.player.loc.y += _this.player.vel.y;
-_this.player.loc.x = tX;
-_this.player.loc.y = tY;
-var t_y_up   = Math.floor(tY / _this.spriteSize);
-var t_y_down = Math.ceil(tY / _this.spriteSize);
-var y_near1  = Math.round((_this.player.loc.y) / _this.spriteSize);
-var y_near2  = Math.round((_this.player.loc.y) / _this.spriteSize);
 
-var t_x_left  = Math.floor(tX / _this.spriteSize);
-var t_x_right = Math.ceil(tX / _this.spriteSize);
-var x_near1   = Math.round((_this.player.loc.x) / _this.spriteSize);
-var x_near2   = Math.round((_this.player.loc.x) / _this.spriteSize);
-
-//var top1    = this.whatTile(x_near1, t_y_up);
-//var top2    = this.whatTile(x_near2, t_y_up);
-//var bottom1 = this.whatTile(x_near1, t_y_down);
-//var bottom2 = this.whatTile(x_near2, t_y_down);
-var left1   = this.whatTile(t_x_left, y_near1);
-//var left2   = this.whatTile(t_x_left, y_near2);
-var right1  = this.whatTile(t_x_right, y_near1);
-var right2  = this.whatTile(t_x_right, y_near2);
-
-
-if (left1.isSolid) {
-_this.key.left = false;
-_this.key.right = true;
-_this.player.vel.x = -.9;
-
-}
-if (right1.isSolid || right2.isSolid) {
-_this.key.right = false;
-_this.key.left = true;
-_this.player.vel.x =  .9;
-
-}
-
-
-};
 Galaxy.prototype.draw = function (context) {
 
 this.draw_map(context, false);
@@ -763,175 +728,72 @@ this.key.left = false;
 
 Galaxy.prototype.update_goomba = function (goomba) {
  
-    
-    if (goomba.key.left) {
-    
-       if (goomba.player.vel.x > -goomba.defaultVelocity.x){
-           goomba.player.vel.x -= goomba.playerSpeed.left;
-            }
-    }
-       
-    
   
-    
-    if (goomba.key.right) {
-      
-       if (goomba.player.vel.x < goomba.defaultVelocity.x)
-           goomba.player.vel.x += goomba.playerSpeed.left;
-    }
-    
     this.move_goomba(goomba);
     
     };
 
 
 Galaxy.prototype.move_goomba = function (goomba) {
+
+
         var tX = goomba.player.loc.x + goomba.player.vel.x;
         var tY = goomba.player.loc.y + goomba.player.vel.y;
        // console.log(t);
         var offset = Math.round((goomba.spriteSize / 2) -1);//Camera Offset
         
-        var tile = this.whatTile(
-           Math.round(goomba.player.loc.x / goomba.spriteSize),
-           Math.round(goomba.player.loc.y / goomba.spriteSize)
-        );
-  
-        var t_y_up   = Math.floor(tY / goomba.spriteSize);
-        var t_y_down = Math.ceil(tY / goomba.spriteSize);
-        var y_near1  = Math.round((goomba.player.loc.y - offset) / goomba.spriteSize);
-        var y_near2  = Math.round((goomba.player.loc.y + offset) / goomba.spriteSize);
-        
-        var t_x_left  = Math.floor(tX / goomba.spriteSize);
-        var t_x_right = Math.ceil(tX / goomba.spriteSize);
-        var x_near1   = Math.round((goomba.player.loc.x - offset) / goomba.spriteSize);
-        var x_near2   = Math.round((goomba.player.loc.x + offset) / goomba.spriteSize);
-        
-        var Gtop1    = this.whatTile(x_near1, t_y_up);
-        var Gtop2    = this.whatTile(x_near2, t_y_up);
-        var Gbottom1 = this.whatTile(x_near1, t_y_down);
-        var Gbottom2 = this.whatTile(x_near2, t_y_down);
-        var Gleft1   = this.whatTile(t_x_left, y_near1);
-        var Gleft2   = this.whatTile(t_x_left, y_near2);
-        var Gright1  = this.whatTile(t_x_right, y_near1);
-        var Gright2  = this.whatTile(t_x_right, y_near2);
-        
-      
- 
-        
-        //goomba.player.vel.x *= .9;
-        
-        if (Gleft1.isSolid || Gleft2.isSolid || Gright1.isSolid || Gright2.isSolid) {
-      goomba.key.left = false;
-      goomba.key.right = true;
-           /* fix overlap */
-        
-           while (this.whatTile(Math.floor(goomba.player.loc.x / goomba.spriteSize), y_near1).isSolid
-               || this.whatTile(Math.floor(goomba.player.loc.x / goomba.spriteSize), y_near2).isSolid)
-               goomba.player.loc.x += .1;
-        
-           while (this.whatTile(Math.ceil(goomba.player.loc.x / goomba.spriteSize), y_near1).isSolid
-               || this.whatTile(Math.ceil(goomba.player.loc.x / goomba.spriteSize), y_near2).isSolid)
-               goomba.player.loc.x -= .1;
-        
-           /* tile bounce */
-        
-           var canAbsorb = 0;
-        
-       ///    if (left1.isSolid && left1.canAbsorb > canAbsorb) canAbsorb = left1.canAbsorb;
-          // if (left2.isSolid && left2.canAbsorb > canAbsorb) canAbsorb = left2.canAbsorb;
-           //if (right1.isSolid && right1.canAbsorb > canAbsorb) canAbsorb = right1.canAbsorb;
-           //if (right2.isSolid && right2.canAbsorb > canAbsorb) canAbsorb = right2.canAbsorb;
-        
-           goomba.player.vel.x *= -canAbsorb || 0;
-           
-        }
-        
-        else if (Gtop1.isSolid || Gtop2.isSolid || Gbottom1.isSolid || Gbottom2.isSolid) {
-        
-       
-           
-           while (this.whatTile(x_near1, Math.floor(goomba.player.loc.y / goomba.spriteSize)).isSolid
-               || this.whatTile(x_near2, Math.floor(goomba.player.loc.y / goomba.spriteSize)).isSolid)
-               goomba.player.loc.y += .1;
-        
-           while (this.whatTile(x_near1, Math.ceil(goomba.player.loc.y / goomba.spriteSize)).isSolid
-               || this.whatTile(x_near2, Math.ceil(goomba.player.loc.y / goomba.spriteSize)).isSolid)
-               goomba.player.loc.y -= .1;
-        
-          
-           
-          // var canAbsorb = 0;
-           
-         //  if (Gtop1.isSolid && top1.canAbsorb > canAbsorb) canAbsorb = top1.canAbsorb;
-         //  if (Gtop2.isSolid && top2.canAbsorb > canAbsorb) canAbsorb = top2.canAbsorb;
-         //  if (bottom1.isSolid && bottom1.canAbsorb > canAbsorb) canAbsorb = bottom1.canAbsorb;
-          // if (bottom2.isSolid && bottom2.canAbsorb > canAbsorb) canAbsorb = bottom2.canAbsorb;
-           
-           goomba.player.vel.y *= -canAbsorb || 0;
-        
-           if ((Gbottom1.isSolid || Gbottom2.isSolid) && !tile.jump) {
-               
-               goomba.player.on_floor = true;
-               goomba.player.can_jump = false;
-           }
-           
-        }
-else{
-   
-        
-        goomba.player.loc.x += goomba.player.vel.x;
-        goomba.player.loc.y += goomba.player.vel.y;
+
+       // console.log(tX);
+      /**************Enemy Solid Object Finder***************/
+      var goombaX = (goomba.player.loc.x);// + goomba.spriteSize / 2);
+console.log(goombaX);
+      var t1 = 0;
+for (var y = 0; y < game.goomba.obsticle.length; y++) {
+   var tempx1 =  xObsticle[y];
+var tempx2 = x2Obsticle[y];
+
+if (goombaX >= tempx1 && goombaX <= tempx2){
+t1 = 1;
 }
-      
+     }
+     if (t1 == 1){
+        console.log("rut roh");
+     
+            goomba.player.vel.x *= -1;
+        
+    
+}
+     
+    
+            goomba.player.loc.x += goomba.player.vel.x;
+            goomba.player.loc.y += goomba.player.vel.y;   
+
+
+
         };
 
 Galaxy.prototype.draw_goomba = function (goomba){
 
-//playerLastX
-    var goombaX = (goomba.player.loc.x + goomba.spriteSize / 2);
-    var goombaY = (goomba.player.loc.y + goomba.spriteSize / 2)-6;    
-    //console.log("Mario X: " +playerLastX+ " Goomba: " + goombaX);
-    var r1 = goombaX - 150;
-    var r2 = goombaX + 150;
+
+    var goombaX = (goomba.player.loc.x + goomba.spriteSize / 2 - this.camera.x);
+    var goombaY = (goomba.player.loc.y + goomba.spriteSize / 2 - this.camera.y)-6;    
+    var r1 = goombaX - 350;
+    var r2 = goombaX + 350;
 
 
 
     if (r1 <= playerLastX && r2 > playerLastX){
-        //console.log("in range");
         context2.drawImage(goomba_smb1,goombaX,goombaY,goomba.spriteSize,goomba.spriteSize);
 
     }
 }
-        //Goomba at @x190
-
-/*
-  playerLastX = playerLocationX;
-        playerLastY = playerLocationY;
-        //Goomba at @x190
-
-*/
+     
 
 
   
     
     
-    //console.log("Player X Location: " + playerLocationX);
-    /*if(game.goomba.goomba1){
-        
-     
-        //console.log(tX,tY);
-        //  console.log(tX);
-    
-        if ((tX >= (this.player.loc.x - 200)) && (tX <= (this.player.loc.x + 200))){
-         
-            
-        }else{//console.log("kill gumba")
-        ;
-    }
-*/
-
-
-
+ 
 
 
 
