@@ -148,14 +148,15 @@ Keys
       },
       view : true,
       player: {
-         x: 200,
-         y: 200,
+         x: 5,
+         y: 5,
          can_jump : false,
          spriteType: 'goomba',
          jumping: false,
          loc: {x:200 , y:175},
-         vel: {x:1.5 , y:16}
-      },
+         vel: {x:0.2 , y:0},
+         on_floor : false
+            },
       spriteSize: 16,
 
     },
