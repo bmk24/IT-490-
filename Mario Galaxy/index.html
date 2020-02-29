@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Mario Galaxy</title>
     <link rel="icon" 
     type="image/png" 
@@ -11,7 +14,8 @@
     ></script>
     <link rel="stylesheet" href="/js/tingle.css">
     <link href="/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
-  
+  	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+
 
 </head>
 <body id="body">
@@ -24,7 +28,30 @@
 <div id="menu" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-bars fa-2x"></i></div>
 <div id="sound" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-volume-up fa-2x"></i></div>
 </div>
+<div class="login">
+  <form class="login100-form validate-form" action="../RabbitMQClientSample.php">
+ <!--input id="Uaddress" type="text" name="address" class="search_addr form-control" size="45"-->
+      <label for="email">Email address:</label>
+      <input id="uemail" type="text" name="email" class="form-control" id="email">
+      <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input id="upassword" type="text" name="password" class="form-control" id="pwd">
+  </div>
+  <input type="button" onclick="handleclick(this)" name="type" value="User" class="btn btn-default"></input>
+  </form>	
 </div>
+<!--div class="register">
+  <form class="login100-form validate-form" action="../send.php">
+      <label for="email">Email address:</label>
+      <input id="uremail" type="text" name="email" class="form-control" id="email">
+      <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input id="urpassword" type="text" name="password" class="form-control" id="pwd">
+  </div>
+  <input type="button" onclick="handleclick(this)" name="type" value="Register as User" class="btn btn-default"></input>
+  </form>	
+</div-->
+
   <div id="gameCenter">
   <!--canvas id="gameChar" height="480" width="640"></canvas-->			
 
@@ -33,7 +60,8 @@
     <canvas id="game" height="480" width="720"></canvas>
     <canvas id="gameBackground" height="480" width="720"></canvas>
 
-		</div>	
+    </div>	
+  
 <audio controls id="theme">
     <source src="music/theme_song.mp3" muted="muted" autoplay="true" type="audio/mpeg">
   </audio>
@@ -47,9 +75,14 @@
 
   <script src="/js/tingle.js"></script>
 <script type="text/javascript" src="/js/spriteLoader.js"></script>
-
+<script src="vendor/bootstrap/js/popper.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/select2/select2.min.js"></script>
+<script src="vendor/tilt/tilt.jquery.min.js"></script>
 
 </body>
 </html>
+
+
 
 
