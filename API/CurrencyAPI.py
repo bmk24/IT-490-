@@ -1,15 +1,41 @@
-
 #!/usr/bin/env python
-import requests, json, pika, datetime
-
+import requests, json, pika, datetime, sys, mysql.connector
+times=datetime.datetime.now().strftime('%Y-%m-%d %I:%M %p')
+try:
 #initiates rabbitMQ connection
-credentials = pika.PlainCredentials('tim', 'test')
-connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.1.68',5672,'/',credentials))
-channel=connection.channel()
-
+ credentials = pika.PlainCredentials('test', 'test')
+ connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.0.12',5672,'/',credentials))
+ channel=connection.channel()
+except:
+ print("can't connect to rbbitmq vm")
+ error("504","API VM can't connect to rabbitmq VM.",times)
+ sys.exit()
 #gets current currency values from api
+def error(code,message,time):
+ 
+ try:
+  connect=mysql.connector.connect(user='myuser',password='Marioplayer1*',host='192.168.0.15',database='elsdb')
+ except:
+  print('Database VM is down.')
+  sys.exit()
+ query1="Select * FROM logging"
+ 
+ query="INSERT INTO logging VALUES (%s, %s, %s)"
+ cursor=connect.cursor(buffered=True)
+ cursor.execute(query1)
+ records=cursor.fetchall()
+ cursor.execute(query, (code, message, time))
+ connect.commit()
+ for row in records:
+  print(row[0])
+  print(row[1])
+  print(row[2])
+ cursor.close()
+ connect.close()
+
 def currencyGet(fromCurrency, toCurrency, amount):
-    url = "https://currency-converter5.p.rapidapi.com/currency/convert"
+
+    url = "https://currency-converter5.p.rapidapi.com/currency/bconvert"
 
     querystring = {"format": "json", "to": toCurrency, "from": fromCurrency, "amount": amount}
 
@@ -19,8 +45,11 @@ def currencyGet(fromCurrency, toCurrency, amount):
     }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
+    if response.status_code==404:
+       times=datetime.datetime.now().strftime('%Y-%m-%d %I:%M %p')
+       error('404',"Can't connect to API server from API script.",times)
+       sys.exit()
     return response
-
 #gets historical currency values from api
 def historicalGet(fromCurrency, toCurrency, amount, time):
     url = "https://currency-converter5.p.rapidapi.com/currency/historical/" + time
@@ -33,6 +62,10 @@ def historicalGet(fromCurrency, toCurrency, amount, time):
     }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
+    if response.status_code==404:
+     times=datetime.datetime.now().strftime('%Y-%m-%d %I:%M %p')
+     print(error('404',"Can't connect to API server from API script.",times))
+     sys.exit()
     return response
 #Function that is acitivted when api data is requested
 def callback(ch, method, properties, body):
@@ -74,9 +107,12 @@ def callback(ch, method, properties, body):
 
 
 #defines what should be done when queue has a new message (start callback function)
+channel.queue_declare(queue='DataToApi', durable=True)
 channel.basic_consume(queue='DataToApi',
                      auto_ack=True,
                      on_message_callback=callback)
 
+
+channel.queue_declare(queue='ApiToDatab', durable=True)
 #starts loop checking the queue for any new messages
 channel.start_consuming()
