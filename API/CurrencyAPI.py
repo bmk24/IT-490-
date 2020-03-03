@@ -1,6 +1,30 @@
 #!/usr/bin/env python
 import requests, json, pika, datetime, sys, mysql.connector
 times=datetime.datetime.now().strftime('%Y-%m-%d %I:%M %p')
+#error reporting
+def error(code,message,time):
+ 
+ try:
+  connect=mysql.connector.connect(user='myuser',password='Marioplayer1*',host='192.168.0.15',database='elsdb')
+ except:
+  print('Database VM is down.')
+  sys.exit()
+ query1="Select * FROM logging"
+ 
+ query="INSERT INTO logging VALUES (%s, %s, %s, %s)"
+ cursor=connect.cursor(buffered=True)
+ cursor.execute(query1)
+ records=cursor.fetchall()
+ cursor.execute(query, (code,"Ubuntu-API", message, time))
+ connect.commit()
+ for row in records:
+  print(row[0])
+  print(row[1])
+  print(row[2])
+  print(row[3])
+ cursor.close()
+ connect.close()
+#attempts to connect to rabbitmqvm
 try:
 #initiates rabbitMQ connection
  credentials = pika.PlainCredentials('test', 'test')
@@ -11,27 +35,6 @@ except:
  error("504","API VM can't connect to rabbitmq VM.",times)
  sys.exit()
 #gets current currency values from api
-def error(code,message,time):
- 
- try:
-  connect=mysql.connector.connect(user='myuser',password='Marioplayer1*',host='192.168.0.15',database='elsdb')
- except:
-  print('Database VM is down.')
-  sys.exit()
- query1="Select * FROM logging"
- 
- query="INSERT INTO logging VALUES (%s, %s, %s)"
- cursor=connect.cursor(buffered=True)
- cursor.execute(query1)
- records=cursor.fetchall()
- cursor.execute(query, (code, message, time))
- connect.commit()
- for row in records:
-  print(row[0])
-  print(row[1])
-  print(row[2])
- cursor.close()
- connect.close()
 
 def currencyGet(fromCurrency, toCurrency, amount):
 
