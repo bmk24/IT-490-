@@ -11,16 +11,17 @@ def error(code,message,time):
   sys.exit()
  query1="Select * FROM logging"
  
- query="INSERT INTO logging VALUES (%s, %s, %s)"
+ query="INSERT INTO logging VALUES (%s, %s, %s, %s)"
  cursor=connect.cursor(buffered=True)
  cursor.execute(query1)
  records=cursor.fetchall()
- cursor.execute(query, (code, message, time))
+ cursor.execute(query, (code,"Ubuntu-API", message, time))
  connect.commit()
  for row in records:
   print(row[0])
   print(row[1])
   print(row[2])
+  print(row[3])
  cursor.close()
  connect.close()
 #attempts to connect to rabbitmqvm
