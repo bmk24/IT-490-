@@ -1,18 +1,24 @@
 <?php
-//dependency libraries
-require_once __DIR__ . '/vendor/autoload.php';
-use PhpAmqpLib\Connection\AMPQStreamConnection;
-use PhpAmqpLib\Connection\AMPQMessage;
+//load dependencies
+require_once('path.inc');
+require_once('get_host_info.inc');
+require_once('rabbitMQLib.inc');
+
+$client =  new RabbitMQClient('testRabbitMQ.ini', 'testServer');
 
 
+$uname=$_POST['uname'];
+$upassword=$_POST['upassword'];
+$req = array("type"=>"Ulogin", "uname"=>$uanme, "upassword"=>$upassword);
 
-//decode json
+$repsonse = $client->send_request($req);
+if($repsonse==1){
+  echo "You are now logged in";
+}
 
+else{echo "Login Fialed\n\n";}
 
-$request = json_decode($msg);
-$username = $request['username'];
-$password = $request['password'];
-
+/*
 $connection = $channel = $callback_queue = $response = $id;
 
 
@@ -63,3 +69,4 @@ public function onResponse($response)
 
 
  ?>
+*/
