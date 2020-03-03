@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Mario Galaxy</title>
+    <link rel="icon" 
+    type="image/png" 
+    href="../Mario Galaxy/img/tile057.png">
+    <link rel="stylesheet" href="../Mario Galaxy/css/main-01.css">
+    <script type="text/javascript" src="../Mario Galaxy/js/jquery.js"></script>
+    <link rel="stylesheet" href="../Mario Galaxy/js/tingle.css">
+    <link href="../Mario Galaxy/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+  	<link rel="stylesheet" type="text/css" href="../Mario Galaxy/vendor/bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="../Mario Galaxy/js/levels.js"></script>
+
+    <script type="text/javascript" src="../Mario Galaxy/js/galaxy.js"></script>
+  
+    <script type="text/javascript" src="../Mario Galaxy/js/loaders.js"></script>
+  
+  
+  
+  <script type="text/javascript" src="../Mario Galaxy/js/spriteLoader.js"></script>
+  
+
+</head>
+<body id="body">
+<div id="overlayControls">
+  <p id="gameTitle">Mario Galaxy</p>
+  <div id="nav">
+<div id="loginNav" class="navTile" style="display: inline-block; text-align: center;">Login</div>
+<div id="controls" class="navTile" style="display: inline-block; text-align: center;">Register</div>
+<div id ="about" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-info fa-2x"></i></div>
+<div id="menu" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-bars fa-2x"></i></div>
+<div id="sound" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-volume-up fa-2x"></i></div>
+</div>
+
+
+<div class="reg" id="register">
+  <p class="labelBig">Register</p>
+
+  <p class="label1">User Name:</p>
+
+  <p class="label2">Password:</p> 
+
+  <form class="loginForm" action="../RabbitMQClientSample.php">
+      <input id="uemail" type="text" name="uemail" class="input100"></input>
+     <input id="upassword" type="text" name="upassword" class="input200"></input>
+  <input type="button" onclick="register(this)" name="type" value="submit" class="subButton"></input>
+  </form>	
+</div>
+<div class="reg" id="login">
+  <p class="labelBig">Login</p>
+
+  <p class="label1">User Name:</p>
+
+  <p class="label2">Password:</p> 
+
+  <form class="loginForm" action="../RabbitMQClientSample.php">
+      <input id="uemail" type="text" name="uemail" class="input100"></input>
+     <input id="upassword" type="text" name="upassword" class="input200"></input>
+  <input type="button" onclick="logon(this)" name="type" value="submit" class="subButton"></input>
+  </form>	
+</div>
+  <div id="gameCenter">
+  <!--canvas id="gameChar" height="480" width="640"></canvas-->			
+
+  <canvas id="gameMid" height="480" width="720"></canvas>			
+
+    <canvas id="game" height="480" width="720"></canvas>
+    <canvas id="gameBackground" height="480" width="720"></canvas>
+
+    </div>	
+  
+<audio controls id="theme">
+    <source src="../Mario Galaxy/music/theme_song.mp3" muted="muted" autoplay="true" type="audio/mpeg">
+  </audio>
+
+
+</body>
+</html>
+
+
+
+

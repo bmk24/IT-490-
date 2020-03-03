@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Mario Galaxy</title>
+    <link rel="icon" 
+    type="image/png" 
+    href="/img/tile057.png">
+    <link rel="stylesheet" href="css/main-01.css">
+    <script src="/js/jquery.js"></script>
+    <link rel="stylesheet" href="/js/tingle.css">
+    <link href="/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+  	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+
+
+</head>
+<body id="body">
+<div id="overlayControls">
+  <p id="gameTitle">Mario Galaxy</p>
+  <div id="nav">
+<div id="loginNav" class="navTile" style="display: inline-block; text-align: center;">Login</div>
+<div id="controls" class="navTile" style="display: inline-block; text-align: center;">Register</div>
+<div id ="about" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-info fa-2x"></i></div>
+<div id="menu" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-bars fa-2x"></i></div>
+<div id="sound" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-volume-up fa-2x"></i></div>
+</div>
+
+
+
+
+  <div id="gameCenter">
+  <!--canvas id="gameChar" height="480" width="640"></canvas-->			
+
+  <canvas id="gameMid" height="480" width="720"></canvas>			
+
+    <canvas id="game" height="480" width="720"></canvas>
+    <canvas id="gameBackground" height="480" width="720"></canvas>
+
+    </div>	
+  
+<audio controls id="theme">
+    <source src="music/theme_song.mp3" muted="muted" autoplay="true" type="audio/mpeg">
+  </audio>
+  <script src="/js/levels.js"></script>
+
+  <script src="/js/galaxy.js"></script>
+
+  <script src="/js/loaders.js"></script>
+
+
+
+  <script src="/js/tingle.js"></script>
+<script type="text/javascript" src="/js/spriteLoader.js"></script>
+
+
+</body>
+</html>
+
+
+
+

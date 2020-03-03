@@ -1,0 +1,8 @@
+mario galazy goals:
+
+properly rendering enemy with physics. no hero interaction
+level 2 design
+login
+error sending
+sprite sheet combine
+multiple enemies
