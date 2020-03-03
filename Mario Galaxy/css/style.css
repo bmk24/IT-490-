@@ -49,3 +49,50 @@ a {
   z-index: 2;
   background:transparent;
 }
+
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+
+
+
+.loginForm {
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+ 
+}
+
+.reg   {
+  width: 960px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid black;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 45px 130px 33px 95px;
+  position: absolute;
+  top:50%;
+}
+
+
+
+

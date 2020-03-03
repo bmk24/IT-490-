@@ -251,3 +251,160 @@ body {font-family: Arial;}
   border: 1px solid #ccc;
   border-top: none;
 }
+
+
+
+
+
+.loginForm {
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+ 
+}
+
+.reg   {
+  width: 35%;
+  height:20rem;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+z-index: 1000;
+border: 1px solid black;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 45px 130px 33px 95px;
+  position: absolute;
+  left:30%;
+  top:300px;
+}
+
+
+.input100 {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #666666;
+position: absolute;
+top:30%;
+  display: block;
+  width: 60%;
+  background: #e6e6e6;
+  height: 50px;
+  border-radius: 25px;
+  padding: 0 30px 0 68px;
+  right:5%;
+}
+.input200 {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #666666;
+position: absolute;
+top:60%;
+  display: block;
+  width: 60%;
+  background: #e6e6e6;
+  height: 50px;
+  border-radius: 25px;
+  padding: 0 30px 0 68px;
+  right:5%;
+
+}
+
+
+.subButton {
+  font-family: Montserrat-Bold;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #fff;
+  text-transform: uppercase;
+
+  width: 50%;
+  height: 50px;
+  border-radius: 25px;
+  background: #57b846;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px;
+position: absolute;
+bottom:5%;
+left:35%;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.subButton:hover {
+  background: #333333;
+}
+.regBut{
+  font-family: Montserrat-Bold;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #fff;
+  text-transform: uppercase;
+
+  width: 20%;
+  height: 30px;
+  border-radius: 25px;
+  background: orange;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px;
+position: absolute;
+bottom:5%;
+left:5%;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+.label1{
+  font-family: Montserrat-Bold;
+  font-size: 20px;
+  line-height: 2.5;
+position: absolute;;
+  top:30%;
+  left:3%
+}
+.label2{
+  font-family: Montserrat-Bold;
+  font-size: 20px;
+  line-height: 2.5;
+position: absolute;
+  top:60%;
+  left:3%;
+}
+
+
+.labelBig{
+  font-family: Montserrat-Bold;
+  font-size: 40px;
+  line-height: 4;
+position: absolute;
+  left:40%;
+  top:-40px;
+}

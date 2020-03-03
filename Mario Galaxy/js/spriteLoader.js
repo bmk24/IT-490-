@@ -53,14 +53,20 @@ game.viewPortLim = true;
 
 
 var Loop = function() {
+
+
+  if (gameStatus == 1){
 game.update();
 game.draw(context);
 
 window.requestAnimFrame(Loop);
-
-
+//console.log("te")
+  }
 };
-Loop();
+
+  Loop();
+
+
 
 //playerAnim();
 

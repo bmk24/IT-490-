@@ -807,9 +807,9 @@ Galaxy.prototype.draw_goomba = function (goomba){
 
 
   
-function handleclick(e){
+function logon(e){
     
-
+console.log('Logging On');
 	var uemail=document.getElementById("uemail").value;
 	var upassword=document.getElementById("upassword").value;
 	event.preventDefault()
@@ -833,7 +833,32 @@ function handleclick(e){
 	
 }    
  
+function register(e){
+    
+    console.log('Registering');
 
+	var uemail=document.getElementById("uemail").value;
+	var upassword=document.getElementById("upassword").value;
+	event.preventDefault()
+	console.log(e.value,uemail,upassword)
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				console.log(this.responseText)
+				if(this.response==1){
+				window.location.href = "logged_in.html";
+				}
+				else{
+					alert("Login failed! Try again");
+				}
+				//alert(this.responseText);
+            }
+        }
+		//xmlhttp.open("GET", "../01_php_scripts/RabbitMQClientSample.php?type=Ulogin"+"&email="+uemail+"&password="+upassword, true);
+		xmlhttp.open("GET", "../RabbitMQClientSample.php?type=Ulogin"+"&uemail="+uemail+"&upassword="+upassword, true);
+        xmlhttp.send();
+	
+} 
 
 
 

@@ -1,10 +1,34 @@
-    var startGame = 1;
+$('#register').hide();
+
+$('#login').hide();
+
+$("#loginNav").click(function(){
+    if ($('#login').hide()){
+        $('#login').show();
+        gameStatus = 0;
+    }else{
+        $('#login').hide();
+        gameStatus = 1;  
+    }
+   
+});
+$("#controls").click(function(){
+    if ($('#register').hide()){
+        $('#register').show();
+        gameStatus = 0;
+    }else{
+        $('#register').hide();
+        gameStatus = 1;  
+    }
+});
+   var startGame = 1;
     window.addEventListener("keydown", function(e) {
         // space and arrow keys
         if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
             e.preventDefault();
         }
     }, false);
+    var gameStatus = 1;
    var spriteStatus = [];
        let marioL_smb1 = new Image();
        let marioL1_smb1 = new Image();
