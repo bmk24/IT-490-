@@ -10,12 +10,24 @@ var game;
 
 var xObsticle = [];
 var x2Obsticle = [];
+
+
+
+
+
+
+
 var Galaxy = function () {
     game = this;
    context.scale(2, 2);
 //context2.scale(2, 2);
 contextBack.fillStyle = "#5D94FB";
 contextBack.fillRect(0, 0, canvasBack.width, canvasBack.height);
+
+
+
+
+
 
 
 this.bigProblem   = false;
@@ -287,6 +299,7 @@ switch (tempTile) {
         context.drawImage(metalBlock,x,y,this.spriteSize,this.spriteSize);   
         break;
     case 5:
+        //console.log("block 5");
         context.drawImage(this.mysteryBlock,x,y,this.spriteSize,this.spriteSize);   
         break;
     case 6:

@@ -22,6 +22,31 @@ canvasBack.height = 480;
 console.log("Canvas Initialization");
 console.log("Game Engine Initialization");
 /* Setup of the engine */
+$('#register').hide();
+
+$('#login').hide();
+
+
+
+
+ 
+$("#loginNav").click(function(){
+  if($('#login').is(':visible')){
+    $('#login').hide();
+  }else{
+    $('#login').show();
+  }
+});
+
+$("#controls").click(function(){
+  if($('#register').is(':visible')){
+    $('#register').hide();
+  }else{
+    $('#register').show();
+  }
+});
+
+
 
 window.requestAnimFrame =
 window.requestAnimationFrame ||
@@ -38,17 +63,17 @@ console.log("Window Animation Initialization");
 
 
 
-context2.drawImage(marioR_smb1,20,20);
+//context2.drawImage(marioR_smb1,20,20);
 
-var game = new Galaxy();
-game.viewPortConstructor(canvas.width, canvas.height);
+//var game = new Galaxy();
+//game.viewPortConstructor(canvas.width, canvas.height);
 
 
 //if (startGame == 1){
-game.load_map(map);//}
+//game.load_map(map);//}
 
 
-game.viewPortLim = true;
+//game.viewPortLim = true;
 
 
 
@@ -64,7 +89,7 @@ window.requestAnimFrame(Loop);
   }
 };
 
-  Loop();
+  //Loop();
 
 
 

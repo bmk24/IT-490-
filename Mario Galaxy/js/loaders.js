@@ -1,26 +1,4 @@
-$('#register').hide();
 
-$('#login').hide();
-
-$("#loginNav").click(function(){
-    if ($('#login').hide()){
-        $('#login').show();
-        gameStatus = 0;
-    }else{
-        $('#login').hide();
-        gameStatus = 1;  
-    }
-   
-});
-$("#controls").click(function(){
-    if ($('#register').hide()){
-        $('#register').show();
-        gameStatus = 0;
-    }else{
-        $('#register').hide();
-        gameStatus = 1;  
-    }
-});
    var startGame = 1;
     window.addEventListener("keydown", function(e) {
         // space and arrow keys
