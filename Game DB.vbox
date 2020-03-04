@@ -6,7 +6,7 @@
 ** Use VBoxManage or the VirtualBox Manager GUI to make changes.
 -->
 <VirtualBox xmlns="http://www.virtualbox.org/" version="1.16-windows">
-  <Machine uuid="{e11a56bf-576a-48f3-963d-332e0d9b741b}" name="Game DB" OSType="Oracle_64" snapshotFolder="Snapshots" lastStateChange="2020-03-04T02:17:24Z">
+  <Machine uuid="{e11a56bf-576a-48f3-963d-332e0d9b741b}" name="Game DB" OSType="Oracle_64" snapshotFolder="Snapshots" lastStateChange="2020-03-04T02:42:59Z">
     <MediaRegistry>
       <HardDisks>
         <HardDisk uuid="{882d42f6-7da1-4573-8a8d-ef6b53bb1556}" location="Game DB.vdi" format="VDI" type="Normal"/>
@@ -14,7 +14,7 @@
     </MediaRegistry>
     <ExtraData>
       <ExtraDataItem name="GUI/LastCloseAction" value="PowerOff"/>
-      <ExtraDataItem name="GUI/LastNormalWindowPosition" value="0,29,640,531"/>
+      <ExtraDataItem name="GUI/LastNormalWindowPosition" value="0,29,800,651"/>
     </ExtraData>
     <Hardware>
       <CPU>
@@ -48,12 +48,19 @@
           </DisabledModes>
           <BridgedInterface name="Killer Wireless-n/a/ac 1535 Wireless Network Adapter"/>
         </Adapter>
+        <Adapter slot="2" MACAddress="0800272B4D2E" type="82540EM">
+          <DisabledModes>
+            <InternalNetwork name="intnet"/>
+            <NATNetwork name="NatNetwork"/>
+          </DisabledModes>
+          <BridgedInterface name="Killer Wireless-n/a/ac 1535 Wireless Network Adapter"/>
+        </Adapter>
       </Network>
       <AudioAdapter codec="AD1980" driver="DirectSound" enabled="true" enabledIn="false"/>
       <RTC localOrUTC="UTC"/>
       <Clipboard/>
       <GuestProperties>
-        <GuestProperty name="/VirtualBox/HostInfo/GUI/LanguageID" value="en_US" timestamp="1583288244528889200" flags=""/>
+        <GuestProperty name="/VirtualBox/HostInfo/GUI/LanguageID" value="en_US" timestamp="1583288805697797800" flags=""/>
       </GuestProperties>
     </Hardware>
     <StorageControllers>
