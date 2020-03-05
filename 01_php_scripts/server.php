@@ -7,10 +7,12 @@ require_once('rabbitMQLib.inc');
 function udoLogin($uemail,$upassword)
 {
 $connection=new mysqli("192.168.0.15", "myuser", "Marioplayer1*", "elsdb");
-$query = "select * from users where username='$uemail' and password='$upassword' ";
+$query = "select * from users where username='$uemail'";
 $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
 $count = mysqli_num_rows($result);
-if ($count >= 1){
+$row = $result -> fetch_row();
+$hash=$row[1];
+if (password_verify($upassword, $hash)) {
   $query = "INSERT INTO `logging`(errorCode, description,vmhost,time) VALUES ('No error','autheticated','Rabbitmq-AKM', NOW());";
   $result = mysqli_query($connection, $query) or die(mysqli_error($connection));  
   return 1;
