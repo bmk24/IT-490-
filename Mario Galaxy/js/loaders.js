@@ -64,44 +64,44 @@
        var  controller, loop, player, render, resize, sprite_sheet;
 
    
-       marioL_smb1.src = '/img/marioL_smb1.png';
-       marioL1_smb1.src = '/img/marioL1_smb1.png';
-       marioL2_smb1.src = '/img/marioL2_smb1.png';
-       marioU1_smb1.src = '/img/marioU1_smb1.gif';
-       marioU2_smb1.src = '/img/marioU1_smb1.gif';
-        goomba_smb1.src='/img/goomba.gif';
-       marioR_smb1.src = '/img/marioR_smb1.png';
-       marioR1_smb1.src = '/img/marioR1_smb1.png';
-       marioR2_smb1.src = '/img/marioR2_smb1.png';
+       marioL_smb1.src = './img/marioL_smb1.png';
+       marioL1_smb1.src = './img/marioL1_smb1.png';
+       marioL2_smb1.src = './img/marioL2_smb1.png';
+       marioU1_smb1.src = './img/marioU1_smb1.gif';
+       marioU2_smb1.src = './img/marioU1_smb1.gif';
+        goomba_smb1.src='./img/goomba.gif';
+       marioR_smb1.src = './img/marioR_smb1.png';
+       marioR1_smb1.src = './img/marioR1_smb1.png';
+       marioR2_smb1.src = './img/marioR2_smb1.png';
        brickBlock.src = './img/ground.png';
-       skyBlock.src = '/img/sky.png';   
-       tubeRight.src = '/img/tube2.png';
-       tubeMid.src = '/img/tubeMid.png';
+       skyBlock.src = './img/sky.png';   
+       tubeRight.src = './img/tube2.png';
+       tubeMid.src = './img/tubeMid.png';
 
-       tubeLeft.src = '/img/tube1.png';
-       greyMetal.src = '/img/tile135.png';
-       mushroom.src = '/img/tile016.png';
-       platformBlock.src = '/img/tile001.png';
-       metalBlock.src = '/img/tile003.png';
-       mysteryBlock.src = '/img/tile024.png';
-       mysteryBlock1.src = '/img/tile025.png';
-       mysteryBlock2.src = '/img/tile026.png';
+       tubeLeft.src = './img/tube1.png';
+       greyMetal.src = './img/tile135.png';
+       mushroom.src = './img/tile016.png';
+       platformBlock.src = './img/tile001.png';
+       metalBlock.src = './img/tile003.png';
+       mysteryBlock.src = './img/tile024.png';
+       mysteryBlock1.src = './img/tile025.png';
+       mysteryBlock2.src = './img/tile026.png';
 
-       coinBlock.src = '/img/tile057.png';
-       rampBlock.src = '/img/tile033.png';
-       bushSmall.src = '/img/bush.gif';
-       bushMedium.src = '/img/bush2.gif';
-       bushLarge.src = '/img/bush3.gif';
-       hillSmall.src = '/img/hillSmall.gif';
-       hillBig.src = '/img/hillBig.gif';
-        hillTop.src = '/img/hillTop.png';
-        hillLeft.src = '/img/hillLeft.png';
-        hillRight.src = '/img/hillRight.png';
-        hillDimple.src = '/img/hillLeftIn.png';
-        hillMid.src = '/img/hillMid.png'; 
-        bushMid.src = '/img/bushMid.png';
-        bushLeft.src = '/img/bushLeft.png';
-        bushRight.src = '/img/bushRight.png'; 
+       coinBlock.src = './img/tile057.png';
+       rampBlock.src = './img/tile033.png';
+       bushSmall.src = './img/bush.gif';
+       bushMedium.src = './img/bush2.gif';
+       bushLarge.src = './img/bush3.gif';
+       hillSmall.src = './img/hillSmall.gif';
+       hillBig.src = './img/hillBig.gif';
+        hillTop.src = './img/hillTop.png';
+        hillLeft.src = './img/hillLeft.png';
+        hillRight.src = './img/hillRight.png';
+        hillDimple.src = './img/hillLeftIn.png';
+        hillMid.src = './img/hillMid.png'; 
+        bushMid.src = './img/bushMid.png';
+        bushLeft.src = './img/bushLeft.png';
+        bushRight.src = './img/bushRight.png'; 
    /*
 /*
 Keys 

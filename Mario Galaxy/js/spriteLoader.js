@@ -1,6 +1,8 @@
 
 goomba_smb1.onload,mysteryBlock1.onload,mysteryBlock2.onload,marioU2_smb1.onload,marioU1_smb1.onload,tubeMid.onload,bushMid.onload,bushLeft.onload,bushRight.onload,hillTop.onload,hillLeft.onload,hillRight.onload,hillDimple.onload,hillMid.onload,greyMetal.onload,tubeLeft.onload,hillSmall.onload,hillBig.onload,bushSmall.onload,bushMedium.onload,bushLarge.onload,rampBlock.onload,marioL_smb1.onload,marioL1_smb1.onload,marioL2_smb1.onload,marioR_smb1.onload,marioR1_smb1.onload,marioR2_smb1.onload,tubeRight.onload,mushroom.onload,platformBlock.onload,metalBlock.onload,mysteryBlock.onload,coinBlock.onload,brickBlock.onload,skyBlock,onload = function(e) {
   console.log("Resources Initialization");
+
+
     init();
 }
 goomba_smb1.onload,mysteryBlock1.onload,mysteryBlock2.onload,marioU2_smb1.onload,marioU1_smb1.onload,tubeMid.onload,bushMid.onload,bushLeft.onload,bushRight.onload,hillTop.onload,hillLeft.onload,hillRight.onload,hillDimple.onload,hillMid.onload,greyMetal.onload,tubeLeft.onload,hillSmall.onload,hillBig.onload,bushSmall.onload,bushMedium.onload,bushLarge.onload,rampBlock.onload,marioL_smb1.onload,marioL1_smb1.onload,marioL2_smb1.onload,marioR_smb1.onload,marioR1_smb1.onload,marioR2_smb1.onload,tubeRight.onload,mushroom.onload,platformBlock.onload,metalBlock.onload,mysteryBlock.onload,coinBlock.onload,brickBlock.onerror = function(){
@@ -22,30 +24,20 @@ canvasBack.height = 480;
 console.log("Canvas Initialization");
 console.log("Game Engine Initialization");
 /* Setup of the engine */
-$('#register').hide();
-
-$('#login').hide();
 
 
 
-
- 
-$("#loginNav").click(function(){
-  if($('#login').is(':visible')){
-    $('#login').hide();
-  }else{
-    $('#login').show();
-  }
+$("#about").click(function(){
+console.log("About");
 });
+$("#menu").click(function(){
+  console.log("Menu");
 
-$("#controls").click(function(){
-  if($('#register').is(':visible')){
-    $('#register').hide();
-  }else{
-    $('#register').show();
-  }
 });
+$("#sound").click(function(){
+  console.log("Sound");
 
+});
 
 
 window.requestAnimFrame =
@@ -63,17 +55,16 @@ console.log("Window Animation Initialization");
 
 
 
-//context2.drawImage(marioR_smb1,20,20);
-
-//var game = new Galaxy();
-//game.viewPortConstructor(canvas.width, canvas.height);
+context2.drawImage(marioR_smb1,20,20);
+var game = new Galaxy();
+game.viewPortConstructor(canvas.width, canvas.height);
 
 
 //if (startGame == 1){
-//game.load_map(map);//}
+game.load_map(map,level_0101);//}
 
 
-//game.viewPortLim = true;
+game.viewPortLim = true;
 
 
 
@@ -89,7 +80,7 @@ window.requestAnimFrame(Loop);
   }
 };
 
-  //Loop();
+  Loop();
 
 
 

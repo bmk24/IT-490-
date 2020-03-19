@@ -159,7 +159,7 @@ case 39:
 }
 };
 
-Galaxy.prototype.load_map = function (map) {
+Galaxy.prototype.load_map = function (map,currMap) {
 game = map;
 
 /**************Enemy Solid Object Finder***************/
@@ -169,8 +169,8 @@ x2Obsticle[y] = game.goomba.obsticle[y].x2;
 }
 /**************Enemy Solid Object Finder***************/
 
-if (typeof map      === 'undefined'
-|| typeof map.data === 'undefined'
+if (typeof currMap      === 'undefined'
+|| typeof currMap.data === 'undefined'
 || typeof map.keys === 'undefined') {
 
    this.errorParse('Bad Map Data at:' + map);
@@ -178,7 +178,7 @@ if (typeof map      === 'undefined'
    return false;
 }
 
-this.currentLevel = map;
+this.currentLevel = currMap;
 
 //this.currentLevel.background = map.background || '#000000';
 this.currentLevel.gravity = map.gravity || {x: 0, y: 0.3};
@@ -191,7 +191,7 @@ this.currentLevel.height = 0;
 
 map.keys.forEach(function (key) {
 
-   map.data.forEach(function (row, y) {
+    level_0101.data.forEach(function (row, y) {
        
        _this.currentLevel.height = Math.max(_this.currentLevel.height, y);
 
@@ -208,8 +208,8 @@ map.keys.forEach(function (key) {
 this.currentLevel.widthNext = this.currentLevel.width * this.spriteSize;
 this.currentLevel.heightNext = this.currentLevel.height * this.spriteSize;
 
-this.player.loc.x = map.player.x * this.spriteSize || 0;
-this.player.loc.y = map.player.y * this.spriteSize || 0;
+playerStats.location.x = map.player.x * this.spriteSize || 0;
+playerStats.location.y = map.player.y * this.spriteSize || 0;
 this.player.spriteType = map.player.spriteType || '#000';
 
 this.key.left  = false;
@@ -221,7 +221,7 @@ this.camera = {
    y: 0
 };
 
-this.player.vel = {
+playerStats.velocity = {
    x: 0,
    y: 0
 };
@@ -417,42 +417,42 @@ if (!fore) this.draw_map(context, true);
 
 Galaxy.prototype.move_player = function (that) {
 var _this = that;
-var tX = _this.player.loc.x + _this.player.vel.x;
-var tY = _this.player.loc.y + _this.player.vel.y;
+var tX = playerStats.location.x + playerStats.velocity.x;
+var tY = playerStats.location.y + playerStats.velocity.y;
 
 var offset = Math.round((_this.spriteSize / 2) -1);//Camera Offset
 
 var tile = this.whatTile(
-   Math.round(_this.player.loc.x / _this.spriteSize),
-   Math.round(_this.player.loc.y / _this.spriteSize)
+   Math.round(playerStats.location.x / playerStats.spriteSize),
+   Math.round(playerStats.location.y / playerStats.spriteSize)
 );
 
 if(tile.gravity) {
    
-   _this.player.vel.x += tile.gravity.x;
-   _this.player.vel.y += tile.gravity.y;
+   playerStats.velocity.x += tile.gravity.x;
+   playerStats.velocity.y += tile.gravity.y;
    
 } else {
    
-   _this.player.vel.x += this.currentLevel.gravity.x;
-   _this.player.vel.y += this.currentLevel.gravity.y;
+   playerStats.velocity.x += this.currentLevel.gravity.x;
+   playerStats.velocity.y += this.currentLevel.gravity.y;
 }
 
 if (tile.friction) {
 
-   _this.player.vel.x *= tile.friction.x;
-   _this.player.vel.y *= tile.friction.y;
+   playerStats.velocity.x *= tile.friction.x;
+   playerStats.velocity.y *= tile.friction.y;
 }
 
-var t_y_up   = Math.floor(tY / _this.spriteSize);
-var t_y_down = Math.ceil(tY / _this.spriteSize);
-var y_near1  = Math.round((_this.player.loc.y - offset) / _this.spriteSize);
-var y_near2  = Math.round((_this.player.loc.y + offset) / _this.spriteSize);
+var t_y_up   = Math.floor(tY / playerStats.spriteSize);
+var t_y_down = Math.ceil(tY / playerStats.spriteSize);
+var y_near1  = Math.round((playerStats.location.y - offset) / playerStats.spriteSize);
+var y_near2  = Math.round((playerStats.location.y + offset) / playerStats.spriteSize);
 
-var t_x_left  = Math.floor(tX / _this.spriteSize);
-var t_x_right = Math.ceil(tX / _this.spriteSize);
-var x_near1   = Math.round((_this.player.loc.x - offset) / _this.spriteSize);
-var x_near2   = Math.round((_this.player.loc.x + offset) / _this.spriteSize);
+var t_x_left  = Math.floor(tX / playerStats.spriteSize);
+var t_x_right = Math.ceil(tX / playerStats.spriteSize);
+var x_near1   = Math.round((playerStats.location.x - offset) / playerStats.spriteSize);
+var x_near2   = Math.round((playerStats.location.x + offset) / playerStats.spriteSize);
 
 var top1    = this.whatTile(x_near1, t_y_up);
 var top2    = this.whatTile(x_near2, t_y_up);
@@ -464,33 +464,33 @@ var right1  = this.whatTile(t_x_right, y_near1);
 var right2  = this.whatTile(t_x_right, y_near2);
 
 
-if (tile.jump && _this.jump_switch > 15) {
+if (tile.jump &&playerStats.jump_switch > 15) {
 
-   _this.player.can_jump = true;
+    playerStats.can_jump = true;
    
-   _this.jump_switch = 0;
+  playerStats.jump_switch = 0;
    
-} else _this.jump_switch++;
+} else playerStats.jump_switch++;
 
-_this.player.vel.x = Math.min(Math.max(_this.player.vel.x, - this.currentLevel.defaultVelocity.x), this.currentLevel.defaultVelocity.x);
-_this.player.vel.y = Math.min(Math.max(_this.player.vel.y, - this.currentLevel.defaultVelocity.y), this.currentLevel.defaultVelocity.y);
+playerStats.velocity.x = Math.min(Math.max(playerStats.velocity.x, - playerStats.defaultVelocity.x), playerStats.defaultVelocity.x);
+playerStats.velocity.y = Math.min(Math.max(playerStats.velocity.y, - playerStats.defaultVelocity.y), playerStats.defaultVelocity.y);
 
-_this.player.loc.x += _this.player.vel.x;
-_this.player.loc.y += _this.player.vel.y;
+playerStats.location.x += playerStats.velocity.x;
+playerStats.location.y += playerStats.velocity.y;
 
-_this.player.vel.x *= .9;
+playerStats.velocity.x *= .9;
 
 if (left1.isSolid || left2.isSolid || right1.isSolid || right2.isSolid) {
 
    /* fix overlap */
 
-   while (this.whatTile(Math.floor(_this.player.loc.x / _this.spriteSize), y_near1).isSolid
-       || this.whatTile(Math.floor(_this.player.loc.x / _this.spriteSize), y_near2).isSolid)
-       this.player.loc.x += .1;
+   while (this.whatTile(Math.floor(playerStats.location.x / playerStats.spriteSize), y_near1).isSolid
+       || this.whatTile(Math.floor(playerStats.location.x / playerStats.spriteSize), y_near2).isSolid)
+       playerStats.location.x += .1;
 
-   while (this.whatTile(Math.ceil(_this.player.loc.x / _this.spriteSize), y_near1).isSolid
-       || this.whatTile(Math.ceil(_this.player.loc.x / _this.spriteSize), y_near2).isSolid)
-       _this.player.loc.x -= .1;
+   while (this.whatTile(Math.ceil(playerStats.location.x / playerStats.spriteSize), y_near1).isSolid
+       || this.whatTile(Math.ceil(playerStats.location.x / playerStats.spriteSize), y_near2).isSolid)
+       playerStats.location.x -= .1;
 
    /* tile bounce */
 
@@ -501,7 +501,7 @@ if (left1.isSolid || left2.isSolid || right1.isSolid || right2.isSolid) {
    if (right1.isSolid && right1.canAbsorb > canAbsorb) canAbsorb = right1.canAbsorb;
    if (right2.isSolid && right2.canAbsorb > canAbsorb) canAbsorb = right2.canAbsorb;
 
-   _this.player.vel.x *= -canAbsorb || 0;
+   playerStats.velocity.x *= -canAbsorb || 0;
    
 }
 
@@ -509,13 +509,13 @@ if (top1.isSolid || top2.isSolid || bottom1.isSolid || bottom2.isSolid) {
 
    /* fix overlap */
    
-   while (this.whatTile(x_near1, Math.floor(this.player.loc.y / this.spriteSize)).isSolid
-       || this.whatTile(x_near2, Math.floor(this.player.loc.y / this.spriteSize)).isSolid)
-       this.player.loc.y += .1;
+   while (this.whatTile(x_near1, Math.floor(playerStats.location.y / playerStats.spriteSize)).isSolid
+       || this.whatTile(x_near2, Math.floor(playerStats.location.y / playerStats.spriteSize)).isSolid)
+       playerStats.location.y += .1;
 
-   while (this.whatTile(x_near1, Math.ceil(this.player.loc.y / this.spriteSize)).isSolid
-       || this.whatTile(x_near2, Math.ceil(this.player.loc.y / this.spriteSize)).isSolid)
-       this.player.loc.y -= .1;
+   while (this.whatTile(x_near1, Math.ceil(playerStats.location.y / playerStats.spriteSize)).isSolid
+       || this.whatTile(x_near2, Math.ceil(playerStats.location.y / playerStats.spriteSize)).isSolid)
+       playerStats.location.y -= .1;
 
    /* tile bounce */
    
@@ -526,20 +526,20 @@ if (top1.isSolid || top2.isSolid || bottom1.isSolid || bottom2.isSolid) {
    if (bottom1.isSolid && bottom1.canAbsorb > canAbsorb) canAbsorb = bottom1.canAbsorb;
    if (bottom2.isSolid && bottom2.canAbsorb > canAbsorb) canAbsorb = bottom2.canAbsorb;
    
-   this.player.vel.y *= -canAbsorb || 0;
+   playerStats.velocity.y *= -canAbsorb || 0;
 
    if ((bottom1.isSolid || bottom2.isSolid) && !tile.jump) {
        
-       this.player.on_floor = true;
-       this.player.can_jump = true;
+    playerStats.on_floor = true;
+       playerStats.can_jump = true;
    }
    
 }
 
 // adjust camera
 if (_this.view){
-var c_x = Math.round(_this.player.loc.x - this.viewport.x/4);
-var c_y = Math.round(_this.player.loc.y - this.viewport.y/4);
+var c_x = Math.round(playerStats.location.x - this.viewport.x/4);
+var c_y = Math.round(playerStats.location.y - this.viewport.y/4);
 var x_dif = Math.abs(c_x - this.camera.x);
 var y_dif = Math.abs(c_y - this.camera.y);
 
@@ -606,29 +606,29 @@ Galaxy.prototype.update_player = function (that) {
 
 if (this.key.left) {
 
-if(playerBlock1 >= this.player.loc.x){console.log("over")}
-   if (this.player.vel.x > -this.currentLevel.defaultVelocity.x){
-       this.player.vel.x -= this.currentLevel.playerSpeed.left;
+if(playerBlock1 >= playerStats.location.x){console.log("over")}
+   if (playerStats.velocity.x > -playerStats.defaultVelocity.x){
+       playerStats.velocity.x -= playerStats.playerSpeed.left;
         }
 }
    
 
 if (this.key.up) {
 
-   if (this.player.can_jump && this.player.vel.y > -this.currentLevel.defaultVelocity.y) {
+   if (playerStats.can_jump && playerStats.velocity.y > -playerStats.defaultVelocity.y) {
        //console.log("Disable JUmp");
-       this.player.vel.y -= this.currentLevel.playerSpeed.jump;
-       this.player.can_jump = false;
+       playerStats.velocity.y -= playerStats.jumpHeight;
+       playerStats.can_jump = false;
    }
 }
 
 if (this.key.right) {
   
-    if (this.player.loc.x > playerStop){playerStop = this.player.loc.x
+    if (playerStats.location.x > playerStop){playerStop = playerStats.location.x
 }
 
-   if (this.player.vel.x < this.currentLevel.defaultVelocity.x)
-       this.player.vel.x += this.currentLevel.playerSpeed.left;
+   if (playerStats.velocity.x < this.currentLevel.defaultVelocity.x)
+       playerStats.velocity.x += this.currentLevel.playerSpeed.left;
 }
 //this.Goomba();
 
@@ -638,9 +638,9 @@ this.move_player(that);
 
 Galaxy.prototype.draw_player = function (that) {
     var _this = that;
-//console.log(_this.player.loc.x);
-    playerLocationX = (_this.player.loc.x + _this.spriteSize / 2 - this.camera.x);
-    playerLocationY = (_this.player.loc.y + _this.spriteSize / 2 - this.camera.y)-6;
+//console.log(playerStats.location.x);
+    playerLocationX = (playerStats.location.x + _this.spriteSize / 2 - this.camera.x);
+    playerLocationY = (playerStats.location.y + _this.spriteSize / 2 - this.camera.y)-6;
     playerLastX = playerLocationX;
     playerLastY = playerLocationY;
     context2.drawImage(_this.image,playerLocationX,playerLocationY)//}
@@ -732,7 +732,7 @@ Galaxy.prototype.viewLimit = function(){
     this.count = this.count +  1;//Player Frame Count
  playerBlock = playerStop - 100;//Player Viewport Blocker
   playerBlock1  = playerBlock.toFixed(0);
-if (this.player.loc.x <= playerBlock1){this.player.vel.x=0;
+if (playerStats.location.x <= playerBlock1){playerStats.velocity.x=0;
 this.key.left = false;
 }
 
@@ -772,9 +772,9 @@ t1 = 1;
 
 
 var z1 = (goomba.player.loc.x + goomba.spriteSize / 2 - this.camera.x);
-var z2 = (this.player.loc.x + this.spriteSize / 2 - this.camera.x);
+var z2 = (playerStats.location.x + this.spriteSize / 2 - this.camera.x);
 
-var q1 = this.player.loc.y;
+var q1 = playerStats.location.y;
 var q2 = goomba.player.loc.y;
 
 
@@ -783,13 +783,13 @@ if (z1 >= (z2-10) && z1 <= (z2+10)){
         //console.log("in");
     
     //console.log("Goomba Kill you");
-    //console.log(this.player.loc.y,goomba.player.loc.y);
+    //console.log(playerStats.location.y,goomba.player.loc.y);
     playerStop = 0;
     playerBlock = 0;
     playerBlock1 = 0;
     playerLastX = 0;
     playerLastY = 0;
-    this.player.loc.x = 0;
+    playerStats.location.x = 0;
     this.load_map(map);
 }
 }

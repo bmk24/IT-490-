@@ -17,6 +17,7 @@ html, body {
   height: 100%;
   padding: 0;
   margin: 0;
+  overflow: hidden
 }
 html {
   display: table;
@@ -38,17 +39,20 @@ body {
 }
 
 #nav{
-  margin: auto;
   position: absolute;
-  width:70%; right: 0%;
-  display:inline-table;
+  width:450px; 
+  display: flex;
+  left:50%;
+  border: 1px solid #ccc;
 
+  transform: translate(-50%);
+margin-top:1rem;
 }
 #overlayControls{
   margin-bottom:30px;
   position: absolute;
   width:100%;
-  height:230px;
+  height:200px;
   top:0px;
   left:0px;
   background-color: #eee;
@@ -95,21 +99,19 @@ border: 1px solid #ccc;
 #gameTitle{
   font-family: "CustomFont2";
 text-align: center;
-font-size: 2.5em;
+font-size: 3em;
 }
 canvas {
     border: 1px solid black;
-
     
     position: absolute;
     top:250px;
+    left:50%;
+
+    transform: translate(-50%, 10%);
 
 
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+
   }
   #game{
     z-index: 1;
@@ -255,7 +257,6 @@ body {font-family: Arial;}
 
 
 
-
 .loginForm {
   width: 100%;  
   min-height: 100vh;
@@ -270,15 +271,45 @@ body {font-family: Arial;}
   padding: 15px;
  
 }
+#regInner{
 
+height: 300px;
+width: 370px;
+background-color:white;
+z-index:11001;
+position: absolute;
+left:50%;
+top:50%;
+transform: translate(-50%,-50%);
+border-radius: 10px;
+
+}
+#regBlur{
+  width: 740px;
+  height:500px;
+  z-index: 11000;
+  position: absolute;
+  left:50%;
+  top:290px;
+  transform: translate(-50%);
+
+  -webkit-filter: blur(10px);
+  filter: blur(10px);
+}
 .reg   {
-  width: 35%;
-  height:20rem;
-  background: #fff;
+
+  height: 300px;
+  width: 370px;
+  background-color:white;
+  z-index:11001;
+  position: absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
   border-radius: 10px;
   overflow: hidden;
-z-index: 1000;
-border: 1px solid black;
+
+  border: 1px solid black;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -288,8 +319,10 @@ border: 1px solid black;
   justify-content: space-between;
   padding: 45px 130px 33px 95px;
   position: absolute;
-  left:30%;
-  top:300px;
+  left:50%;
+  top:290px;
+  transform: translate(-50%);
+
 }
 
 
@@ -306,6 +339,7 @@ top:30%;
   border-radius: 25px;
   padding: 0 30px 0 68px;
   right:5%;
+
 }
 .input200 {
   font-size: 15px;
