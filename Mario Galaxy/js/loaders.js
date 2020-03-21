@@ -1,5 +1,7 @@
 
    var startGame = 1;
+   var game = new Galaxy();
+
     window.addEventListener("keydown", function(e) {
         // space and arrow keys
         if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {

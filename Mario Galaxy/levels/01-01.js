@@ -95,7 +95,8 @@ var level_0101 = {
           x: 5,
           y: 5,
           spriteType: 'mario',
-          jumping: false
+          jumping: false,
+          health : 3
        },
        
        /* scripts refered to by the "script" variable in the tile keys */
@@ -103,6 +104,8 @@ var level_0101 = {
        scripts: {
           /* you can just use "this" instead of your engine variable ("game"), but Codepen doesn't like it */
           change_colour: 'game.player.spriteType = mario',
+          mys: 'console.log("Mystery");',
+
           /* you could load a new map variable here */
           next_level: 'alert("Yay! You won! Reloading map.");game.load_map(map);',
           death: 'console.log("You died!");this.load_map(map);',

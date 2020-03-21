@@ -4,7 +4,7 @@ location: {
     x: 5,
     y:5,
 },
-speed: .5,
+speed: 2.0,
 jumpHeight: 7,
 health: 100,
 spriteSize: 16,

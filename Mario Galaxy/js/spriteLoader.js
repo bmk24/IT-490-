@@ -56,13 +56,12 @@ console.log("Window Animation Initialization");
 
 
 context2.drawImage(marioR_smb1,20,20);
-var game = new Galaxy();
 game.viewPortConstructor(canvas.width, canvas.height);
 
 
 //if (startGame == 1){
 game.load_map(map,level_0101);//}
-
+//game.clock();
 
 game.viewPortLim = true;
 

@@ -10,7 +10,10 @@ var game;
 
 var xObsticle = [];
 var x2Obsticle = [];
+var mysteryY = 0;
 
+
+var playerOBJ;
 
 
 
@@ -36,7 +39,10 @@ this.spriteSize      = 24;
 this.viewPortLim = false;
 this.jump_switch    = 0;
 this.delay = 15;
+this.delay2 = 5;
 this.count = 0;
+this.count2 = 0;
+
 this.frame_set = 1;
 this.mystery = 0;
 this.image = marioR2_smb1;
@@ -57,7 +63,7 @@ this.viewport = {
    x: 200,
    y: 200
 };
-
+mysteryY = 5;
 this.camera = {
    x: 0,
    y: 0
@@ -94,7 +100,28 @@ Galaxy.prototype.errorParse = function (message) {
 if (this.bigProblem) alert(message);
 if (this.mainLog) console.log(message);
 };
+Galaxy.prototype.clock = function (map,currMap) {
 
+    var countdownTemp = 350;
+ 
+    countdownTimer = setInterval(function() {//Start Countdown for pre defined time
+        countdownTemp--;
+        console.log(countdownTemp);
+        document.getElementById('clock').innerHTML = ('<p>Time:' + countdownTemp +  '</p>');
+        if (countdownTemp <= 0) {//Once over, Start Recording
+            //document.getElementById('arMicrophoneMessages').innerHTML = ('Recording...');
+            clearInterval(countdownTimer);
+            //eval('console.log("TimeOut!");this.load_map(map,currMap);');
+            //game.load_map(map,currMap);
+            alert("Kill");
+            game = null;
+            //toggleRecording(props);
+        }
+
+    }, 1000);
+    if (countdownTemp <= 0) {        
+    }
+    };
 Galaxy.prototype.logger = function (message) {
 
 if (this.mainLog) console.log(message);
@@ -161,7 +188,7 @@ case 39:
 
 Galaxy.prototype.load_map = function (map,currMap) {
 game = map;
-
+this.clock(map,currMap);
 /**************Enemy Solid Object Finder***************/
 for (var y = 0; y < game.goomba.obsticle.length; y++) {
     xObsticle[y] = game.goomba.obsticle[y].x1;
@@ -236,7 +263,7 @@ Galaxy.prototype.whatTile = function (x, y) {
 return (this.currentLevel.data[y] && this.currentLevel.data[y][x]) ? this.currentLevel.data[y][x] : 0;
 };
 
-Galaxy.prototype.draw_tile = function (x, y, tile, context,mapY,mapX) {
+Galaxy.prototype.draw_tile = function (x, y, tile) {
 /*
 Keys 
 0 Blank space after scenery 
@@ -287,6 +314,7 @@ switch (tempTile) {
         contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
         break;
     case 1:
+        context.fillStyle = "#5D94FB";
         context.fillRect(x, y,this.spriteSize,this.spriteSize);        
         break;
     case 2:
@@ -300,7 +328,11 @@ switch (tempTile) {
         break;
     case 5:
         //console.log("block 5");
-        context.drawImage(this.mysteryBlock,x,y,this.spriteSize,this.spriteSize);   
+        yTemp = y + mysteryY;
+        //console.log(mysteryY);
+        contextBack.fillStyle = "#5D94FB";
+        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
+        context.drawImage(this.mysteryBlock,x,yTemp,this.spriteSize,this.spriteSize);   
         break;
     case 6:
         context.drawImage(rampBlock,x,y,this.spriteSize,this.spriteSize);   
@@ -462,7 +494,39 @@ var left1   = this.whatTile(t_x_left, y_near1);
 var left2   = this.whatTile(t_x_left, y_near2);
 var right1  = this.whatTile(t_x_right, y_near1);
 var right2  = this.whatTile(t_x_right, y_near2);
+if (top1.id ==5 || top2.id ==5 ){
+    //currMap.data.x[x_near2]  = 1
+    //this.currentLevel.data[x_near2][t_y_up] = 04;
+    //this.currentLevel.data[x_near1][t_y_up] = 04;
+    if (top1.id ==5){
+        this.currentLevel.data[t_y_up][x_near1] = 04;
+        var xNext = (x_near1 * this.spriteSize) - this.camera.x;
+        var yNext = (t_y_up * this.spriteSize) - this.camera.y;
+        context.drawImage(metalBlock,xNext, yNext, playerStats.spriteSize, playerStats.spriteSize);
+        //context.drawImage(metalBlock,hillMid,x,y,this.spriteSize,this.spriteSize);   
 
+    }
+    else{
+        this.currentLevel.data[t_y_up][x_near2] = 04;
+        var xNext = (x_near2 * this.spriteSize) - this.camera.x;
+        var yNext = (t_y_up * this.spriteSize) - this.camera.y;
+        context.drawImage(metalBlock,xNext, yNext, playerStats.spriteSize, playerStats.spriteSize);
+    //context.drawImage(xNext,x_near2,t_y_up,this.spriteSize,this.spriteSize);   
+
+    }
+    this.draw_map();
+    context.fillStyle = "blue";
+    //contextBack.fillStyle = "#5D94FB";
+
+    //contextBack.fillRect(x_near2, t_y_up,this.spriteSize, this.spriteSize);
+    console.log("Mystery",playerStats.location.y,t_y_up);
+   
+    //this.draw_tile(x_near2, t_y_up, 4,context);
+    //this.draw_tile(x_near2, t_y_up, 4,context);
+    //context.fillRect((x_near2)-2, t_y_up,this.spriteSize*2,this.spriteSize*2); 
+    //context.fillRect(x_near1, t_y_up,this.spriteSize,this.spriteSize);  
+    //this.load_map
+}     
 
 if (tile.jump &&playerStats.jump_switch > 15) {
 
@@ -472,9 +536,11 @@ if (tile.jump &&playerStats.jump_switch > 15) {
    
 } else playerStats.jump_switch++;
 
-playerStats.velocity.x = Math.min(Math.max(playerStats.velocity.x, - playerStats.defaultVelocity.x), playerStats.defaultVelocity.x);
-playerStats.velocity.y = Math.min(Math.max(playerStats.velocity.y, - playerStats.defaultVelocity.y), playerStats.defaultVelocity.y);
+playerStats.velocity.x = Math.min(Math.max(playerStats.velocity.x, - playerStats.speed), playerStats.speed);
+//playerStats.velocity.x = playerStats.speed;
 
+playerStats.velocity.y = Math.min(Math.max(playerStats.velocity.y, - playerStats.defaultVelocity.y), playerStats.defaultVelocity.y);
+//console.log(playerStats.speed);
 playerStats.location.x += playerStats.velocity.x;
 playerStats.location.y += playerStats.velocity.y;
 
@@ -595,7 +661,7 @@ if(y_dif > 5) {
 
 if(this.last_tile != tile.id && tile.script) {
 
-   eval(this.currentLevel.scripts[tile.script]);
+   eval(currMap.scripts[tile.script]);
 }
 
 this.last_tile = tile.id;
@@ -607,7 +673,7 @@ Galaxy.prototype.update_player = function (that) {
 if (this.key.left) {
 
 if(playerBlock1 >= playerStats.location.x){console.log("over")}
-   if (playerStats.velocity.x > -playerStats.defaultVelocity.x){
+   if (playerStats.velocity.x > -playerStats.speed){
        playerStats.velocity.x -= playerStats.playerSpeed.left;
         }
 }
@@ -615,7 +681,7 @@ if(playerBlock1 >= playerStats.location.x){console.log("over")}
 
 if (this.key.up) {
 
-   if (playerStats.can_jump && playerStats.velocity.y > -playerStats.defaultVelocity.y) {
+   if (playerStats.can_jump && playerStats.velocity.y > -playerStats.speed) {
        //console.log("Disable JUmp");
        playerStats.velocity.y -= playerStats.jumpHeight;
        playerStats.can_jump = false;
@@ -627,7 +693,7 @@ if (this.key.right) {
     if (playerStats.location.x > playerStop){playerStop = playerStats.location.x
 }
 
-   if (playerStats.velocity.x < this.currentLevel.defaultVelocity.x)
+   if (playerStats.velocity.x < playerStats.speed)
        playerStats.velocity.x += this.currentLevel.playerSpeed.left;
 }
 //this.Goomba();
@@ -639,8 +705,8 @@ this.move_player(that);
 Galaxy.prototype.draw_player = function (that) {
     var _this = that;
 //console.log(playerStats.location.x);
-    playerLocationX = (playerStats.location.x + _this.spriteSize / 2 - this.camera.x);
-    playerLocationY = (playerStats.location.y + _this.spriteSize / 2 - this.camera.y)-6;
+    playerLocationX = (playerStats.location.x + playerStats.spriteSize / 2 - this.camera.x);
+    playerLocationY = (playerStats.location.y + playerStats.spriteSize / 2 - this.camera.y)-6;
     playerLastX = playerLocationX;
     playerLastY = playerLocationY;
     context2.drawImage(_this.image,playerLocationX,playerLocationY)//}
@@ -671,10 +737,48 @@ Galaxy.prototype.loop = function(time_stamp) {
     if (!this.key.left.active && !this.key.right.active) {
         this.player.sprite = 4;
     }
+    if (this.count >= this.delay2) {
+        this.count2 = 0;// Reset the count.
+        var mystery;
+        switch(this.mystery) {
+            case 0:
+        
+                mysteryY = 0;      
+              break;
+            case 1:
+             
+                mysteryY = -5;      
+      
+              break;
+              case 2:
+                mysteryY = 0;      
+      
+              break;
+
+          }
+    }
     if (this.count >= this.delay) {// If enough cycles have passed, we change the frame.
         this.count = 0;// Reset the count.
 
+        var mystery;
+        switch(this.mystery) {
+            case 0:
+                mystery = 1;
+                this.mysteryBlock =  eval(mysteryBlock);
+              break;
+            case 1:
+                mystery = 2;
+                this.mysteryBlock =  eval(mysteryBlock1);
+      
+              break;
+              case 2:
+                mystery = 0;
+                this.mysteryBlock =  eval(mysteryBlock2);
+      
+              break;
 
+          }
+          this.mystery = mystery;
 
         /*********************Player Animation *************************/
         var frameTemp; 
@@ -700,23 +804,7 @@ Galaxy.prototype.loop = function(time_stamp) {
         this.image = eval(frameTemp)
         /*********************Player Animation *************************/
         /***************** Mystery Block Animation ********************/
-        var mystery;
-        switch(this.mystery) {
-            case 0:
-                mystery = 1;
-                this.mysteryBlock =  eval(mysteryBlock);      
-              break;
-            case 1:
-                mystery = 2;
-                this.mysteryBlock =  eval(mysteryBlock1);      
-              break;
-              case 2:
-                mystery = 0;
-                this.mysteryBlock =  eval(mysteryBlock2);      
-              break;
-
-          }
-          this.mystery = mystery;
+       
         /***************** Mystery Block Animation ********************/       
       }
   };
@@ -730,6 +818,8 @@ this.draw_goomba(game.goomba);
 Galaxy.prototype.viewLimit = function(){
 
     this.count = this.count +  1;//Player Frame Count
+    this.count2 = this.count2 +  1;//Player Frame Count
+
  playerBlock = playerStop - 100;//Player Viewport Blocker
   playerBlock1  = playerBlock.toFixed(0);
 if (playerStats.location.x <= playerBlock1){playerStats.velocity.x=0;

@@ -49,7 +49,7 @@ var map = {
           {id: 2,isSolid: 1,canAbsorb: 0},
           {id: 3,isSolid: 1,canAbsorb: 0},
           {id: 4,isSolid: 1,canAbsorb: 0},
-          {id: 5,isSolid: 1,canAbsorb: 0},
+          {id: 5,isSolid: 1,canAbsorb: 0, script: 'mys'},
           {id: 6,isSolid: 1,canAbsorb: 0},
           {id: 7,isSolid: 0, script: 'death'},
           {id: 8,isSolid: 1},
@@ -114,7 +114,7 @@ var map = {
        /* Velocity limits */
        
        defaultVelocity: {
-          x: 1.5,
+          x: 10.5,
           y: 16
        },
        
@@ -186,6 +186,8 @@ var map = {
        scripts: {
           /* you can just use "this" instead of your engine variable ("game"), but Codepen doesn't like it */
           change_colour: 'game.player.spriteType = mario',
+          mys: 'alert("Mystery");',
+
           /* you could load a new map variable here */
           next_level: 'alert("Yay! You won! Reloading map.");game.load_map(map);',
           death: 'console.log("You died!");this.load_map(map);',
