@@ -1,6 +1,8 @@
 # Currency API and Data.py
 API connection script that connects to RabbitMQ server and interacts with the game and database vms. 
 Provides API data to both the game and the database.
+### Data,py
+data.py simulates database data. I made it to test the api script before the database was made.
 ### Prerequisites
 sudo apt-get install python3-pip
 
