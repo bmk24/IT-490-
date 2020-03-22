@@ -6,7 +6,7 @@ require_once('rabbitMQLib.inc');
 
 function udoLogin($uemail,$upassword)
 {
-$connection=new mysqli("192.168.0.15", "myuser", "Marioplayer1*", "elsdb");
+    $connection=new mysqli("3.21.114.39", "myuser", "PASSWORD", "marioGalaxy");
 $query = "select * from users where username='$uemail'";
 $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
 $count = mysqli_num_rows($result);
@@ -24,18 +24,28 @@ else{
 }
 }
 //registers users
-function udoRegister($email,$password)
+function udoRegister($email,$password,$char,$cur)
 { 
 $hashed_pass=password_hash($password, PASSWORD_DEFAULT);
-$connection=new mysqli("192.168.0.15", "myuser", "Marioplayer1*", "elsdb");
-$query = "INSERT INTO users(username,password,hash ) VALUES ('$email','$password','$hashed_pass' )";
+$connection=new mysqli("3.21.114.39", "myuser", "PASSWORD", "marioGalaxy");
+$query = "select * from users where username='$email'";
 $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
-if ($result){  
-  $query = "INSERT INTO `logging`(errorCode, description,vmhost,time) VALUES ('No error','User registered','Rabbitmq-AKM', NOW());";
-  $result = mysqli_query($connection, $query) or die(mysqli_error($connection));   
-  return 1 ; }
-else { 
-  return 0 ;
+$count = mysqli_num_rows($result);
+if($count>0){
+  return 0 ; 
+}
+else{
+  $query = "INSERT INTO users(username,hash ) VALUES ('$email','$hashed_pass' )";
+  $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+  $query2="INSERT INTO userInfo(username, levelsComplete, currentLevel, currentPoints, maxPoints, playerLives, spritePack, characterName, currencyCode) VALUES ('$email',0,0,0,0,0,'NA','$char','$cur')";
+  $result2 = mysqli_query($connection, $query2) or die(mysqli_error($connection));
+  if ($result){  
+    $query = "INSERT INTO `logging`(errorCode, description,vmhost,time) VALUES ('No error','User registered','Rabbitmq-AKM', NOW());";
+    $result = mysqli_query($connection, $query) or die(mysqli_error($connection));   
+    return 1 ; }
+  else { 
+    return 0 ;
+  }  
 }
 }
 
@@ -52,7 +62,7 @@ function requestProcessor($request)
     case "Ulogin":
       return udoLogin($request['uemail'],$request['upassword']);
     case "uregistration":
-      return udoRegister($request['uemail'],$request['upassword']);
+      return udoRegister($request['uemail'],$request['upassword'],$request['char'],$request['cur']);
     }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
@@ -62,5 +72,3 @@ $server->process_requests('requestProcessor');
 echo "testRabbitMQServer END".PHP_EOL;
 exit();
 ?>
-
-

@@ -5,7 +5,7 @@ require_once('rabbitMQLib.inc');
 $client = new RabbitMQClient('testRabbitMQ.ini', 'testServer');
 $type=$_GET["type"];
 //--------------------Login type
-if($type=="ulogin"){
+if($type=="Ulogin"){
 $type=$_GET['type'];
 $uemail=$_GET["uemail"];
 $upassword=$_GET["upassword"];
@@ -20,7 +20,9 @@ else if($type=="uregistration"){
     $uemail=$_GET['uemail'];
     $upassword=$_GET['upassword'];
     $type=$_GET['type'];
-    $req = array("type"=>$type,"uaddress"=>$uaddress,"uemail"=>$uemail,"upassword"=>$upassword);
+    $char=$_GET['char'];
+    $cur=$_GET['cur'];
+    $req = array("type"=>$type,"uaddress"=>$uaddress,"uemail"=>$uemail,"upassword"=>$upassword,"char"=>$char,"cur"=>$cur);
     $response = $client->send_request($req);
     if($response==1){
      echo 1;
@@ -29,5 +31,4 @@ else if($type=="uregistration"){
     echo "registration is Failed \n\n";
     }    
 }
-
 ?>
