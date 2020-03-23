@@ -35,6 +35,22 @@ def getPoints(jsonresult):
  mycursor.execute(query,(jsonresult,))
  result=mycursor.fetchone()
  channel.basic_publish(exchange='',routing_key='DataToApp',body=json.dumps({'username':jsonresult,'points':Decimal(result[0])},use_decimal=True))
+def getShop(username,itemID):
+ global mydb
+
+ mycursor = mydb.cursor()
+ query="select * from shop where itemNum=%s"
+ mycursor.execute(query,(itemID,))
+ result=mycursor.fetchone()
+ message={'username':username,'itemID':result[0],
+ 'itemName':result[1],
+ 'itemPrice':Decimal(result[2])}
+ query="select * from purchaseHistory where itemID=%s"
+ mycursor.execute(query,(itemID,))
+ result2=mycursor.fetchone()
+ message["quantity"]=result2[2]
+ deliver=json.dumps(message,use_decimal=True)
+ channel.basic_publish(exchange='',routing_key='DataToApp',body=deliver)
 
 def getCharacter(jsonresult):
  global mydb
@@ -92,6 +108,14 @@ def setCharacter(character,username):
  mydb.commit()
  #channel.basic_publish(exchange='',routing_key='DataToApp',body=json.dumps({'username':usernames
  
+def setQuantity(itemID,quantity,username):
+ global mydb
+ mycursor = mydb.cursor()
+ query="Update purchaseHistory Set quantity=%s where username=%s and itemID=%s"
+ mycursor.execute(query,(quantity,username, itemID))
+ mydb.commit()
+ #channel.basic_publish(exchange='',routing_key='DataToApp',body=json.dumps({'username':usernames
+ 
 def setPoints(points,username):
  global mydb
  mycursor = mydb.cursor()
@@ -117,24 +141,41 @@ def callback(ch, method, properties, body):
  elif head=="getUser":
   username=jsonResult['username']
   getUser(username)
+  
+ elif head=="getShop":
+  username=jsonResult['username']
+  itemID=jsonResult['itemID']
+  getShop(username,itemID)
+  
  elif head=="setCurrency":
   username=jsonResult['username']
   currency=jsonResult['currency']
   setCurrency(currency, username)
+  
  elif head=="setPoints":
   points=jsonResult['points']
   username=jsonResult['username']
   setPoints(points, username)
+  
+ elif head=="setQuantity":
+  quantity=jsonResult['quantity']
+  username=jsonResult['username']
+  itemID=jsonResult['itemID']
+  setQuantity(itemID,quantity, username)
+  
  elif head=="getPoints":
   points=jsonResult['username']
   getPoints(points)
+  
  elif head=="getCharacter":
   character=jsonResult['character']
   getCharacter(character)
+  
  elif head=="setCharacter":
   character=jsonResult['character']
   username=jsonResult['username']
   setCharacter(character, username)
+  
  elif head=="setInfo":
   username=jsonResult['username']
   levelsComplete=jsonResult['levelsComplete']
