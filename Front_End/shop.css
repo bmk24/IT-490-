@@ -1,0 +1,26 @@
+*{
+  text-align: center;
+}
+
+
+.shop-list-container {
+  display: inline-block;
+  height: 480px;
+  width: 720px;
+  vertical-align: middle;
+}
+
+ul {
+  list-style-type: none;
+}
+
+
+/*.container {
+  width: 200px;
+
+  position: relative;
+  left: -20px;
+
+  display: inline-block;
+  vertical-align: middle;
+}*/
