@@ -24,8 +24,19 @@ $_GET["itemID"]=$itemID;
 $arrayShop=json_decode(getData());
 
 $price=$arrayShop->itemPrice;
+$quantityUser=$arrayShop->quantity;
 
-if ($price*$quantity<=$balance){
+
+$cost=$price*$quantity;
+if ($cost<=$balance){
+
+$_GET["head"]="setQuantity";
+$_GET["quantity"]=$quantity+$quantityUser;
+getData();
+
+$_GET["head"]="setPoints";
+$_GET["points"]=$balance-$cost;
+getData();
 return 1;
 }
 else {
