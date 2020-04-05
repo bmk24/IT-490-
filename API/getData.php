@@ -1,7 +1,5 @@
 
 <?php
-
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -10,8 +8,22 @@ require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPReader;
-$connection = new AMQPStreamConnection('ec2-3-21-125-32.us-east-2.compute.amazonaws.com', 5672, 'test', 'test');
-$channel = $connection->channel();
+
+$callback = function ($msg) {
+  global $connection, $channel, $result;
+  $result=$msg->body;
+  #$channel->basic_cancel('test',false,true);
+  $connection->close();
+  
+  $channel->close();
+  
+  return false;
+};
+function getData(){
+global $connection,$channel, $callback, $result;
+
+
+
 $wait=rand(100,200);
 
 $count=0;
@@ -19,19 +31,23 @@ $maxExecution=40;
 #hacky code for exclusive queue. I wish i could think of an easier way.
 while (True) {
 try {
+$connection = new AMQPStreamConnection('ec2-3-21-125-32.us-east-2.compute.amazonaws.com', 5672, 'test', 'test');
+$channel = $connection->channel();
 $channel->queue_declare('AppToData', false, false, true, true);
 break;
 }
 catch (Exception $e){
 usleep($wait*1000);
 $count++;
-
-if ($count>=$maxExecution) {
-echo "Error: receive.py is not running on the database vm. Located in: /home/ubuntu command: nohup python3 receive.py &";
 $connection->close();
 $channel->close();
-echo "Failed to obtain access to queue. Dead connections are blocking it.";
-exit();
+
+if ($count>=$maxExecution) {
+echo "Error: receive.py is not running on the database vm. Located in: /home/ubuntu command: nohup python3 receive.py &".$e;
+$connection->close();
+$channel->close();
+return "Failed to obtain access to queue. Dead connections are blocking it.[1]";
+
 }
 Continue;
 }
@@ -40,6 +56,7 @@ Continue;
 $channel->queue_declare('DataToApp', false, true, false, false);
 
 //calls a specific function getCurrency, getUser
+//Should be switch not ifs or truth array
 $head=$_GET["head"];
 if ($head=="getCurrency") {
  $currency=$_GET['currency'];
@@ -113,10 +130,11 @@ else if ($head=="setInfo"){
 
 }
 else {
-echo "Error Wrong function call";
+
+
 $connection->close();
 $channel->close();
-exit();
+return "Error Wrong function call";
 }
 
 
@@ -125,15 +143,9 @@ $pass=json_encode($pass);
 $msg = new AMQPMessage($pass);
 $channel->basic_publish($msg, '', 'AppToDatab');
 $done=false;
-$callback = function ($msg) {
-  global $connection, $channel;
-  echo $msg->body;
-  $connection->close();
-  $channel->close();
-  exit();
-};
-$timeout=5;
-$channel->basic_consume('DataToApp', '', false, true, false, false, $callback);
+
+$timeout=10;
+$channel->basic_consume('DataToApp', 'test', false, true, false, false, $callback);
 while($channel->is_consuming()) {
 
 try {
@@ -143,12 +155,19 @@ catch(Exception $e){
 $channel->queue_purge('AppToDatab');
 $connection->close();
 $channel->close();
-$pass=array("message"=>"Error: receive.py is not running on the database vm. Located in: /home/ubuntu command: nohup python3 receive.py &");
+$pass=array("message"=>"Error: receive.py is not running on the database vm. Located in: /home/ubuntu command: nohup python3 receive.py &[2]");
 $errors=json_encode($pass);
-echo $errors;
-exit();
+return $errors;
+
 }
 
+
+}
+return $result;
+}
+if (empty($_GET["function"])){
+echo getData();
+exit();
 }
 
 ?>
