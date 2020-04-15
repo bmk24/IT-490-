@@ -1,0 +1,20 @@
+<script>
+
+let xhr = new XMLHttpRequest(); 
+var quantity;
+var jsonResult;
+var username;
+var head;
+var itemID;
+//sets username and gets associated user data
+username="user1";
+head="setQuantity";
+quantity=5;
+itemID=1;
+xhr.open("GET", "http://ec2-34-229-47-176.compute-1.amazonaws.com/testApi/getData.php?username="+ username +"&head="+head+"&quantity="+quantity+"&itemID="+itemID, true);
+
+//nothing sent back since it is a set. Could report success/failure but not worthwhile atm. Tested and does work.
+
+xhr.send();
+
+</script>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="shop.css">
+  </head>
+  <body>
+    <div class="shop-list-container">
+        <ul>
+          <li>
+            <input type="checkbox" name="upgrades" id="upgrades[]" value="gfx_upgrd">
+            <label for="upgrades[]">Graphics Upgrade</label>
+          </li>
+
+          <li>
+            <input type="checkbox" name="upgrades" id="upgrades[]" value="one_up">
+            <label for="upgrades[]">Extra Life</label>
+          </li>
+        </ul>
+    </div>
+
+<div class="btn-container">
+  <button type="submit" onclick="chkBoxValues()" name="button">Upgrade!</button>
+</div>
+
+
+
+  </body>
+  <script type="text/javascript">
+    function chkBoxValues () {
+      var upgrades = document.getElementsByName('upgrades');
+      var checked_uprgades;
+      for(i = 0; i < upgrades.length; i++) {
+        if(upgrades[i].checked == true) {
+          checked_uprgades = upgrades[i].value;
+          console.log(checked_uprgades)
+        }
+      }
+
+    }
+
+  </script>
+</html>

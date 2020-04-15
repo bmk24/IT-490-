@@ -1,0 +1,18 @@
+<script>
+
+let xhr = new XMLHttpRequest();
+var modifier; 
+var currency;
+var jsonResult;
+var head;
+//sets username and gets associated user data
+username="user1";
+head="setPoints";
+points=11;
+xhr.open("GET", "http://ec2-34-229-47-176.compute-1.amazonaws.com/testApi/getData.php?username="+ username +"&head="+head+"&points="+points, true);
+
+//nothing sent back since it is a set. Could report success/failure but not worthwhile atm. Tested and does work.
+
+xhr.send();
+
+</script>

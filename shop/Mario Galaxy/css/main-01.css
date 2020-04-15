@@ -1,0 +1,511 @@
+@font-face {
+  font-family: CustomFont;
+  src: url(mario.woff),
+   url('mario.woff2');
+  }
+  @font-face {
+    font-family: CustomFont2;
+    src: url('smb1font.ttf') format('truetype');    }
+h1{
+  font-family: "CustomFont2";
+text-align: center;
+}
+
+
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden
+}
+html {
+  display: table;
+  margin: auto;
+}
+
+
+body {
+  
+  background-color: black;
+  display: table-cell;
+  vertical-align: middle;
+}
+#gameCenter{
+  height: 800px;
+  width: 800px;
+  margin: 0 auto;
+
+}
+
+#nav{
+  position: absolute;
+  width:450px; 
+  display: flex;
+  left:50%;
+  border: 1px solid #ccc;
+
+  transform: translate(-50%);
+margin-top:1rem;
+}
+#overlayControls{
+  margin-bottom:30px;
+  position: absolute;
+  width:100%;
+  height:200px;
+  top:0px;
+  left:0px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+.navTile{
+  padding:10px;
+width: 75px;
+height: 50px;
+display:inline-block;
+border: 1px solid #ccc;
+
+}
+#credits{
+  text-align: center;
+
+}
+#startButton{
+  position:absolute;
+  top:150px;
+  left:340px;
+  height:70px;
+  width:150px;
+    z-index: 2000;
+
+    background: transparent;
+    border: none !important;
+    font-size:0;
+}
+#aboutButton{
+  position:absolute;
+  top:230px;
+  left:340px;
+  height:70px;
+  width:150px;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden; 
+  z-index: 200;
+
+}
+#gameTitle{
+  font-family: "CustomFont2";
+text-align: center;
+font-size: 3em;
+}
+canvas {
+    border: 1px solid black;
+    
+    position: absolute;
+    top:250px;
+    left:50%;
+
+    transform: translate(-50%, 10%);
+
+
+
+  }
+  #game{
+    z-index: 1;
+    background:transparent;
+
+  }
+  #gameMid{
+    z-index: 2;
+    background:transparent;
+
+  }
+  #gameBackground{
+    z-index: 0;
+
+ }
+ #gameOverlay{
+  z-index: 50;
+  background:transparent;
+  position: absolute;
+  top:260px;
+  left:50%;
+
+  transform: translate(-50%, 10%);
+
+}
+#coin{
+  position: absolute;
+  left:250px;
+  top:50px;
+  font-family: "CustomFont2";
+text-align: center;
+font-size: 1.5em;
+
+}
+#health{
+  position: absolute;
+  right:0px;
+  top:50px;
+  font-family: "CustomFont2";
+text-align: center;
+font-size: 1.5em;
+}
+#clock{
+  position: absolute;
+  right:250px;
+top:50px;
+font-family: "CustomFont2";
+text-align: center;
+font-size: 1.5em;
+
+}
+  #gameChar{
+    z-index: 3;
+    background:transparent;
+  }
+  audio{
+    width:0px;
+    height: 0px;
+  }
+ 
+ 
+#lean_overlay {
+  position: absolute;
+  z-index:100;
+  top: 0px;
+  left: 0px;
+  height:100%;
+  width:100%;
+  background: #000;
+  display: none;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: absolute; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  margin-left: auto;
+  margin-right: auto;
+  top:175px;
+  width: 850px; /* Full width */
+  height: 450px; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5px auto; /* 15% from the top and centered */
+  border: 1px solid #888;
+  height:250px;
+width: 250px;
+}
+
+/* The Close Button */
+.close {
+  /* Position it in the top right corner outside of the modal */
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+#submit{
+  position: relative;
+  bottom:0;
+}
+/* Close button on hover */
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)}
+  to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+  from {transform: scale(0)}
+  to {transform: scale(1)}
+}
+
+
+
+
+
+
+body {font-family: Arial;}
+	
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+
+
+
+.loginForm {
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+ 
+}
+#regInner{
+
+height: 300px;
+width: 370px;
+background-color:white;
+z-index:11001;
+position: absolute;
+left:50%;
+top:50%;
+transform: translate(-50%,-50%);
+border-radius: 10px;
+
+}
+#regBlur{
+  width: 740px;
+  height:500px;
+  z-index: 11000;
+  position: absolute;
+  left:50%;
+  top:290px;
+  transform: translate(-50%);
+
+  -webkit-filter: blur(10px);
+  filter: blur(10px);
+}
+.reg   {
+
+  height: 300px;
+  width: 370px;
+  background-color:white;
+  z-index:11001;
+  position: absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  border-radius: 10px;
+  overflow: hidden;
+
+  border: 1px solid black;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 45px 130px 33px 95px;
+  position: absolute;
+  left:50%;
+  top:290px;
+  transform: translate(-50%);
+
+}
+
+
+.input100 {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #666666;
+position: absolute;
+top:30%;
+  display: block;
+  width: 60%;
+  background: #e6e6e6;
+  height: 50px;
+  border-radius: 25px;
+  padding: 0 30px 0 68px;
+  right:5%;
+
+}
+.input200 {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #666666;
+position: absolute;
+top:60%;
+  display: block;
+  width: 60%;
+  background: #e6e6e6;
+  height: 50px;
+  border-radius: 25px;
+  padding: 0 30px 0 68px;
+  right:5%;
+
+}
+
+
+.subButton {
+  font-family: Montserrat-Bold;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #fff;
+  text-transform: uppercase;
+
+  width: 50%;
+  height: 50px;
+  border-radius: 25px;
+  background: #57b846;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px;
+position: absolute;
+bottom:5%;
+left:35%;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.subButton:hover {
+  background: #333333;
+}
+.regBut{
+  font-family: Montserrat-Bold;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #fff;
+  text-transform: uppercase;
+
+  width: 20%;
+  height: 30px;
+  border-radius: 25px;
+  background: orange;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px;
+position: absolute;
+bottom:5%;
+left:5%;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+.label1{
+  font-family: Montserrat-Bold;
+  font-size: 20px;
+  line-height: 2.5;
+position: absolute;;
+  top:30%;
+  left:3%
+}
+.label2{
+  font-family: Montserrat-Bold;
+  font-size: 20px;
+  line-height: 2.5;
+position: absolute;
+  top:60%;
+  left:3%;
+}
+
+
+.labelBig{
+  font-family: Montserrat-Bold;
+  font-size: 40px;
+  line-height: 4;
+position: absolute;
+  left:40%;
+  top:-40px;
+}
+
+#healthSystem{
+  position: absolute;
+  left:40%;
+  top:220px;
+z-index:1500;
+color:black;
+width:100px;
+background-color: white;;
+}
+
+/******************Shop**********************/
+.shop-list-container {
+  display: inline-block;
+  height: 480px;
+  width: 720px;
+  vertical-align: middle;
+  z-index: 100;
+  position: absolute;
+  
+  top:250px;
+  left:10%;
+  transform: translate(-50%, 10%);
+
+
+}
+
+ul {
+  list-style-type: none;
+}
+/******************Shop**********************/
