@@ -129,7 +129,7 @@ Galaxy.prototype.keydown = function (e) {
     case 39:
        this.key.right = true;
        playerPos = 'right';
-       //console.log('right');
+       console.log('right');
        playerStats.spriteNum == 3
 
        if (this.key.right.state != this.key.right) this.key.right.active = this.key.right;
@@ -392,11 +392,7 @@ switch (tempTile) {
         contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(bushRight,x,y,currMap.spriteSize,currMap.spriteSize);   
-        break;    
-    case 98:
-        contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
-        break;    
+        break;      
     case 99:
         contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
@@ -779,7 +775,7 @@ Galaxy.prototype.wowser = function (map,currMap) {
         }
 };
 Galaxy.prototype.vario = function (map,currMap) {
-    //console.log("Mario");
+    console.log("Mario");
 
     if (this.key.up.active && !playerStats.jumping) {
         this.key.up.active = false;
@@ -948,7 +944,7 @@ Galaxy.prototype.loop = function(time_stamp) {
           }
     }
     if (this.count >= this.delay) {// If enough cycles have passed, we change the frame.
-        //console.log("mystery");
+        console.log("mystery");
         this.count = 0;// Reset the count.
 
         var mystery;
@@ -1046,8 +1042,6 @@ if (z1 >= (z2-10) && z1 <= (z2+10)){
     playerLastX = 0;
     playerLastY = 0;
     playerStats.location.x = 0;
-    playerStats.health -= 1;
-    console.log("you died");
     this.load_map(map,currMap);
 }
 }

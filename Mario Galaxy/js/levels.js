@@ -102,7 +102,6 @@ var map = {
           {id: 37,isSolid: 1},
           {id: 38,isSolid: 1},
           {id: 39,isSolid: 0},
-          {id: 98,isSolid: 0, script: 'next_level'},
           {id: 99,isSolid: 0, script: 'coin'}
 
 
@@ -228,8 +227,8 @@ var map = {
           mys: 'alert("Mystery");',
 
           /* you could load a new map variable here */
-          next_level: 'window.location.href = "game2.html";',
-          death: 'console.log("You died!");playerStats.health -= 1;this.load_map(map);',
+          next_level: 'alert("Yay! You won! Reloading map.");game.load_map(map);',
+          death: 'console.log("You died!");this.load_map(map);',
           coin: 'console.log("Coin");this.coin(map,currMap);',
 
           unlock: 'game.currentLevel.keys[10].isSolid = 0;game.currentLevel.keys[10].colour = "#888";'
