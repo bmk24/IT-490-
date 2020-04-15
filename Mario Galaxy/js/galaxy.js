@@ -6,46 +6,30 @@ var playerBlock1;
 var playerLastX = 0;
 var playerLastY = 0;
 var frame_set;
-var game;
-
 var xObsticle = [];
 var x2Obsticle = [];
 var mysteryY = 0;
-
-
 var playerOBJ;
-
-
+var tempThing;
 
 
 
 
 var Galaxy = function () {
-    game = this;
    context.scale(2, 2);
 //context2.scale(2, 2);
 contextBack.fillStyle = "#5D94FB";
 contextBack.fillRect(0, 0, canvasBack.width, canvasBack.height);
-
-
-
-
-
-
-
 this.bigProblem   = false;
 this.mainLog       = true;
-this.spriteSize      = 24;
 this.viewPortLim = false;
-this.jump_switch    = 0;
+playerStats.jump_switch    = 0;
 this.delay = 15;
 this.delay2 = 5;
 this.count = 0;
 this.count2 = 0;
-
 this.frame_set = 1;
 this.mystery = 0;
-this.image = marioR2_smb1;
 this.view = true;
 this.key = {
     left:  { active:false, state:false },
@@ -59,42 +43,26 @@ this.key.right.state = false;
 this.key.up.active = false;
 this.key.up.state = false;
 this.mysteryBlock = mysteryBlock;
-this.viewport = {
-   x: 200,
-   y: 200
-};
-mysteryY = 5;
-this.camera = {
-   x: 0,
-   y: 0
-};
-
-this.spriteSheet = {
-
-    frame_sets:[[0, 1], [2, 3], [4, 5]]// standing still, walk right, walk left
-
-  };
-
-this.player = {
-
-   loc: {
-       x: 0,
-       y: 0
-   },
-   
-   vel: {
-       x: 0,
-       y: 0
-   },
-   
- 
-   can_jump: true
-};
-
 window.onkeydown = this.keydown.bind(this);
 window.onkeyup   = this.keyup.bind(this);
-};
 
+
+};
+Galaxy.prototype.setup = function (map,currMap){
+
+
+ playerStats.image = marioWalk1_smb1;
+
+
+
+ 
+
+ 
+    
+
+
+
+};
 Galaxy.prototype.errorParse = function (message) {
 
 if (this.bigProblem) alert(message);
@@ -102,84 +70,99 @@ if (this.mainLog) console.log(message);
 };
 Galaxy.prototype.clock = function (map,currMap) {
 
-    var countdownTemp = 350;
+    var countdownTemp = currMap.time;
  
-    countdownTimer = setInterval(function() {//Start Countdown for pre defined time
+    currMap.countdownTimer = setInterval(function() {//Start Countdown for pre defined time
         countdownTemp--;
-        console.log(countdownTemp);
+        //console.log(countdownTemp);
+currMap.time = countdownTemp; 
         document.getElementById('clock').innerHTML = ('<p>Time:' + countdownTemp +  '</p>');
+        document.getElementById('health').innerHTML = ('<p>Lives:' + playerStats.health +  '</p>');
+        document.getElementById('coin').innerHTML = ('<p>Coins:' + playerStats.coin +  '</p>');
+        if (currMap.gamePause == 1){
+            clearInterval(currMap.countdownTimer);
+
+        }
         if (countdownTemp <= 0) {//Once over, Start Recording
-            //document.getElementById('arMicrophoneMessages').innerHTML = ('Recording...');
-            clearInterval(countdownTimer);
-            //eval('console.log("TimeOut!");this.load_map(map,currMap);');
-            //game.load_map(map,currMap);
-            alert("Kill");
-            game = null;
-            //toggleRecording(props);
+            console.log("You have died");
+            this.load_map(map,currMap);//}
+            clearInterval(currMap.countdownTimer);     
+
         }
 
     }, 1000);
-    if (countdownTemp <= 0) {        
+    if (countdownTemp <= 0) {   
     }
     };
+
 Galaxy.prototype.logger = function (message) {
 
 if (this.mainLog) console.log(message);
 };
 
-Galaxy.prototype.viewPortConstructor = function (x, y) {
+Galaxy.prototype.viewPortConstructor = function (x, y,map,currMap) {
 
-this.viewport.x = x;
-this.viewport.y = y;
+currMap.viewport.x = x;
+currMap.viewport.y = y;
 };
 
 Galaxy.prototype.keydown = function (e) {
 
-    var _this = this;
     
     switch (e.keyCode) {
     case 37:
-       _this.key.left = true;
+       this.key.left = true;
+
        playerPos = 'left';
-       this.player.sprite == 1
-       if (this.key.left.state != _this.key.left) this.key.left.active = _this.key.left;
-       this.key.left.state  = _this.key.left;// Always update the physical state.
+       playerStats.spriteNum == 1
+       if (this.key.left.state != this.key.left) this.key.left.active = this.key.left;
+       this.key.left.state  = this.key.left;// Always update the physical state.
        break;
     case 38:
-       _this.key.up = true;
+       this.key.up = true;
        playerPos = 'up';
-       this.player.sprite == 2
+       playerStats.spriteNum == 2
 
-       if (this.key.up.state != _this.key.up) this.key.up.active = _this.key.up;
-       this.key.up.state  = _this.key.up;
+       if (this.key.up.state != this.key.up) this.key.up.active = this.key.up;
+       this.key.up.state  = this.key.up;
        break;
     case 39:
-       _this.key.right = true;
+       this.key.right = true;
        playerPos = 'right';
-       this.player.sprite == 3
+       //console.log('right');
+       playerStats.spriteNum == 3
 
-       if (this.key.right.state != _this.key.right) this.key.right.active = _this.key.right;
-       this.key.right.state  = _this.key.right;
+       if (this.key.right.state != this.key.right) this.key.right.active = this.key.right;
+       this.key.right.state  = this.key.right;
        break;
+
+    case 83:
+        if(currMap.gamePause == 0){
+            currMap.gamePause = 1;
+            console.log("Game Paused...");
+        }
+        else{
+            currMap.gamePause = 0;
+            console.log("Game Resuming...");
+        }
     }
     };
 Galaxy.prototype.keyup = function (e) {
 
-var _this = this;
 //console.log(e.keyCode);
 switch (e.keyCode) {
 case 37:
-   _this.key.left = false;
+   this.key.left = false;
    playerPos = 'none';
 
    break;
 case 38:
-   _this.key.up = false;
+   this.key.up = false;
    playerPos = 'none';
 
    break;
 case 39:
-   _this.key.right = false;
+   this.key.right = false;
    playerPos = 'none';
 
    break;
@@ -187,12 +170,14 @@ case 39:
 };
 
 Galaxy.prototype.load_map = function (map,currMap) {
-game = map;
 this.clock(map,currMap);
+this.setup(map,currMap);
+
+
 /**************Enemy Solid Object Finder***************/
-for (var y = 0; y < game.goomba.obsticle.length; y++) {
-    xObsticle[y] = game.goomba.obsticle[y].x1;
-x2Obsticle[y] = game.goomba.obsticle[y].x2;
+for (var y = 0; y < currMap.goomba.obsticle.length; y++) {
+    xObsticle[y] = currMap.goomba.obsticle[y].x1;
+x2Obsticle[y] = currMap.goomba.obsticle[y].x2;
 }
 /**************Enemy Solid Object Finder***************/
 
@@ -205,39 +190,36 @@ if (typeof currMap      === 'undefined'
    return false;
 }
 
-this.currentLevel = currMap;
 
-//this.currentLevel.background = map.background || '#000000';
-this.currentLevel.gravity = map.gravity || {x: 0, y: 0.3};
-this.spriteSize = map.spriteSize || 24;
+//currMap.background = map.background || '#000000';
+currMap.gravity = map.gravity || {x: 0, y: 0.3};
+currMap.spriteSize = map.spriteSize || 24;
 
-var _this = this;
 
-this.currentLevel.width = 0;
-this.currentLevel.height = 0;
+currMap.width = 0;
+currMap.height = 0;
 
 map.keys.forEach(function (key) {
 
-    level_0101.data.forEach(function (row, y) {
+    currMap.data.forEach(function (row, y) {
        
-       _this.currentLevel.height = Math.max(_this.currentLevel.height, y);
+       currMap.height = Math.max(currMap.height, y);
 
        row.forEach(function (tile, x) {
            
-           _this.currentLevel.width = Math.max(_this.currentLevel.width, x);
+           currMap.width = Math.max(currMap.width, x);
 
            if (tile == key.id)
-               _this.currentLevel.data[y][x] = key;
+               currMap.data[y][x] = key;
        });
    });
 });
 
-this.currentLevel.widthNext = this.currentLevel.width * this.spriteSize;
-this.currentLevel.heightNext = this.currentLevel.height * this.spriteSize;
+currMap.widthNext = currMap.width * currMap.spriteSize;
+currMap.heightNext = currMap.height * currMap.spriteSize;
 
-playerStats.location.x = map.player.x * this.spriteSize || 0;
-playerStats.location.y = map.player.y * this.spriteSize || 0;
-this.player.spriteType = map.player.spriteType || '#000';
+playerStats.location.x = map.player.x * currMap.spriteSize || 0;
+playerStats.location.y = map.player.y * currMap.spriteSize || 0;
 
 this.key.left  = false;
 this.key.up    = false;
@@ -258,12 +240,12 @@ this.logger('Successfully loaded map data.');
 return true;
 };
 
-Galaxy.prototype.whatTile = function (x, y) {
+Galaxy.prototype.whatTile = function (x, y,map,currMap) {
 
-return (this.currentLevel.data[y] && this.currentLevel.data[y][x]) ? this.currentLevel.data[y][x] : 0;
+return (currMap.data[y] && currMap.data[y][x]) ? currMap.data[y][x] : 0;
 };
 
-Galaxy.prototype.draw_tile = function (x, y, tile) {
+Galaxy.prototype.draw_tile = function (x, y, tile,map,currMap) {
 /*
 Keys 
 0 Blank space after scenery 
@@ -311,152 +293,161 @@ switch (tempTile) {
 
     case 0:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         break;
     case 1:
         context.fillStyle = "#5D94FB";
-        context.fillRect(x, y,this.spriteSize,this.spriteSize);        
+        context.fillRect(x, y,currMap.spriteSize,currMap.spriteSize);        
         break;
     case 2:
-        context.drawImage(brickBlock,x,y,this.spriteSize,this.spriteSize);   
+        context.drawImage(brickBlock,x,y,currMap.spriteSize,currMap.spriteSize);   
         break;
     case 3:
-        context.drawImage(platformBlock,x,y,this.spriteSize,this.spriteSize);   
+        context.drawImage(platformBlock,x,y,currMap.spriteSize,currMap.spriteSize);   
         break;
     case 4:
-        context.drawImage(metalBlock,x,y,this.spriteSize,this.spriteSize);   
+        context.drawImage(metalBlock,x,y,currMap.spriteSize,currMap.spriteSize);   
         break;
     case 5:
-        //console.log("block 5");
         yTemp = y + mysteryY;
-        //console.log(mysteryY);
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-        context.drawImage(this.mysteryBlock,x,yTemp,this.spriteSize,this.spriteSize);   
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        context.drawImage(this.mysteryBlock,x,yTemp,currMap.spriteSize,currMap.spriteSize);   
         break;
     case 6:
-        context.drawImage(rampBlock,x,y,this.spriteSize,this.spriteSize);   
+        context.drawImage(rampBlock,x,y,currMap.spriteSize,currMap.spriteSize);   
         break;
     case 7:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize); 
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize); 
         break;
     case 8:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);         
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);         
         break;
     case 9:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-        context.drawImage(tubeLeft,x,y,this.spriteSize*1.3,this.spriteSize);   
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        context.drawImage(tubeLeft,x,y,currMap.spriteSize*1.3,currMap.spriteSize);   
         break; 
     case 10:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-        context.drawImage(tubeRight,x,y,this.spriteSize*1.3,this.spriteSize);   
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        context.drawImage(tubeRight,x,y,currMap.spriteSize*1.3,currMap.spriteSize);   
         break; 
     case 11:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-        context.drawImage(tubeLeft,x+4,y,this.spriteSize*.80,this.spriteSize*1.3);   
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        context.drawImage(tubeLeft,x+4,y,currMap.spriteSize*.80,currMap.spriteSize*1.3);   
         break;  
     case 12:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-        context.drawImage(tubeRight,x,y,this.spriteSize*.80,this.spriteSize*1.3);   
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        context.drawImage(tubeRight,x,y,currMap.spriteSize*.80,currMap.spriteSize*1.3);   
         break;  
     case 13:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(tubeMid,x,y,(32),(tubeMid.height)) 
             break;  
     case 14:
-            context.drawImage(greyMetal,x,y,this.spriteSize,this.spriteSize);   
+            context.drawImage(greyMetal,x,y,currMap.spriteSize,currMap.spriteSize);   
             break; 
     case 15:
             contextBack.fillStyle = "#5D94FB";
-            contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-            context.drawImage(hillTop,x,y,this.spriteSize,this.spriteSize);   
+            contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+            context.drawImage(hillTop,x,y,currMap.spriteSize,currMap.spriteSize);   
             break;  
     case 16:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-            context.drawImage(hillLeft,x,y,this.spriteSize,this.spriteSize);   
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+            context.drawImage(hillLeft,x,y,currMap.spriteSize,currMap.spriteSize);   
             break;   
     case 17:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
             context.drawImage(hillRight,x,y,hillRight.width,hillRight.height);   
             break;  
     case 18:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-            context.drawImage(hillDimple,x,y,this.spriteSize,this.spriteSize);   
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+            context.drawImage(hillDimple,x,y,currMap.spriteSize,currMap.spriteSize);   
             break;  
     case 19:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-        context.drawImage(hillMid,x,y,this.spriteSize,this.spriteSize);   
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        context.drawImage(hillMid,x,y,currMap.spriteSize,currMap.spriteSize);   
             break; 
     case 20:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-        context.drawImage(bushMid,x,y,this.spriteSize,this.spriteSize);   
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        context.drawImage(bushMid,x,y,currMap.spriteSize,currMap.spriteSize);   
         break; 
     case 21:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-        context.drawImage(bushLeft,x,y,this.spriteSize,this.spriteSize);   
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        context.drawImage(bushLeft,x,y,currMap.spriteSize,currMap.spriteSize);   
         break; 
     case 22:
         contextBack.fillStyle = "#5D94FB";
-        contextBack.fillRect(x, y,this.spriteSize, this.spriteSize);
-        context.drawImage(bushRight,x,y,this.spriteSize,this.spriteSize);   
-        break;      
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        context.drawImage(bushRight,x,y,currMap.spriteSize,currMap.spriteSize);   
+        break;    
+    case 98:
+        contextBack.fillStyle = "#5D94FB";
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        break;    
+    case 99:
+        contextBack.fillStyle = "#5D94FB";
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        context.drawImage(coinBlock,x,y,currMap.spriteSize,currMap.spriteSize);   
+        break;  
    }
 };
 
-Galaxy.prototype.draw_map = function (context, fore) {
+Galaxy.prototype.draw_map = function (context, fore,map,currMap) {
 
-for (var y = 0; y < this.currentLevel.data.length; y++) {
+for (var y = 0; y < currMap.data.length; y++) {
 
-   for (var x = 0; x < this.currentLevel.data[y].length; x++) {
+   for (var x = 0; x < currMap.data[y].length; x++) {
 
-       if ((!fore && !this.currentLevel.data[y][x].fore) || (fore && this.currentLevel.data[y][x].fore)) {
+       if ((!fore && !currMap.data[y][x].fore) || (fore && currMap.data[y][x].fore)) {
 
-           var xNext = (x * this.spriteSize) - this.camera.x;
-           var yNext = (y * this.spriteSize) - this.camera.y;
+           var xNext = (x * currMap.spriteSize) - currMap.camera.x;
+           var yNext = (y * currMap.spriteSize) - currMap.camera.y;
            
-           if(xNext < -this.spriteSize
-           || yNext < -this.spriteSize
-           || xNext > this.viewport.x
-           || yNext > this.viewport.y 
+           if(xNext < -currMap.spriteSize
+           || yNext < -currMap.spriteSize
+           || xNext > currMap.viewport.x
+           || yNext > currMap.viewport.y 
            ) continue;
            this.draw_tile(
                xNext,
                yNext,
-               this.currentLevel.data[y][x],
-               context,
-               y,
-               x
+               currMap.data[y][x],
+               map,
+               currMap
            );
        }
    }
 }
 
-if (!fore) this.draw_map(context, true);
+if (!fore) this.draw_map(context, true,map,currMap);
 };
 
-Galaxy.prototype.move_player = function (that) {
-var _this = that;
+Galaxy.prototype.move_player = function (map,currMap) {
+   // console.log(playerStats.velocity.x,playerStats.velocity.y);
+
 var tX = playerStats.location.x + playerStats.velocity.x;
 var tY = playerStats.location.y + playerStats.velocity.y;
 
-var offset = Math.round((_this.spriteSize / 2) -1);//Camera Offset
+var offset = Math.round((currMap.spriteSize / 2) -1);//Camera Offset
 
 var tile = this.whatTile(
    Math.round(playerStats.location.x / playerStats.spriteSize),
-   Math.round(playerStats.location.y / playerStats.spriteSize)
+   Math.round(playerStats.location.y / playerStats.spriteSize),
+   map,
+   currMap
 );
 
 if(tile.gravity) {
@@ -466,8 +457,8 @@ if(tile.gravity) {
    
 } else {
    
-   playerStats.velocity.x += this.currentLevel.gravity.x;
-   playerStats.velocity.y += this.currentLevel.gravity.y;
+   playerStats.velocity.x += currMap.gravity.x;
+   playerStats.velocity.y += currMap.gravity.y;
 }
 
 if (tile.friction) {
@@ -486,45 +477,61 @@ var t_x_right = Math.ceil(tX / playerStats.spriteSize);
 var x_near1   = Math.round((playerStats.location.x - offset) / playerStats.spriteSize);
 var x_near2   = Math.round((playerStats.location.x + offset) / playerStats.spriteSize);
 
-var top1    = this.whatTile(x_near1, t_y_up);
-var top2    = this.whatTile(x_near2, t_y_up);
-var bottom1 = this.whatTile(x_near1, t_y_down);
-var bottom2 = this.whatTile(x_near2, t_y_down);
-var left1   = this.whatTile(t_x_left, y_near1);
-var left2   = this.whatTile(t_x_left, y_near2);
-var right1  = this.whatTile(t_x_right, y_near1);
-var right2  = this.whatTile(t_x_right, y_near2);
+var top1    = this.whatTile(x_near1, t_y_up,
+    map,
+    currMap);
+var top2    = this.whatTile(x_near2, t_y_up,
+    map,
+    currMap);
+var bottom1 = this.whatTile(x_near1, t_y_down,
+    map,
+    currMap);
+var bottom2 = this.whatTile(x_near2, t_y_down,
+    map,
+    currMap);
+var left1   = this.whatTile(t_x_left, y_near1,
+    map,
+    currMap);
+var left2   = this.whatTile(t_x_left, y_near2,
+    map,
+    currMap);
+var right1  = this.whatTile(t_x_right, y_near1,
+    map,
+    currMap);
+var right2  = this.whatTile(t_x_right, y_near2,
+    map,
+    currMap);
 if (top1.id ==5 || top2.id ==5 ){
     //currMap.data.x[x_near2]  = 1
-    //this.currentLevel.data[x_near2][t_y_up] = 04;
-    //this.currentLevel.data[x_near1][t_y_up] = 04;
+    //currMap.data[x_near2][t_y_up] = 04;
+    //currMap.data[x_near1][t_y_up] = 04;
     if (top1.id ==5){
-        this.currentLevel.data[t_y_up][x_near1] = 04;
-        var xNext = (x_near1 * this.spriteSize) - this.camera.x;
-        var yNext = (t_y_up * this.spriteSize) - this.camera.y;
+        currMap.data[t_y_up][x_near1] = 04;
+        var xNext = (x_near1 * currMap.spriteSize) - currMap.camera.x;
+        var yNext = (t_y_up * currMap.spriteSize) - currMap.camera.y;
         context.drawImage(metalBlock,xNext, yNext, playerStats.spriteSize, playerStats.spriteSize);
-        //context.drawImage(metalBlock,hillMid,x,y,this.spriteSize,this.spriteSize);   
+        //context.drawImage(metalBlock,hillMid,x,y,currMap.spriteSize,currMap.spriteSize);   
 
     }
     else{
-        this.currentLevel.data[t_y_up][x_near2] = 04;
-        var xNext = (x_near2 * this.spriteSize) - this.camera.x;
-        var yNext = (t_y_up * this.spriteSize) - this.camera.y;
+        currMap.data[t_y_up][x_near2] = 04;
+        var xNext = (x_near2 * currMap.spriteSize) - currMap.camera.x;
+        var yNext = (t_y_up * currMap.spriteSize) - currMap.camera.y;
         context.drawImage(metalBlock,xNext, yNext, playerStats.spriteSize, playerStats.spriteSize);
-    //context.drawImage(xNext,x_near2,t_y_up,this.spriteSize,this.spriteSize);   
+    //context.drawImage(xNext,x_near2,t_y_up,currMap.spriteSize,currMap.spriteSize);   
 
     }
-    this.draw_map();
+    this.draw_map(context, false,map,currMap);
     context.fillStyle = "blue";
     //contextBack.fillStyle = "#5D94FB";
 
-    //contextBack.fillRect(x_near2, t_y_up,this.spriteSize, this.spriteSize);
+    //contextBack.fillRect(x_near2, t_y_up,currMap.spriteSize, currMap.spriteSize);
     console.log("Mystery",playerStats.location.y,t_y_up);
    
     //this.draw_tile(x_near2, t_y_up, 4,context);
     //this.draw_tile(x_near2, t_y_up, 4,context);
-    //context.fillRect((x_near2)-2, t_y_up,this.spriteSize*2,this.spriteSize*2); 
-    //context.fillRect(x_near1, t_y_up,this.spriteSize,this.spriteSize);  
+    //context.fillRect((x_near2)-2, t_y_up,currMap.spriteSize*2,currMap.spriteSize*2); 
+    //context.fillRect(x_near1, t_y_up,currMap.spriteSize,currMap.spriteSize);  
     //this.load_map
 }     
 
@@ -550,12 +557,12 @@ if (left1.isSolid || left2.isSolid || right1.isSolid || right2.isSolid) {
 
    /* fix overlap */
 
-   while (this.whatTile(Math.floor(playerStats.location.x / playerStats.spriteSize), y_near1).isSolid
-       || this.whatTile(Math.floor(playerStats.location.x / playerStats.spriteSize), y_near2).isSolid)
+   while (this.whatTile(Math.floor(playerStats.location.x / playerStats.spriteSize), y_near1,map,currMap).isSolid
+       || this.whatTile(Math.floor(playerStats.location.x / playerStats.spriteSize), y_near2,map,currMap).isSolid)
        playerStats.location.x += .1;
 
-   while (this.whatTile(Math.ceil(playerStats.location.x / playerStats.spriteSize), y_near1).isSolid
-       || this.whatTile(Math.ceil(playerStats.location.x / playerStats.spriteSize), y_near2).isSolid)
+   while (this.whatTile(Math.ceil(playerStats.location.x / playerStats.spriteSize), y_near1,map,currMap).isSolid
+       || this.whatTile(Math.ceil(playerStats.location.x / playerStats.spriteSize), y_near2,map,currMap).isSolid)
        playerStats.location.x -= .1;
 
    /* tile bounce */
@@ -575,12 +582,12 @@ if (top1.isSolid || top2.isSolid || bottom1.isSolid || bottom2.isSolid) {
 
    /* fix overlap */
    
-   while (this.whatTile(x_near1, Math.floor(playerStats.location.y / playerStats.spriteSize)).isSolid
-       || this.whatTile(x_near2, Math.floor(playerStats.location.y / playerStats.spriteSize)).isSolid)
+   while (this.whatTile(x_near1, Math.floor(playerStats.location.y / playerStats.spriteSize),map,currMap).isSolid
+       || this.whatTile(x_near2, Math.floor(playerStats.location.y / playerStats.spriteSize),map,currMap).isSolid)
        playerStats.location.y += .1;
 
-   while (this.whatTile(x_near1, Math.ceil(playerStats.location.y / playerStats.spriteSize)).isSolid
-       || this.whatTile(x_near2, Math.ceil(playerStats.location.y / playerStats.spriteSize)).isSolid)
+   while (this.whatTile(x_near1, Math.ceil(playerStats.location.y / playerStats.spriteSize),map,currMap).isSolid
+       || this.whatTile(x_near2, Math.ceil(playerStats.location.y / playerStats.spriteSize),map,currMap).isSolid)
        playerStats.location.y -= .1;
 
    /* tile bounce */
@@ -603,32 +610,32 @@ if (top1.isSolid || top2.isSolid || bottom1.isSolid || bottom2.isSolid) {
 }
 
 // adjust camera
-if (_this.view){
-var c_x = Math.round(playerStats.location.x - this.viewport.x/4);
-var c_y = Math.round(playerStats.location.y - this.viewport.y/4);
-var x_dif = Math.abs(c_x - this.camera.x);
-var y_dif = Math.abs(c_y - this.camera.y);
+if (this.view){
+var c_x = Math.round(playerStats.location.x - currMap.viewport.x/4);
+var c_y = Math.round(playerStats.location.y - currMap.viewport.y/4);
+var x_dif = Math.abs(c_x - currMap.camera.x);
+var y_dif = Math.abs(c_y - currMap.camera.y);
 
 if(x_dif > 5) {
    
    var mag = Math.round(Math.max(1, x_dif * 0.1));
 
-   if(c_x != this.camera.x) {
+   if(c_x != currMap.camera.x) {
        
-       this.camera.x += c_x > this.camera.x ? mag : -mag;
+       currMap.camera.x += c_x > currMap.camera.x ? mag : -mag;
        
-       if(_this.viewPortLim) {
+       if(this.viewPortLim) {
            
-           _this.camera.x = 
+           currMap.camera.x = 
                Math.min(
-                   _this.currentLevel.widthNext - this.viewport.x + _this.spriteSize,
-                   this.camera.x
+                   currMap.widthNext - currMap.viewport.x + currMap.spriteSize,
+                   currMap.camera.x
                );
            
-           this.camera.x = 
+           currMap.camera.x = 
                Math.max(
                    0,
-                   this.camera.x
+                   currMap.camera.x
                );
        }
    }
@@ -638,37 +645,40 @@ if(y_dif > 5) {
    
    var mag = Math.round(Math.max(1, y_dif * 0.1));
    
-   if(c_y != this.camera.y) {
+   if(c_y != currMap.camera.y) {
        
-       this.camera.y += c_y > this.camera.y ? mag : -mag;
+       currMap.camera.y += c_y > currMap.camera.y ? mag : -mag;
    
        if(this.viewPortLim) {
            
-           this.camera.y = 
+           currMap.camera.y = 
                Math.min(
-                   this.currentLevel.heightNext - this.viewport.y + this.spriteSize,
-                   this.camera.y
+                   currMap.heightNext - currMap.viewport.y + currMap.spriteSize,
+                   currMap.camera.y
                );
            
-           this.camera.y = 
+           currMap.camera.y = 
                Math.max(
                    0,
-                   this.camera.y
+                   currMap.camera.y
                );
        }
    }
 }
 
-if(this.last_tile != tile.id && tile.script) {
+if(currMap.last_tile != tile.id && tile.script) {
 
    eval(currMap.scripts[tile.script]);
 }
 
-this.last_tile = tile.id;
+currMap.last_tile = tile.id;
 }
 };
-
-Galaxy.prototype.update_player = function (that) {
+Galaxy.prototype.coin = function(map,currMap){
+    console.log("coin");
+    playerStats.coin += 1;
+};
+Galaxy.prototype.update_player = function (map,currMap) {
 
 if (this.key.left) {
 
@@ -694,49 +704,229 @@ if (this.key.right) {
 }
 
    if (playerStats.velocity.x < playerStats.speed)
-       playerStats.velocity.x += this.currentLevel.playerSpeed.left;
+       playerStats.velocity.x += currMap.playerSpeed.left;
 }
 //this.Goomba();
 
-this.move_player(that);
+this.move_player(map,currMap);
 
 };
 
-Galaxy.prototype.draw_player = function (that) {
-    var _this = that;
-//console.log(playerStats.location.x);
-    playerLocationX = (playerStats.location.x + playerStats.spriteSize / 2 - this.camera.x);
-    playerLocationY = (playerStats.location.y + playerStats.spriteSize / 2 - this.camera.y)-6;
-    playerLastX = playerLocationX;
-    playerLastY = playerLocationY;
-    context2.drawImage(_this.image,playerLocationX,playerLocationY)//}
-
+Galaxy.prototype.draw_player = function (map,currMap) {
+   playerLocationX = (playerStats.location.x + playerStats.spriteSize / 2 - currMap.camera.x);
+   playerLocationY = (playerStats.location.y + playerStats.spriteSize / 2 - currMap.camera.y)-26;
+   playerLastX = playerLocationX;
+   playerLastY = playerLocationY;
+   context2.drawImage(playerStats.image,playerLocationX,playerLocationY,36,36)   ;
 };
-Galaxy.prototype.update = function () {
-
+Galaxy.prototype.update = function (map,currMap) {
+if (currMap.gamePause == 0){
 this.viewLimit();
-this.update_player(this);
-//this.update_player(game.goomba);
+this.update_player(map,currMap);
+if (playerStats.spriteType == 'Vario' || playerStats.spriteType == 'vario'){this.vario(map,currMap);}
+if (playerStats.spriteType == 'Yario' || playerStats.spriteType == 'yario'){this.yario(map,currMap);}
+if (playerStats.spriteType == 'Wowser' || playerStats.spriteType == 'wowser'){this.wowser(map,currMap);}
+if (playerStats.spriteType == 'Ruigi' || playerStats.spriteType == 'ruigi'){this.ruigi(map,currMap);}
 this.loop();
-this.update_goomba(game.goomba);
-   
+this.update_goomba(currMap.goomba,map,currMap);
+}  
 };
+Galaxy.prototype.wowser = function (map,currMap) {
+
+    if (this.key.up.active && !playerStats.jumping) {
+        this.key.up.active = false;
+        playerStats.jumping = true;
+        playerStats.spriteNum = 3;
+      }
+      if (this.key.left.active) {
+       playerStats.spriteNum = 2;
+      }
+      if (this.key.right.active) {
+          playerStats.spriteNum = 1;
+      }
+      if (!this.key.left.active && !this.key.right.active) {
+          playerStats.spriteNum = 4;
+      }
+    
+      if (this.count >= this.delay) {// If enough cycles have passed, we change the frame.
+          this.count = 0;// Reset the count.
+  
+        
+          /*********************Player Animation *************************/
+          var frameTemp; 
+         // var charTpye = 
+          if ((this.key.left == true) && (this.key.up == false)){frameTemp = 'bowserWalk';}
+          else if ((this.key.right == true) && (this.key.up == false)){frameTemp = 'bowserWalk';}
+          else if ((this.key.up == true) || ((this.key.up == true) && (this.key.right == true))|| ((this.key.up == true) && (this.left.right == true))){frameTemp = 'bowserWalk';}else {frameTemp = 'bowserWalk_smb1';}
+          if(this.key.left == true || this.key.right  == true){
+              //console.log(this.frame_set);
+          switch(this.frame_set) {
+              case 1:
+                frame_set = 2;
+                frameTemp = frameTemp + '1_smb1';
+                break;
+              case 2:
+                frame_set = 1;
+                frameTemp = frameTemp + '2_smb1';
+                break;
+  
+            }
+            this.frame_set = frame_set;
+  
+          }else{frameTemp = 'bowserWalk_smb1'}
+          playerStats.image = eval(frameTemp);
+   
+        }
+};
+Galaxy.prototype.vario = function (map,currMap) {
+    //console.log("Mario");
+
+    if (this.key.up.active && !playerStats.jumping) {
+        this.key.up.active = false;
+        playerStats.jumping = true;
+        playerStats.spriteNum = 3;
+      }
+      if (this.key.left.active) {
+       playerStats.spriteNum = 2;
+      }
+      if (this.key.right.active) {
+          playerStats.spriteNum = 1;
+      }
+      if (!this.key.left.active && !this.key.right.active) {
+          playerStats.spriteNum = 4;
+      }
+   
+  
+  
+          /*********************Player Animation *************************/
+          var frameTemp; 
+         // var charTpye = 
+          if ((this.key.left == true) && (this.key.up == false)){frameTemp = 'marioWalk';}
+          else if ((this.key.right == true) && (this.key.up == false)){frameTemp = 'marioWalk';}
+          else if ((this.key.up == true) || ((this.key.up == true) && (this.key.right == true))|| ((this.key.up == true) && (this.left.right == true))){frameTemp = 'marioWalk';}else {frameTemp = 'marioWalk';}
+          if(this.key.left == true || this.key.right  == true){
+              //console.log(this.frame_set);
+          switch(this.frame_set) {
+              case 1:
+                frame_set = 2;
+                frameTemp = frameTemp + '1_smb1';
+                break;
+              case 2:
+                frame_set = 1;
+                frameTemp = frameTemp + '2_smb1';
+                break;
+  
+            }
+            this.frame_set = frame_set;
+  
+          }else{frameTemp = frameTemp +'_smb1'}
+          playerStats.image = eval(frameTemp);
+          /*********************Player Animation *************************/
+          /***************** Mystery Block Animation ********************/
+         
+          /***************** Mystery Block Animation ********************/       
+        
+};
+Galaxy.prototype.yario = function (map,currMap) {
+
+    if (this.key.up.active && !playerStats.jumping) {
+        this.key.up.active = false;
+        playerStats.jumping = true;
+        playerStats.spriteNum = 3;
+      }
+      if (this.key.left.active) {
+       playerStats.spriteNum = 2;
+      }
+      if (this.key.right.active) {
+          playerStats.spriteNum = 1;
+      }
+      if (!this.key.left.active && !this.key.right.active) {
+          playerStats.spriteNum = 4;
+      }
+    
+      if (this.count >= this.delay) {// If enough cycles have passed, we change the frame.
+          this.count = 0;// Reset the count.
+  
+        
+          /*********************Player Animation *************************/
+          var frameTemp; 
+         // var charTpye = 
+          if ((this.key.left == true) && (this.key.up == false)){frameTemp = 'warioWalk';}
+          else if ((this.key.right == true) && (this.key.up == false)){frameTemp = 'warioWalk';}
+          else if ((this.key.up == true) || ((this.key.up == true) && (this.key.right == true))|| ((this.key.up == true) && (this.left.right == true))){frameTemp = 'warioWalk';}else {frameTemp = 'warioWalk';}
+          if(this.key.left == true || this.key.right  == true){
+              //console.log(this.frame_set);
+          switch(this.frame_set) {
+              case 1:
+                frame_set = 2;
+                frameTemp = frameTemp + '1_smb1';
+                break;
+              case 2:
+                frame_set = 1;
+                frameTemp = frameTemp + '2_smb1';
+                break;
+  
+            }
+            this.frame_set = frame_set;
+  
+          }else{frameTemp = 'warioWalk_smb1'}
+          playerStats.image = eval(frameTemp);
+   
+        }
+
+};
+Galaxy.prototype.ruigi = function (map,currMap) {
+
+    if (this.key.up.active && !playerStats.jumping) {
+        this.key.up.active = false;
+        playerStats.jumping = true;
+        playerStats.spriteNum = 3;
+      }
+      if (this.key.left.active) {
+       playerStats.spriteNum = 2;
+      }
+      if (this.key.right.active) {
+          playerStats.spriteNum = 1;
+      }
+      if (!this.key.left.active && !this.key.right.active) {
+          playerStats.spriteNum = 4;
+      }
+    
+      if (this.count >= this.delay) {// If enough cycles have passed, we change the frame.
+          this.count = 0;// Reset the count.
+  
+        
+          /*********************Player Animation *************************/
+          var frameTemp; 
+         // var charTpye = 
+          if ((this.key.left == true) && (this.key.up == false)){frameTemp = 'luigiWalk';}
+          else if ((this.key.right == true) && (this.key.up == false)){frameTemp = 'luigiWalk';}
+          else if ((this.key.up == true) || ((this.key.up == true) && (this.key.right == true))|| ((this.key.up == true) && (this.left.right == true))){frameTemp = 'luigiWalk';}else {frameTemp = 'luigiWalk';}
+          if(this.key.left == true || this.key.right  == true){
+              //console.log(this.frame_set);
+          switch(this.frame_set) {
+              case 1:
+                frame_set = 2;
+                frameTemp = frameTemp + "1_smb1";
+                break;
+              case 2:
+                frame_set = 1;
+                frameTemp = frameTemp + '2_smb1';
+                break;
+  
+            }
+            this.frame_set = frame_set;
+  
+          }else{frameTemp = 'luigiWalk_smb1'}
+          playerStats.image = eval(frameTemp);
+   
+        }
+
+};
+
 Galaxy.prototype.loop = function(time_stamp) {
 
-    if (this.key.up.active && !this.player.jumping) {
-      this.key.up.active = false;
-      this.player.jumping = true;
-      this.player.sprite = 3;
-    }
-    if (this.key.left.active) {
-     this.player.sprite = 2;
-    }
-    if (this.key.right.active) {
-        this.player.sprite = 1;
-    }
-    if (!this.key.left.active && !this.key.right.active) {
-        this.player.sprite = 4;
-    }
+   
     if (this.count >= this.delay2) {
         this.count2 = 0;// Reset the count.
         var mystery;
@@ -758,6 +948,7 @@ Galaxy.prototype.loop = function(time_stamp) {
           }
     }
     if (this.count >= this.delay) {// If enough cycles have passed, we change the frame.
+        //console.log("mystery");
         this.count = 0;// Reset the count.
 
         var mystery;
@@ -780,40 +971,15 @@ Galaxy.prototype.loop = function(time_stamp) {
           }
           this.mystery = mystery;
 
-        /*********************Player Animation *************************/
-        var frameTemp; 
-        if ((this.key.left == true) && (this.key.up == false)){frameTemp = 'marioL';}
-        else if ((this.key.right == true) && (this.key.up == false)){frameTemp = 'marioR';}
-        else if ((this.key.up == true) || ((this.key.up == true) && (this.key.right == true))|| ((this.key.up == true) && (this.left.right == true))){frameTemp = 'marioU';}else {frameTemp = 'marioR';}
-        if(this.key.left == true || this.key.right  == true){
-            //console.log(this.frame_set);
-        switch(this.frame_set) {
-            case 1:
-              frame_set = 2;
-              frameTemp = frameTemp + '1_smb1';
-              break;
-            case 2:
-              frame_set = 1;
-              frameTemp = frameTemp + '2_smb1';
-              break;
-
-          }
-          this.frame_set = frame_set;
-
-        }else{frameTemp = frameTemp +'2_smb1'}
-        this.image = eval(frameTemp)
-        /*********************Player Animation *************************/
-        /***************** Mystery Block Animation ********************/
-       
-        /***************** Mystery Block Animation ********************/       
+         
       }
   };
 
-Galaxy.prototype.draw = function (context) {
+Galaxy.prototype.draw = function (context,map,currMap) {
 
-this.draw_map(context, false);
-this.draw_player(this);
-this.draw_goomba(game.goomba);
+this.draw_map(context,false,map,currMap);
+this.draw_player(map,currMap);
+this.draw_goomba(currMap.goomba,map,currMap);
 };
 Galaxy.prototype.viewLimit = function(){
 
@@ -829,15 +995,15 @@ this.key.left = false;
 }
 
 
-Galaxy.prototype.update_goomba = function (goomba) {
+Galaxy.prototype.update_goomba = function (goomba,map,currMap) {
  
   
-    this.move_goomba(goomba);
+    this.move_goomba(goomba,map,currMap);
     
     };
 
 
-Galaxy.prototype.move_goomba = function (goomba) {
+Galaxy.prototype.move_goomba = function (goomba,map,currMap) {
 
 
         var tX = goomba.player.loc.x + goomba.player.vel.x;
@@ -851,7 +1017,7 @@ Galaxy.prototype.move_goomba = function (goomba) {
       var goombaX = (goomba.player.loc.x);// + goomba.spriteSize / 2);
 //console.log(goombaX);
       var t1 = 0;
-for (var y = 0; y < game.goomba.obsticle.length; y++) {
+for (var y = 0; y < currMap.goomba.obsticle.length; y++) {
    var tempx1 =  xObsticle[y];
 var tempx2 = x2Obsticle[y];
 
@@ -861,8 +1027,8 @@ t1 = 1;
 
 
 
-var z1 = (goomba.player.loc.x + goomba.spriteSize / 2 - this.camera.x);
-var z2 = (playerStats.location.x + this.spriteSize / 2 - this.camera.x);
+var z1 = (goomba.player.loc.x + goomba.spriteSize / 2 - currMap.camera.x);
+var z2 = (playerStats.location.x + currMap.spriteSize / 2 - currMap.camera.x);
 
 var q1 = playerStats.location.y;
 var q2 = goomba.player.loc.y;
@@ -880,7 +1046,7 @@ if (z1 >= (z2-10) && z1 <= (z2+10)){
     playerLastX = 0;
     playerLastY = 0;
     playerStats.location.x = 0;
-    this.load_map(map);
+    this.load_map(map,currMap);
 }
 }
      }
@@ -891,11 +1057,11 @@ if (z1 >= (z2-10) && z1 <= (z2+10)){
             goomba.player.loc.y += goomba.player.vel.y;   
         };
 
-Galaxy.prototype.draw_goomba = function (goomba){
+Galaxy.prototype.draw_goomba = function (goomba,map,currMap){
 
 
-    var goombaX = (goomba.player.loc.x + goomba.spriteSize / 2 - this.camera.x);
-    var goombaY = (goomba.player.loc.y + goomba.spriteSize / 2 - this.camera.y)-6;    
+    var goombaX = (goomba.player.loc.x + goomba.spriteSize / 2 - currMap.camera.x);
+    var goombaY = (goomba.player.loc.y + goomba.spriteSize / 2 - currMap.camera.y)-6;    
     var r1 = goombaX - 350;
     var r2 = goombaX + 350;
 
@@ -983,46 +1149,4 @@ context2.drawImage(marioR_smb1,20,20);
    }, 1000/60);
 }
 
-var myVar = setInterval(myTimer, 150);
 
-function myTimer() {
-
-if ((playerPos == 'right')){
-
-   switch(playerRefresh){
-       case 0:
-           context2.clearRect(0, 0,400, 800);//Yoshi
-
-           context2.drawImage(marioR1_smb1,playerLocationX,playerLocationY);
-           break;
-       case 1:
-           context2.clearRect(0, 0,400, 800);//Yoshi
-
-           context2.drawImage(marioR2_smb1,playerLocationX,playerLocationY);
-           break;
-   }
-}    else    if (playerPos == 'left'){
-   switch(playerRefresh){
-       case 0:
-           context2.clearRect(0, 0,400, 800);//Yoshi
-
-           context2.drawImage(marioL1_smb1,playerLocationX,playerLocationY);
-           break;
-       case 1:
-           context2.clearRect(0, 0,400, 800);//Yoshi
-
-           context2.drawImage(marioL2_smb1,playerLocationX,playerLocationY);   
-           break;
-   }
-
-}else if (playerPos == 'up'){
-   context2.clearRect(0, 0,400, 800);//Yoshi
-
-   context2.drawImage(marioR_smb1,playerLocationX,playerLocationY);
-
-}
-
-
-
-
-}

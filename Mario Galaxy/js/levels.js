@@ -25,6 +25,24 @@ var map = {
    20 Bush Center
    21 Left Bush
    21 Right Bush
+   22 Bsh part
+   23 Teal Metal
+   24 Teal Platform
+   25 Teal Ground
+   26 Teal Ramp
+   27 Black Sky
+   28 IN PROG
+   29 IN PGOG
+   30 IN PROG
+   31 Gray Platform
+   32 Red Lava
+   33 Red lava Wave
+   34 Lava bridge
+   35 Lava bridge chain
+   36 Sea
+   37 Sea Block
+   38 Sea Coral Wave
+   39
    /*******Big Hill******
    01,01,15,01,01,
    01,16,18,17,01,
@@ -66,7 +84,28 @@ var map = {
           {id: 19,isSolid: 0},
           {id: 20,isSolid: 0},
           {id: 21,isSolid: 0},
-          {id: 22,isSolid: 0}
+          {id: 22,isSolid: 0},
+          {id: 23,isSolid: 1},
+          {id: 24,isSolid: 1},
+          {id: 25,isSolid: 1},
+          {id: 26,isSolid: 1},
+          {id: 27,isSolid: 0},
+          {id: 28,isSolid: 0},
+          {id: 29,isSolid: 0},
+          {id: 30,isSolid: 0},
+          {id: 31,isSolid: 1},
+          {id: 32,isSolid: 0},
+          {id: 33,isSolid: 0},
+          {id: 34,isSolid: 1},
+          {id: 35,isSolid: 0},
+          {id: 36,isSolid: 0},
+          {id: 37,isSolid: 1},
+          {id: 38,isSolid: 1},
+          {id: 39,isSolid: 0},
+          {id: 98,isSolid: 0, script: 'next_level'},
+          {id: 99,isSolid: 0, script: 'coin'}
+
+
        ],
                
        /*
@@ -189,8 +228,10 @@ var map = {
           mys: 'alert("Mystery");',
 
           /* you could load a new map variable here */
-          next_level: 'alert("Yay! You won! Reloading map.");game.load_map(map);',
-          death: 'console.log("You died!");this.load_map(map);',
+          next_level: 'window.location.href = "game2.html";',
+          death: 'console.log("You died!");playerStats.health -= 1;this.load_map(map);',
+          coin: 'console.log("Coin");this.coin(map,currMap);',
+
           unlock: 'game.currentLevel.keys[10].isSolid = 0;game.currentLevel.keys[10].colour = "#888";'
        }
        };

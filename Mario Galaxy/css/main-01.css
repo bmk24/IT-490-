@@ -127,6 +127,42 @@ canvas {
     z-index: 0;
 
  }
+ #gameOverlay{
+  z-index: 50;
+  background:transparent;
+  position: absolute;
+  top:260px;
+  left:50%;
+
+  transform: translate(-50%, 10%);
+
+}
+#coin{
+  position: absolute;
+  left:250px;
+  top:50px;
+  font-family: "CustomFont2";
+text-align: center;
+font-size: 1.5em;
+
+}
+#health{
+  position: absolute;
+  right:0px;
+  top:50px;
+  font-family: "CustomFont2";
+text-align: center;
+font-size: 1.5em;
+}
+#clock{
+  position: absolute;
+  right:250px;
+top:50px;
+font-family: "CustomFont2";
+text-align: center;
+font-size: 1.5em;
+
+}
   #gameChar{
     z-index: 3;
     background:transparent;
@@ -452,3 +488,24 @@ color:black;
 width:100px;
 background-color: white;;
 }
+
+/******************Shop**********************/
+.shop-list-container {
+  display: inline-block;
+  height: 480px;
+  width: 720px;
+  vertical-align: middle;
+  z-index: 100;
+  position: absolute;
+  
+  top:250px;
+  left:10%;
+  transform: translate(-50%, 10%);
+
+
+}
+
+ul {
+  list-style-type: none;
+}
+/******************Shop**********************/
