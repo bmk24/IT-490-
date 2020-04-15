@@ -1,5 +1,5 @@
 .balance {
-position: absolute;
+/* position: absolute;
 z-index: 2;
 background: rgba(252,234,187,1);
 background: -moz-linear-gradient(left, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 31%, rgba(248,181,0,1) 73%, rgba(251,223,147,1) 100%);
@@ -20,17 +20,22 @@ border: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
 -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-font-size: 20px;
 
-width:   400px;
-border: 100px;
-padding: 50px;
-margin-top: -55%;
-margin-left: 25%;
-text-align: center;
-  
-  color: #404040;
-  font-weight: bold
+*/
+z-index: 2;
+position: absolute;
+  text-align: center;
+  margin-left: 25%;
+  margin-top: -55%;
+  font-size: 30px;
+ 
+  color: #d9d9d9;
+}
+.center {
+z-index: 3;
+position: absolute;
+margin-left: 27%;
+margin-top: -33%;
 
 }
 /*
@@ -62,6 +67,11 @@ animation: color-change-2x 2s linear infinite alternate both;
   100% {
     background: #87CEFA;
   }
+}
+.brick {
+z-index: 2;
+position: relative;
+width: 500px; height: 200px;
 }
 /*
 sets up balance styling
@@ -98,7 +108,7 @@ input[type="button"] {
 sets up each shop item's styling
 */
 .item {
-top: -555px;
+top: -500px;
 z-index: 2;
 position: relative;
 background: rgba(226,226,226,1);
