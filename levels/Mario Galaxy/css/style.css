@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #f2f2f2;
+}
+
+canvas {
+  display:block;
+  margin: 40px auto 20px;
+  
+
+
+  padding-left: 0;
+    padding-right: 0;
+   left:20rem;
+    display: block;
+    position: fixed;
+    top:5rem;
+}
+#canvas{
+  z-index: 0;
+}
+p, a {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  color: #777;
+  display: block;
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  text-decoration:none;
+}
+
+.info {
+  margin:14px auto;
+  text-align: justify;
+  font-size: 18px;
+  color: #999;
+}
+
+a {
+  color:#3377ee;
+}
+
+#gameMid{
+  z-index: 2;
+  background:transparent;
+}
+
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+
+
+
+.loginForm {
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+ 
+}
+
+.reg   {
+  width: 960px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid black;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 45px 130px 33px 95px;
+  position: absolute;
+  top:50%;
+}
+
+
+
+

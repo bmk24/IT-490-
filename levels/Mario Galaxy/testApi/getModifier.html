@@ -1,0 +1,31 @@
+
+<script>
+
+let xhr = new XMLHttpRequest();
+var modifier; 
+var currency;
+var jsonResult;
+var head;
+//sets currency test data
+currency="JPY";
+head="getCurrency";
+xhr.open("GET", "http://ec2-34-229-47-176.compute-1.amazonaws.com/testApi/getData.php?currency="+ currency+"&head="+head, true);
+
+
+
+xhr.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200){
+      //sent back in form {'currency':(name),difference:difference in form +-75,20,10 etc}
+      jsonResult=JSON.parse(xhr.responseText);
+      console.log(jsonResult);
+      modifier=jsonResult.difference;
+      console.log(modifier);
+}
+};
+
+xhr.onerror = function() {
+  alert("Request failed");
+};
+xhr.send();
+
+</script>

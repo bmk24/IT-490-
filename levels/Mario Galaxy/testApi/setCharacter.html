@@ -1,0 +1,18 @@
+<script>
+
+let xhr = new XMLHttpRequest();
+var modifier; 
+var currency;
+var jsonResult;
+var head;
+//sets username and gets associated user data
+username="user1";
+head="setCharacter";
+character="Vario";
+xhr.open("GET", "getData.php?username="+ username +"&head="+head+"&character="+character, true);
+
+//nothing sent back since it is a set. Could report success/failure but not worthwhile atm. Tested and does work.
+
+xhr.send();
+
+</script>
