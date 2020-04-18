@@ -1,17 +1,32 @@
+<?php
+session_start();
+if (empty($_SESSION["username"])){
+session_unset();
+session_destroy();
+header("location: http://ec2-34-229-47-176.compute-1.amazonaws.com/game/login.html");
+exit();
+}
+?>
 <!DOCTYPE html>
 <html>
+
+
+<img src="cloud.png" class="cloud"> 
+<img src="cloud.png" class="cloud" style="margin-top: 5%; animation-delay: 1s;">
+<img src="cloud.png" class="cloud" style="margin-top: 10%; animation-delay: 3s;"> 
+<img src="cloud.png" class="cloud" style="margin-top: 15%; animation-delay: 7s;"> 
 <script>
 var balances;
-function purchase(quantity,username,balances,itemID,price){
+function purchase(quantity,username,itemID){
 let xhr = new XMLHttpRequest();
 var modifier; 
 var currency;
 var jsonResult;
 var head;
 quantity=Number(quantity);
-price=Number(price);
 
-xhr.open("GET", "http://ec2-34-229-47-176.compute-1.amazonaws.com/testApi/shopCheck.php?username="+ username +"&itemID="+itemID+"&balance="+balances+"&price="+price+"&quantity="+quantity, false);
+
+xhr.open("GET", "http://ec2-34-229-47-176.compute-1.amazonaws.com/testApi/shopCheck.php?username="+ username +"&itemID="+itemID+"&quantity="+quantity, false);
 
 xhr.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200){
@@ -54,17 +69,17 @@ xhr.onreadystatechange = function() {
       document.getElementById("item"+itemID).innerHTML += "Cost: $"+jsonResult.itemPrice+"<br>";
       
       if (itemID==1) {
-      document.getElementById("item"+itemID).innerHTML += "<label for=\"quantitites\">Amount: </label><input type=\"number\" pattern=\"^[0–9]$\" id=\"quantity"+itemID+"\" name=\"quantities\" value=\"\"><input type=\"button\" id=\"input"+itemID+"\" value=\"Purchase\">";
+      document.getElementById("item"+itemID).innerHTML += "<label for=\"quantitites\">Amount: </label><input type=\"number\" pattern=\"^[0â€“9]$\" id=\"quantity"+itemID+"\" name=\"quantities\" value=\"\"><input type=\"button\" id=\"input"+itemID+"\" value=\"Purchase\">";
       
       
-      document.getElementById("input"+itemID).onclick = function() {purchase(document.getElementById("quantity"+itemID).value,username,balances,itemID,jsonResult.itemPrice)};
+      document.getElementById("input"+itemID).onclick = function() {purchase(document.getElementById("quantity"+itemID).value,username,itemID)};
       }
       else {
       
       
        document.getElementById("item"+itemID).innerHTML += "<br><input type=\"button\" id=\"input"+itemID+"\" value=\"Purchase\">";
        
-      document.getElementById("input"+itemID).onclick = function() {purchase(1,username,balances,itemID,jsonResult.itemPrice)};
+      document.getElementById("input"+itemID).onclick = function() {purchase(1,username,itemID)};
        
        
        
@@ -77,7 +92,7 @@ xhr.onreadystatechange = function() {
 };
 xhr.send();
 }
-function getUser(username,itemID){
+function getUser(username){
 let xhr = new XMLHttpRequest();
 var modifier; 
 var currency;
@@ -96,7 +111,7 @@ xhr.onreadystatechange = function() {
       console.log(xhr.responseText);
       jsonResult=JSON.parse(xhr.responseText);
       console.log(jsonResult);
-      document.getElementById("balance").innerHTML = "Username: "+jsonResult.username+"<br>"+"Balance: $"+jsonResult.currentPoints;
+      document.getElementById("centerText").innerHTML += "Username: "+jsonResult.username+"<br>"+"Balance: $"+jsonResult.currentPoints;
       balances=jsonResult.currentPoints;
       
 }
@@ -115,18 +130,24 @@ xhr.send();
 <body>
 <div class="balance" id="balance">
 
+<img src="mysteryFixFinal2.png" class="brick" style="margin-top: 3%;">
+<div class="center" id="centerText"></div>
 </div>
+<script>
 
+</script>
 <?php
+session_start();
 $itemIDS=array(1,2);
+echo "<script>getUser('".$_SESSION["username"]."');</script>";
 foreach ($itemIDS as $element){
 $shopElement="
 <div class=\"item\" id=\"item".$element."\">
 
 </div>
 <script>
-getUser(\"user1\",".$element.");
-getShop(\"user1\",".$element.");
+
+getShop('".$_SESSION['username']."',".$element.");
 
 </script>
 ";
