@@ -670,9 +670,30 @@ if(currMap.last_tile != tile.id && tile.script) {
 currMap.last_tile = tile.id;
 }
 };
+//implemented modifier and coin value logic
 Galaxy.prototype.coin = function(map,currMap){
-    console.log("coin");
-    playerStats.coin += 1;
+    if (playerStats.modifier>0){
+    console.log(playerStats.modifier);
+    var rounded;
+    rounded=playerStats.coin +1-playerStats.modifier/100;
+  
+    playerStats.coin=+rounded.toFixed(2);
+    if (!isNaN(playerStats.coin)){
+    
+    setPoints(playerStats.username,playerStats.coin);  
+    }
+   }
+    else if(playerStats.modifier<0) {
+    playerStats.coin+=1+Math.abs(playerStats.modifier);
+    
+     if (!isNaN(playerStats.coin)){
+    
+    setPoints(playerStats.username,playerStats.coin);  
+    }
+   }
+    else if (playerStats.modifier==0){
+    setPoints(playerStats.username,playerStats.coin+1); 
+   }
 };
 Galaxy.prototype.update_player = function (map,currMap) {
 
