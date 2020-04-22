@@ -71,6 +71,18 @@ def getCharacter(jsonresult):
  'special':result[5],
  },use_decimal=True))
  quit(mydb)
+ 
+def setShop(itemID,itemPrice):
+ mydb=connect()
+
+ mycursor = mydb.cursor()
+ query="Update shop Set itemPrice=%s where itemNum=%s"
+
+ mycursor.execute(query,(itemPrice,itemID))
+ mydb.commit()
+ channel.basic_publish(exchange='',routing_key='DataToApp',body=json.dumps({'message':'success'}))
+ quit(mydb)
+ 
 def getUser(usernames):
  mydb=connect()
  mycursor = mydb.cursor()
@@ -87,7 +99,7 @@ def getUser(usernames):
   charactername=row[7]
   currencycode=row[8]
   
- channel.basic_publish(exchange='',routing_key='DataToApp',body=json.dumps({'username':usernames,
+  channel.basic_publish(exchange='',routing_key='DataToApp',body=json.dumps({'username':usernames,
  'currentLevel':int(currentlevel),
  'levelsComplete':int(levelscomplete),
  'currentPoints':Decimal(currentpoints),
@@ -133,7 +145,7 @@ def setInfo(username,levelsComplete,currentLevel,currentPoints,maxPoints,current
  mydb=connect()
  mycursor = mydb.cursor()
  query="Update userInfo Set levelsComplete=%s, currentLevel=%s, currentPoints=%s, maxPoints=%s, playerLives=%s, spritePack=%s, characterName=%s, currencyCode=%s where username=%s"
- mycursor.execute(query,(levelsComplete,currentLevel, currentPoints, maxPoints, currentPoints, spritePack, characterName, currencyCode, username))
+ mycursor.execute(query,(levelsComplete,currentLevel, currentPoints, maxPoints, currentLives, spritePack, characterName, currencyCode, username))
  mydb.commit()
  channel.basic_publish(exchange='',routing_key='DataToApp',body=json.dumps({'message':'success'}))
  quit(mydb)
@@ -142,48 +154,51 @@ def callback(ch, method, properties, body):
  jsonResult=json.loads(body)
  head=jsonResult["head"]
  try:
-	 if head=="getCurrency":
+  if head=="getCurrency":
 	  currency=jsonResult['currency']
 	  getCurrency(currency)
-	 elif head=="getUser":
+  elif head=="getUser":
 	  username=jsonResult['username']
 	  getUser(username)
 	  
-	 elif head=="getShop":
+  elif head=="getShop":
 	  username=jsonResult['username']
 	  itemID=jsonResult['itemID']
 	  getShop(username,itemID)
 	  
-	 elif head=="setCurrency":
+  elif head=="setCurrency":
 	  username=jsonResult['username']
 	  currency=jsonResult['currency']
 	  setCurrency(currency, username)
 	  
-	 elif head=="setPoints":
+  elif head=="setPoints":
 	  points=jsonResult['points']
 	  username=jsonResult['username']
 	  setPoints(points, username)
 	  
-	 elif head=="setQuantity":
+  elif head=="setQuantity":
 	  quantity=jsonResult['quantity']
 	  username=jsonResult['username']
 	  itemID=jsonResult['itemID']
 	  setQuantity(itemID,quantity, username)
 	  
-	 elif head=="getPoints":
+  elif head=="getPoints":
 	  points=jsonResult['username']
 	  getPoints(points)
 	  
-	 elif head=="getCharacter":
+  elif head=="getCharacter":
 	  character=jsonResult['character']
 	  getCharacter(character)
-	  
-	 elif head=="setCharacter":
-	  character=jsonResult['character']
-	  username=jsonResult['username']
-	  setCharacter(character, username)
-	  
-	 elif head=="setInfo":
+  elif head=="setCharacter":
+   character=jsonResult['character']
+   username=jsonResult['username']
+   setCharacter(character, username)
+  elif head=="setShop":
+   itemID=jsonResult['itemID']
+   itemPrice=jsonResult['itemPrice']
+   setShop(itemID, itemPrice)
+     
+  elif head=="setInfo":
 	  username=jsonResult['username']
 	  levelsComplete=jsonResult['levelsComplete']
 	  currentLevel=jsonResult['currentLevel']
