@@ -56,7 +56,7 @@ Continue;
 $channel->queue_declare('DataToApp', false, true, false, false);
 
 //calls a specific function getCurrency, getUser
-//Should be switch not ifs or truth array
+//Should be switch not ifss
 $head=$_GET["head"];
 if ($head=="getCurrency") {
  $currency=$_GET['currency'];
@@ -106,6 +106,12 @@ else if ($head=="setCharacter"){
  $username=$_GET['username'];
  $character=$_GET['character'];
  $pass=array("head"=>"setCharacter","username"=>$username,"character"=>$character);
+
+}
+else if ($head=="setShop"){
+ $itemID=$_GET["itemID"];
+ $itemPrice=$_GET["itemPrice"];
+ $pass=array("head"=>"setShop","itemID"=>$itemID,"itemPrice"=>$itemPrice);
 
 }
 else if ($head=="setInfo"){
