@@ -49,6 +49,35 @@ getData();
 $_GET["head"]="setPoints";
 $_GET["points"]=$balance-$cost;
 getData();
+
+if ($itemID==1){
+$_GET["head"]="getUser";
+$_GET["function"]=1;
+$_GET["username"]=$username;
+$arrayUser2=json_decode(getData());
+$_GET["head"]="setInfo";
+$username=$arrayUser2->username;
+$currentLevel=$arrayUser2->currentLevel;
+$levelsComplete=$arrayUser2->levelsComplete;
+$currentPoints=$arrayUser2->currentPoints;
+$maxPoints=$arrayUser2->maxPoints;
+//$playerLives=$quantity;
+$currentLives=$arrayUser2->playerLives+$quantity;
+$spritePack=$arrayUser2->spritePack;
+$character=$arrayUser2->characterName;
+$currencyCode=$arrayUser2->currencyCode;
+$_GET['username']=$username;
+$_GET['levelsComplete']=$levelsComplete;
+$_GET['currentLevel']=$currentLevel;
+$_GET['currentPoints']=$currentPoints;
+$_GET['maxPoints']=$maxPoints;
+$_GET['spritePack']=$spritePack;
+$_GET['character']=$character;
+$_GET['currency']=$currencyCode;
+$_GET['currentLives']=$currentLives;
+getData();
+}
+
 return 1;
 }
 else {
