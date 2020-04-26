@@ -76,11 +76,16 @@ def setShop(itemID,itemPrice):
  mydb=connect()
 
  mycursor = mydb.cursor()
- query="Update shop Set itemPrice=%s where itemNum=%s"
-
- mycursor.execute(query,(itemPrice,itemID))
+ if(itemID.isdigit()):
+    query="Update shop Set itemPrice=%s where itemNum=%s"
+   
+ else:
+ 
+  query="Update shop Set itemPrice=%s where itemName=%s"
+  
+ result=mycursor.execute(query,(itemPrice,itemID))
+ channel.basic_publish(exchange='',routing_key='DataToApp',body=json.dumps({'message':'successfully changed the price!'})) 
  mydb.commit()
- channel.basic_publish(exchange='',routing_key='DataToApp',body=json.dumps({'message':'success'}))
  quit(mydb)
  
 def getUser(usernames):
