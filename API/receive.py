@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-import pika, simplejson as json, mysql.connector, sys
+import pika, simplejson as json, mysql.connector, sys, accountDetails,mysqlDetails
 from decimal import *
 #publishes json to be processed and returned by CurrencyAPI.py
-credentials = pika.PlainCredentials('test','test')
-connection = pika.BlockingConnection(pika.ConnectionParameters('ec2-3-21-125-32.us-east-2.compute.amazonaws.com',5672,'/',credentials))
+credentials = pika.PlainCredentials(accountDetails.usernames,accountDetails.password)
+connection = pika.BlockingConnection(pika.ConnectionParameters(accountDetails.address,accountDetails.port,'/',credentials))
 channel = connection.channel()
  
 queue = channel.queue_declare(
@@ -11,11 +11,12 @@ queue = channel.queue_declare(
     exclusive=False, auto_delete=False
 )
 def connect():
+ global host,user,passwd,database
  mydb = mysql.connector.connect(
- host="localhost",
- user="myuser",
- passwd="MarioGalaxy1*",
- database="marioGalaxy"
+ host=mysqlDetails.host,
+ user=mysqlDetails.user,
+ passwd=mysqlDetails.passwd,
+ database=mysqlDetails.database
  )
  return mydb
 def quit(db):
