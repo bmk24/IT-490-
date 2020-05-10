@@ -19,8 +19,8 @@ then
 
   done
   scp -i /home/ubuntu/app.pem ubuntu@$fromAddress:/var/www/html/* /home/ubuntu/APP/
-  echo Successfully migrated new files and backed up $date files.
-  echo Successfully migrated new files and backed up $date files. >> /home/ubuntu/migrateLog
+  echo Successfully migrated new files and backed up files as of $date.
+  echo Successfully migrated new files and backed up files as of $date. >> /home/ubuntu/migrateLog
   else
   echo Successfully migrated new files. APP empty
   echo Successfully migrated new files. APP empty >> /home/ubuntu/migrateLog
