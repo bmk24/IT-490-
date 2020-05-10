@@ -1,5 +1,5 @@
 #!/bin/bash
-address=3.23.111.83
+address=3.15.40.78
 if [ $1 == "m" ] || [ $1 == "migrate" ] || [ $1 == "write" ] || [ $1 == "w" ]; 
 then
 date=$(date +%Y-%m-%d-%M-%S)
@@ -15,13 +15,13 @@ fileName="${output##*/}"
 mv $output /home/ubuntu/backup/"$date-$fileName"
 
 done
-scp -i /home/ubuntu/api.pem ubuntu@$address:/home/ubuntu/API/* /home/ubuntu/API/ 
+scp -r -i /home/ubuntu/api.pem ubuntu@$address:/home/ubuntu/API/* /home/ubuntu/API/ 
 echo Successfully migrated new files and backed up $date files.
 echo Successfully migrated new files and backed up $date files. >> /home/ubuntu/migrateLog
 else
 echo Successfully migrated new files. API empty
 echo Successfully migrated new files. API empty >> /home/ubuntu/migrateLog 
-scp -i /home/ubuntu/api.pem ubuntu@$address:/home/ubuntu/API/* /home/ubuntu/API/ 
+scp -r -i /home/ubuntu/api.pem ubuntu@$address:/home/ubuntu/API/* /home/ubuntu/API/ 
 fi
 
 
