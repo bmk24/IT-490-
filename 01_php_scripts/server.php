@@ -1,74 +1,165 @@
 <?php
+
 require_once('path.inc');
+
 require_once('get_host_info.inc');
+
 require_once('rabbitMQLib.inc');
+
 //$connection=new mysqli($hostname, $username, $mypassword, $database);
 
+
 function udoLogin($uemail,$upassword)
+
 {
-    $connection=new mysqli("3.21.114.39", "myuser", "PASSWORD", "marioGalaxy");
+
+    $connection=new mysqli("172.31.26.33", "myuser", "MarioGalaxy1*", "marioGalaxy");
+
 $query = "select * from users where username='$uemail'";
+
 $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+
 $count = mysqli_num_rows($result);
+
 $row = $result -> fetch_row();
+
 $hash=$row[1];
+
 if (password_verify($upassword, $hash)) {
+
   $query = "INSERT INTO `logging`(errorCode, description,vmhost,time) VALUES ('No error','autheticated','Rabbitmq-AKM', NOW());";
-  $result = mysqli_query($connection, $query) or die(mysqli_error($connection));  
-  return 1;
-}
-else{
-  $time='time';
-  $query = "INSERT INTO `logging`(errorCode, description,vmhost,time) VALUES ('errorcode','authetication failed','Rabbitmq-AKM', NOW());";
-  $result = mysqli_query($connection, $query) or die(mysqli_error($connection)); 
-}
-}
-//registers users
-function udoRegister($email,$password,$char,$cur)
-{ 
-$hashed_pass=password_hash($password, PASSWORD_DEFAULT);
-$connection=new mysqli("3.21.114.39", "myuser", "PASSWORD", "marioGalaxy");
-$query = "select * from users where username='$email'";
-$result = mysqli_query($connection, $query) or die(mysqli_error($connection));
-$count = mysqli_num_rows($result);
-if($count>0){
-  return 0 ; 
-}
-else{
-  $query = "INSERT INTO users(username,hash ) VALUES ('$email','$hashed_pass' )";
+
   $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
-  $query2="INSERT INTO userInfo(username, levelsComplete, currentLevel, currentPoints, maxPoints, playerLives, spritePack, characterName, currencyCode) VALUES ('$email',0,0,0,0,0,'NA','$char','$cur')";
-  $result2 = mysqli_query($connection, $query2) or die(mysqli_error($connection));
-  if ($result){  
-    $query = "INSERT INTO `logging`(errorCode, description,vmhost,time) VALUES ('No error','User registered','Rabbitmq-AKM', NOW());";
-    $result = mysqli_query($connection, $query) or die(mysqli_error($connection));   
-    return 1 ; }
-  else { 
-    return 0 ;
-  }  
+
+  return 1;
+
 }
+
+else{
+
+  $time='time';
+
+  $query = "INSERT INTO `logging`(errorCode, description,vmhost,time) VALUES ('errorcode','authetication failed','Rabbitmq-AKM', NOW());";
+
+  $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+
+}
+
+}
+
+//registers users
+
+function udoRegister($email,$password,$char,$cur)
+
+{
+
+$hashed_pass=password_hash($password, PASSWORD_DEFAULT);
+
+$connection=new mysqli("172.31.26.33", "myuser", "MarioGalaxy1*", "marioGalaxy");
+
+$query = "select * from users where username='$email'";
+
+$result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+
+$count = mysqli_num_rows($result);
+
+if($count>0){
+
+  return 0 ;
+
+}
+
+else{
+
+  $query = "INSERT INTO users(username,hash ) VALUES ('$email','$hashed_pass' )";
+
+  $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+
+  $query2="INSERT INTO userInfo(username, levelsComplete, currentLevel, currentPoints, maxPoints, playerLives, spritePack, characterName, currencyCode) VALUES ('$email',0,0,0,0,3,'NA','$char','$cur')";
+
+  $result2 = mysqli_query($connection, $query2) or die(mysqli_error($connection));
+
+  if ($result){
+
+    $query = "select * from shop";
+
+    $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+
+    while ($row = mysqli_fetch_assoc($result)) {
+
+      $id=$row["itemNum"];
+
+      insert_shop($id,$email);    }
+
+    $query = "INSERT INTO `logging`(errorCode, description,vmhost,time) VALUES ('No error','User registered','Rabbitmq-AKM', NOW());";
+
+    $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+
+    return 1 ; }
+
+  else {
+
+    return 0 ;
+
+  }
+
+}
+
+
+
+}
+
+function insert_shop($id,$uemail){
+
+  $connection=new mysqli("172.31.26.33", "myuser", "MarioGalaxy1*", "marioGalaxy");
+
+  $query = "INSERT INTO `purchaseHistory`(`itemID`, `username`, `quantity`) VALUES ('$id','$uemail',0)";
+
+  $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+
 }
 
 function requestProcessor($request)
+
 {
+
   echo "received request".PHP_EOL;
+
   var_dump($request);
+
   if(!isset($request['type']))
+
   {
+
     return "ERROR: unsupported message type";
+
   }
+
   switch ($request['type'])
+
   {
+
     case "Ulogin":
+
       return udoLogin($request['uemail'],$request['upassword']);
+
     case "uregistration":
+
       return udoRegister($request['uemail'],$request['upassword'],$request['char'],$request['cur']);
+
     }
+
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
+
 }
+
 $server = new rabbitMQServer("testRabbitMQ.ini","testServer");
+
 echo "testRabbitMQServer BEGIN".PHP_EOL;
+
 $server->process_requests('requestProcessor');
+
 echo "testRabbitMQServer END".PHP_EOL;
+unset($server);
 exit();
 ?>
