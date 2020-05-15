@@ -1,9 +1,0 @@
-if line not equal eachother:
-Get station sequences, 
-iterate up the number until first station with both lines
-
-get trains from orgin to mid
-trains from mid to end	
-
-else:
-  simplesearch
