@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Mario Galaxy</title>
+      <link rel="icon" type="image/png" href="img/tile057.png">
+      <link rel="stylesheet" href="../css/main-01.css">
+      <script type="text/javascript" src="js/jquery.js"></script>
+      <link href="../fontawesome/css/all.css" rel="stylesheet">
+      <!--load all styles -->
+      <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.min.css">
+ 
+   </head>
+   <body id="body">
+      <div id="overlayControls">
+      <p id="gameTitle">Mario Galaxy</p>
+      <div id="nav">
+         <!--div id="loginNav" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-key fa-2x"></i></div>
+         <div id="regNav" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-pen fa-2x"></i></div-->
+         <div id="controls" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-gamepad fa-2x"></i></div>
+         <div id ="about" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-info fa-2x"></i></div>
+         <div id="menu" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-bars fa-2x"></i></div>
+         <div id="sound" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-volume-up fa-2x"></i></div>
+      </div>
+      </div>
+      <div id="regBlur"></div>
+   
+      <div id="gameCenter">
+  
+    
+ 
+         <div id="healthSystem">
+            
+            
+         </div>
+         <div id="gameOverlay" height="480" width="720">
+            <span id="clock"></span>
+            <span id="health"></span>
+            <span id="coin"></span>
+
+         </div>
+         <canvas id="game3Mid" height="480" width="720"></canvas>
+         <canvas id="game3" height="480" width="720"></canvas>
+         <canvas id="game3Background" height="480" width="720"></canvas>
+      </div>
+      <audio controls id="theme">
+         <source src="music/theme_song.mp3" muted="muted" autoplay="true" type="audio/mpeg">
+      </audio>
+      <script type="text/javascript" src="js/levels.js"></script>
+      <script type="text/javascript" src="levels/01-01.js"></script>
+      <script type="text/javascript" src="js/player.js"></script>
+      <script type="text/javascript" src="js/rabbit.js"></script>
+
+      <script type="text/javascript" src="js/galaxy2.js"></script>
+      <script type="text/javascript" src="js/loaders.js"></script>
+      <script type="text/javascript" src="spriteLoader3.js"></script>
+   </body>
+</html>
