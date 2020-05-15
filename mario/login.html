@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Welcome</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="../images/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="../vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../css/util.css">
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+<!--===============================================================================================-->
+<script type="text/javascript" src="js/loginPage.js"></script>
+
+
+</head>
+<body>
+	<div class="limiter">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">GalaxyMario</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+		  <ul class="navbar-nav">
+			<li class="nav-item">
+			  <a class="nav-link" onclick="openCity(event, 'login')">User login</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" onclick="openCity(event, 'user_reg')">User Registration</a>
+			</li>
+		  </ul>
+		</div>
+	  </nav>		
+<!----------- user login starts here       -->
+<div id="login" class="tabcontent">
+	<div class="container-login100 member">
+		<div class="container-login100">
+				<div class="wrap-login100">
+					<div class="login100-pic js-tilt" data-tilt>
+						<img src="../images/img-01.png" alt="IMG">
+					</div>
+					<form class="login100-form validate-form">
+						<span class="login100-form-title">
+							User Login
+						</span>
+						<div class="wrap-input100">
+							<input id="uemail" class="input100" type="text" name="email" placeholder="Email">
+							<span class="focus-input100"></span>
+							<span class="symbol-input100">
+								<i class="fa fa-envelope" aria-hidden="true"></i>
+							</span>
+						</div>
+	
+						<div class="wrap-input100 validate-input" data-validate = "Password is required">
+							<input id="upassword" class="input100" type="password" name="password" placeholder="Password">
+							<span class="focus-input100"></span>
+							<span class="symbol-input100">
+								<i class="fa fa-lock" aria-hidden="true"></i>
+							</span>
+						</div>
+						<div class="container-login100-form-btn">
+							<input type="button" onclick="handleclick(this)" class="login100-form-btn" name="type" value="Ulogin">
+						</input>
+						</div>
+					</form>
+				</div>
+			</div>	
+</div>
+</div>
+<!----------- user reg starts here       -->
+
+<div id="user_reg" class="tabcontent">
+		<div class="container-login100 member">
+				<div class="container-login100">
+						<div class="wrap-login100">
+  <div class="member">
+		<form class="login100-form validate-form" action="../01_php_scripts/RabbitMQClientSample.php">
+				<label for="email">Username :</label>
+				<input id="uremail" type="text" name="email" class="form-control" id="email">
+				<div class="form-group">
+				<label for="pwd">Password:</label>
+				<input id="urpassword" type="text" name="password" class="form-control" id="pwd">
+		</div>
+		<input type="button" onclick="handleclick(this)" name="type" value="Register as User" class="btn btn-default"></input>
+		</form>	
+	</div>
+<!----------- character selection starts here       -->
+<div class="character_selection">
+	<h4>Character</h4>
+	<form class="character_selection" action="">
+	  <input type="radio" id="Ruigi" name="character" value="Ruigi" checked>
+	  <label for="Ruigi">Ruigi</label><br>
+	  <input type="radio" id="Vario" name="character" value="Vario">
+	  <label for="Vario">Vario</label><br>
+	  <input type="radio" id="Wowser" name="character" value="Wowser">
+	  <label for="Wowser">Wowser</label><br>
+	  <input type="radio" id="Yario" name="character" value="Yario">
+	  <label for="Yario">Yario</label><br>
+	</form>
+  </div>
+  
+  <!----------- currency selection starts here       -->
+  <div class="currency_selection">
+	<h4>Currency</h4>
+	<form class="crncy_select" action="">
+	  <input type="radio" id="CHF" name="crncy" value="CHF">
+	  <label for="CHF">CHF</label><br>
+	  <input type="radio" id="CNY" name="crncy" value="CNY">
+	  <label for="CNY">CNY</label><br>
+	  <input type="radio" id="EUR" name="crncy" value="EUR" checked>
+	  <label for="EUR">EUR</label><br>
+	  <input type="radio" id="GBP" name="crncy" value="GBP">
+	  <label for="GBP">GBP</label><br>
+	  <input type="radio" id="JPY" name="crncy" value="JPY">
+	  <label for="JPY">JPY</label><br>
+	  <input type="radio" id="MXN" name="crncy" value="MXN">
+	  <label for="MXN">MXN</label><br>
+	  <input type="radio" id="RUB" name="crncy" value="RUB">
+	  <label for="RUB">RUB</label><br>
+	  <input type="radio" id="ZAR" name="crncy" value="ZAR">
+	  <label for="ZAR">ZAR</label><br>
+	</form>
+  </div>
+</div>  
+</div>
+</div>
+</div>
+
+</div>
+<!--===============================================================================================-->	
+	<script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../vendor/bootstrap/js/popper.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+</body>
+</html>

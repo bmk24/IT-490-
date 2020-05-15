@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (empty($_SESSION["username"])){
+session_unset();
+session_destroy();
+header("location: http://ec2-34-229-47-176.compute-1.amazonaws.com/game/login.html");
+exit();
+}
+?>
 <!DOCTYPE html>
 <html>
    <head>
@@ -16,8 +25,8 @@
       <div id="overlayControls">
       <p id="gameTitle">Mario Galaxy</p>
       <div id="nav">
-         <!--div id="loginNav" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-key fa-2x"></i></div>
-         <div id="regNav" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-pen fa-2x"></i></div-->
+         <div id="loginNav" class="navTile" style="display: inline-block; text-align: center;"  onclick="location.href='http://ec2-34-229-47-176.compute-1.amazonaws.com/testApi/shop.php';">Shop</i></div>
+         <div id="regNav" class="navTile" style="display: inline-block; text-align: center;"  onclick="location.href='http://ec2-34-229-47-176.compute-1.amazonaws.com/testApi/logout.php';">logout</i></div>
          <div id="controls" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-gamepad fa-2x"></i></div>
          <div id ="about" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-info fa-2x"></i></div>
          <div id="menu" class="navTile" style="display: inline-block; text-align: center;"><i class="fas fa-bars fa-2x"></i></div>
@@ -26,10 +35,6 @@
       </div>
       <div id="regBlur"></div>
    
-      <div id="gameCenter">
-      
-   n type="submit" onclick="chkBoxValues()" name="button">Upgrade!</button>
-    </div>
          <div id="healthSystem">
             
             
@@ -47,11 +52,12 @@
       <audio controls id="theme">
          <source src="music/theme_song.mp3" muted="muted" autoplay="true" type="audio/mpeg">
       </audio>
-      <script type="text/javascript" src="js/levels.js"></script>
+
       <script type="text/javascript" src="levels/01-01.js"></script>
       <script type="text/javascript" src="levels/01-02.js"></script>
-      <script type="text/javascript" src="js/player.js"></script>
       <script type="text/javascript" src="js/rabbit.js"></script>
+      <script type="text/javascript" src="js/player.js"></script>
+     
 
       <script type="text/javascript" src="js/galaxy.js"></script>
       <script type="text/javascript" src="js/loaders.js"></script>

@@ -15,10 +15,10 @@ var tempThing;
 
 
 
-var Galaxy = function () {
+var Galaxy2 = function () {
    context.scale(2, 2);
 //context2.scale(2, 2);
-contextBack.fillStyle = "#5D94FB";
+//contextBack.fillStyle = "#5D94FB";
 contextBack.fillRect(0, 0, canvasBack.width, canvasBack.height);
 this.bigProblem   = false;
 this.mainLog       = true;
@@ -48,7 +48,7 @@ window.onkeyup   = this.keyup.bind(this);
 
 
 };
-Galaxy.prototype.setup = function (map,currMap){
+Galaxy2.prototype.setup = function (map,currMap){
 
 
  playerStats.image = marioWalk1_smb1;
@@ -63,12 +63,12 @@ Galaxy.prototype.setup = function (map,currMap){
 
 
 };
-Galaxy.prototype.errorParse = function (message) {
+Galaxy2.prototype.errorParse = function (message) {
 
 if (this.bigProblem) alert(message);
 if (this.mainLog) console.log(message);
 };
-Galaxy.prototype.clock = function (map,currMap) {
+Galaxy2.prototype.clock = function (map,currMap) {
 
     var countdownTemp = currMap.time;
  
@@ -95,18 +95,18 @@ currMap.time = countdownTemp;
     }
     };
 
-Galaxy.prototype.logger = function (message) {
+Galaxy2.prototype.logger = function (message) {
 
 if (this.mainLog) console.log(message);
 };
 
-Galaxy.prototype.viewPortConstructor = function (x, y,map,currMap) {
+Galaxy2.prototype.viewPortConstructor = function (x, y,map,currMap) {
 
 currMap.viewport.x = x;
 currMap.viewport.y = y;
 };
 
-Galaxy.prototype.keydown = function (e) {
+Galaxy2.prototype.keydown = function (e) {
 
     
     switch (e.keyCode) {
@@ -129,7 +129,7 @@ Galaxy.prototype.keydown = function (e) {
     case 39:
        this.key.right = true;
        playerPos = 'right';
-       console.log('right');
+       //console.log('right');
        playerStats.spriteNum == 3
 
        if (this.key.right.state != this.key.right) this.key.right.active = this.key.right;
@@ -147,7 +147,7 @@ Galaxy.prototype.keydown = function (e) {
         }
     }
     };
-Galaxy.prototype.keyup = function (e) {
+Galaxy2.prototype.keyup = function (e) {
 
 //console.log(e.keyCode);
 switch (e.keyCode) {
@@ -169,7 +169,7 @@ case 39:
 }
 };
 
-Galaxy.prototype.load_map = function (map,currMap) {
+Galaxy2.prototype.load_map = function (map,currMap) {
 this.clock(map,currMap);
 this.setup(map,currMap);
 
@@ -240,12 +240,12 @@ this.logger('Successfully loaded map data.');
 return true;
 };
 
-Galaxy.prototype.whatTile = function (x, y,map,currMap) {
+Galaxy2.prototype.whatTile = function (x, y,map,currMap) {
 
 return (currMap.data[y] && currMap.data[y][x]) ? currMap.data[y][x] : 0;
 };
 
-Galaxy.prototype.draw_tile = function (x, y, tile,map,currMap) {
+Galaxy2.prototype.draw_tile = function (x, y, tile,map,currMap) {
 /*
 Keys 
 0 Blank space after scenery 
@@ -287,16 +287,21 @@ Keys
 12,13,
 *******************/
 var tempTile = tile.id;
-contextBack.fillStyle = "#5D94FB";
 
+if (currMap.background == "sky"){
+    contextBack.fillStyle = "#5D94FB";
+
+}
+if (currMap.background == "dark"){
+    contextBack.fillStyle = "black";
+
+}
 switch (tempTile) {
 
     case 0:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         break;
     case 1:
-        context.fillStyle = "#5D94FB";
         context.fillRect(x, y,currMap.spriteSize,currMap.spriteSize);        
         break;
     case 2:
@@ -310,7 +315,8 @@ switch (tempTile) {
         break;
     case 5:
         yTemp = y + mysteryY;
-        contextBack.fillStyle = "#5D94FB";
+       
+
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(this.mysteryBlock,x,yTemp,currMap.spriteSize,currMap.spriteSize);   
         break;
@@ -318,35 +324,28 @@ switch (tempTile) {
         context.drawImage(rampBlock,x,y,currMap.spriteSize,currMap.spriteSize);   
         break;
     case 7:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize); 
         break;
     case 8:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);         
         break;
     case 9:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(tubeLeft,x,y,currMap.spriteSize*1.3,currMap.spriteSize);   
         break; 
     case 10:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(tubeRight,x,y,currMap.spriteSize*1.3,currMap.spriteSize);   
         break; 
     case 11:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(tubeLeft,x+4,y,currMap.spriteSize*.80,currMap.spriteSize*1.3);   
         break;  
     case 12:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(tubeRight,x,y,currMap.spriteSize*.80,currMap.spriteSize*1.3);   
         break;  
     case 13:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(tubeMid,x,y,(32),(tubeMid.height)) 
             break;  
@@ -354,54 +353,145 @@ switch (tempTile) {
             context.drawImage(greyMetal,x,y,currMap.spriteSize,currMap.spriteSize);   
             break; 
     case 15:
-            contextBack.fillStyle = "#5D94FB";
             contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
             context.drawImage(hillTop,x,y,currMap.spriteSize,currMap.spriteSize);   
             break;  
     case 16:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
             context.drawImage(hillLeft,x,y,currMap.spriteSize,currMap.spriteSize);   
             break;   
     case 17:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
             context.drawImage(hillRight,x,y,hillRight.width,hillRight.height);   
             break;  
     case 18:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
             context.drawImage(hillDimple,x,y,currMap.spriteSize,currMap.spriteSize);   
             break;  
     case 19:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(hillMid,x,y,currMap.spriteSize,currMap.spriteSize);   
             break; 
     case 20:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(bushMid,x,y,currMap.spriteSize,currMap.spriteSize);   
         break; 
     case 21:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(bushLeft,x,y,currMap.spriteSize,currMap.spriteSize);   
         break; 
     case 22:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(bushRight,x,y,currMap.spriteSize,currMap.spriteSize);   
-        break;      
+        break;    
+    case 60:
+        contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        context.drawImage(block3,x,y,currMap.spriteSize,currMap.spriteSize);   
+        break;  
+    case 23:
+        context.drawImage(tealMetal_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+        break;    
+    case 24:
+        context.drawImage(tealPlatform_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+        break;   
+    case 25:
+        context.drawImage(tealBlock_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+        break;   
+    case 26:
+        context.drawImage(tealRamp_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+        break;   
+    case 27:
+        context.drawImage(blackSky_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+        break;   
+    case 28:
+        break;   
+    case 29:
+        break;   
+    case 30:
+        break;   
+    case 31:
+        context.drawImage(grayBlock_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+        break;   
+    case 32:
+        context.drawImage(lava_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+        break;   
+    case 33:
+        context.drawImage(lavaWave_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+        break;   
+    case 34:
+        break;   
+    case 35:
+        break;   
+    case 36:
+        context.drawImage(seaBlock_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+
+        break;   
+    case 37:
+        context.drawImage(seaPlatform_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+
+        break;   
+    case 38:
+        context.drawImage(seaCoral_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+
+        break;   
+    case 39:
+        context.drawImage(seaWave_smb1,x,y,currMap.spriteSize,currMap.spriteSize);   
+
+
+        break;  
+        /*
+          let treePlatform1_smb1 = new Image();
+          let treePlatform2_smb1 = new Image();
+          let treePlatform3_smb1 = new Image();
+          let treePlatformStump_smb1 = new Image();
+          let castleSpike_smb1 = new Image();
+          let castleSpike2_smb1 = new Image();
+          let castleBrick_smb1 = new Image();
+       let metalBlockTeal_smb1 = new Image();
+       let flagpole_smb1 = new Image();
+       let flagpoleTop_smb1 = new Image();
+       let bridgeTop_smb1 = new Image();
+       let bridgeBottom_smb1 = new Image();
+       let largeTreeTop_smb1 = new Image();
+       let largeTreeMid_smb1 = new Image();
+       let largTreeStump_smb1 = new Image();
+       let smallTreeTop_smb1 = new Image();
+       let smallTreeBottom_smb1 = new Image();
+       let castle1_smb1 = new Image();
+       let castle2_smb1 = new Image();
+       let castle3_smb1 = new Image();
+       let castle4_smb1 = new Image();
+       let castle5_smb1 = new Image();
+       let castle6_smb1 = new Image();
+       let castle7_smb1 = new Image();
+       let castle8_smb1 = new Image();
+       let castle9_smb1 = new Image();
+       let castle10_smb1 = new Image();
+       let castle11_smb1 = new Image();
+
+        */
+       // contextBack.fillStyle = "#5D94FB";
+        //contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
+        //break;    
     case 99:
-        contextBack.fillStyle = "#5D94FB";
         contextBack.fillRect(x, y,currMap.spriteSize, currMap.spriteSize);
         context.drawImage(coinBlock,x,y,currMap.spriteSize,currMap.spriteSize);   
         break;  
    }
 };
 
-Galaxy.prototype.draw_map = function (context, fore,map,currMap) {
+Galaxy2.prototype.draw_map = function (context, fore,map,currMap) {
 
 for (var y = 0; y < currMap.data.length; y++) {
 
@@ -431,8 +521,28 @@ for (var y = 0; y < currMap.data.length; y++) {
 if (!fore) this.draw_map(context, true,map,currMap);
 };
 
-Galaxy.prototype.move_player = function (map,currMap) {
+Galaxy2.prototype.move_player = function (map,currMap) {
    // console.log(playerStats.velocity.x,playerStats.velocity.y);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var tX = playerStats.location.x + playerStats.velocity.x;
 var tY = playerStats.location.y + playerStats.velocity.y;
@@ -542,7 +652,27 @@ if (tile.jump &&playerStats.jump_switch > 15) {
 playerStats.velocity.x = Math.min(Math.max(playerStats.velocity.x, - playerStats.speed), playerStats.speed);
 //playerStats.velocity.x = playerStats.speed;
 
-playerStats.velocity.y = Math.min(Math.max(playerStats.velocity.y, - playerStats.defaultVelocity.y), playerStats.defaultVelocity.y);
+
+if (playerStats.spriteType == 'Vario' || playerStats.spriteType == 'vario'){
+    playerStats.velocity.y = Math.min(Math.max(playerStats.velocity.y, - playerStats.mario.y), playerStats.mario.y);
+
+}
+if (playerStats.spriteType == 'Yario' || playerStats.spriteType == 'yario'){
+    playerStats.velocity.y = Math.min(Math.max(playerStats.velocity.y, - playerStats.wario.y), playerStats.wario.y);
+
+}
+if (playerStats.spriteType == 'Wowser' || playerStats.spriteType == 'wowser'){
+    playerStats.velocity.y = Math.min(Math.max(playerStats.velocity.y, - playerStats.bowser.y), playerStats.bowser.y);
+
+}
+if (playerStats.spriteType == 'Ruigi' || playerStats.spriteType == 'ruigi'){
+    playerStats.velocity.y = Math.min(Math.max(playerStats.velocity.y, - playerStats.luigi.y), playerStats.luigi.y);
+
+}
+
+
+
+//playerStats.velocity.y = Math.min(Math.max(playerStats.velocity.y, - playerStats.defaultVelocity.y), playerStats.defaultVelocity.y);
 //console.log(playerStats.speed);
 playerStats.location.x += playerStats.velocity.x;
 playerStats.location.y += playerStats.velocity.y;
@@ -670,11 +800,11 @@ if(currMap.last_tile != tile.id && tile.script) {
 currMap.last_tile = tile.id;
 }
 };
-Galaxy.prototype.coin = function(map,currMap){
+Galaxy2.prototype.coin = function(map,currMap){
     console.log("coin");
     playerStats.coin += 1;
 };
-Galaxy.prototype.update_player = function (map,currMap) {
+Galaxy2.prototype.update_player = function (map,currMap) {
 
 if (this.key.left) {
 
@@ -708,15 +838,26 @@ this.move_player(map,currMap);
 
 };
 
-Galaxy.prototype.draw_player = function (map,currMap) {
+Galaxy2.prototype.draw_player = function (map,currMap) {
    playerLocationX = (playerStats.location.x + playerStats.spriteSize / 2 - currMap.camera.x);
    playerLocationY = (playerStats.location.y + playerStats.spriteSize / 2 - currMap.camera.y)-26;
    playerLastX = playerLocationX;
    playerLastY = playerLocationY;
    context2.drawImage(playerStats.image,playerLocationX,playerLocationY,36,36)   ;
 };
-
-Galaxy.prototype.wowser = function (map,currMap) {
+Galaxy2.prototype.update = function (map,currMap) {
+if (currMap.gamePause == 0){
+this.viewLimit();
+this.update_player(map,currMap);
+if (playerStats.spriteType == 'Vario' || playerStats.spriteType == 'vario'){this.vario(map,currMap);}
+if (playerStats.spriteType == 'Yario' || playerStats.spriteType == 'yario'){this.yario(map,currMap);}
+if (playerStats.spriteType == 'Wowser' || playerStats.spriteType == 'wowser'){this.wowser(map,currMap);}
+if (playerStats.spriteType == 'Ruigi' || playerStats.spriteType == 'ruigi'){this.ruigi(map,currMap);}
+this.loop();
+this.update_goomba(currMap.goomba,map,currMap);
+}  
+};
+Galaxy2.prototype.wowser = function (map,currMap) {
 
     if (this.key.up.active && !playerStats.jumping) {
         this.key.up.active = false;
@@ -763,8 +904,8 @@ Galaxy.prototype.wowser = function (map,currMap) {
    
         }
 };
-Galaxy.prototype.vario = function (map,currMap) {
-    console.log("Mario");
+Galaxy2.prototype.vario = function (map,currMap) {
+    //console.log("Mario");
 
     if (this.key.up.active && !playerStats.jumping) {
         this.key.up.active = false;
@@ -812,7 +953,7 @@ Galaxy.prototype.vario = function (map,currMap) {
           /***************** Mystery Block Animation ********************/       
         
 };
-Galaxy.prototype.yario = function (map,currMap) {
+Galaxy2.prototype.yario = function (map,currMap) {
 
     if (this.key.up.active && !playerStats.jumping) {
         this.key.up.active = false;
@@ -860,7 +1001,7 @@ Galaxy.prototype.yario = function (map,currMap) {
         }
 
 };
-Galaxy.prototype.ruigi = function (map,currMap) {
+Galaxy2.prototype.ruigi = function (map,currMap) {
 
     if (this.key.up.active && !playerStats.jumping) {
         this.key.up.active = false;
@@ -909,7 +1050,7 @@ Galaxy.prototype.ruigi = function (map,currMap) {
 
 };
 
-Galaxy.prototype.loop = function(time_stamp) {
+Galaxy2.prototype.loop = function(time_stamp) {
 
    
     if (this.count >= this.delay2) {
@@ -933,7 +1074,7 @@ Galaxy.prototype.loop = function(time_stamp) {
           }
     }
     if (this.count >= this.delay) {// If enough cycles have passed, we change the frame.
-        console.log("mystery");
+        //console.log("mystery");
         this.count = 0;// Reset the count.
 
         var mystery;
@@ -960,13 +1101,13 @@ Galaxy.prototype.loop = function(time_stamp) {
       }
   };
 
-Galaxy.prototype.draw = function (context,map,currMap) {
+Galaxy2.prototype.draw = function (context,map,currMap) {
 
 this.draw_map(context,false,map,currMap);
 this.draw_player(map,currMap);
 this.draw_goomba(currMap.goomba,map,currMap);
 };
-Galaxy.prototype.viewLimit = function(){
+Galaxy2.prototype.viewLimit = function(){
 
     this.count = this.count +  1;//Player Frame Count
     this.count2 = this.count2 +  1;//Player Frame Count
@@ -980,7 +1121,7 @@ this.key.left = false;
 }
 
 
-Galaxy.prototype.update_goomba = function (goomba,map,currMap) {
+Galaxy2.prototype.update_goomba = function (goomba,map,currMap) {
  
   
     this.move_goomba(goomba,map,currMap);
@@ -988,7 +1129,7 @@ Galaxy.prototype.update_goomba = function (goomba,map,currMap) {
     };
 
 
-Galaxy.prototype.move_goomba = function (goomba,map,currMap) {
+Galaxy2.prototype.move_goomba = function (goomba,map,currMap) {
 
 
         var tX = goomba.player.loc.x + goomba.player.vel.x;
@@ -1031,6 +1172,8 @@ if (z1 >= (z2-10) && z1 <= (z2+10)){
     playerLastX = 0;
     playerLastY = 0;
     playerStats.location.x = 0;
+    playerStats.health -= 1;
+    console.log("you died");
     this.load_map(map,currMap);
 }
 }
@@ -1042,7 +1185,7 @@ if (z1 >= (z2-10) && z1 <= (z2+10)){
             goomba.player.loc.y += goomba.player.vel.y;   
         };
 
-Galaxy.prototype.draw_goomba = function (goomba,map,currMap){
+Galaxy2.prototype.draw_goomba = function (goomba,map,currMap){
 
 
     var goombaX = (goomba.player.loc.x + goomba.spriteSize / 2 - currMap.camera.x);
@@ -1056,269 +1199,82 @@ Galaxy.prototype.draw_goomba = function (goomba,map,currMap){
         context2.drawImage(goomba_smb1,goombaX,goombaY,goomba.spriteSize,goomba.spriteSize);
 
     }
-};
-Galaxy.prototype.update = function (map,currMap) {
-    if (currMap.gamePause == 0){
-    this.viewLimit();
-    this.update_player(map,currMap);
+}
+     
 
-    if (playerStats.spriteType == 'Vario' || playerStats.spriteType == 'vario'){this.vario(map,currMap);}
-    if (playerStats.spriteType == 'Yario' || playerStats.spriteType == 'yario'){this.yario(map,currMap);}
-    if (playerStats.spriteType == 'Wowser' || playerStats.spriteType == 'wowser'){this.wowser(map,currMap);}
-    if (playerStats.spriteType == 'Ruigi' || playerStats.spriteType == 'ruigi'){this.ruigi(map,currMap);}
-    this.loop();
-    this.update_goomba2(currMap.en1,map,currMap);
-    }  
-    };
-Galaxy.prototype.draw_goomba2 = function (goomba,map,currMap) {
-    playerLocationX = (goomba.location.x + goomba.spriteSize / 2 - currMap.camera.x);
-    playerLocationY = (goomba.location.y + goomba.spriteSize / 2 - currMap.camera.y)-26;
-    playerLastX = playerLocationX;
-    playerLastY = playerLocationY;
-    context2.drawImage(goomba.image,playerLocationX,playerLocationY,16,16)   ;
- };
 
-Galaxy.prototype.move_goomba2 = function (goomba,map,currMap) {
- 
- var tX = goomba.location.x + goomba.velocity.x;
- var tY = goomba.location.y + goomba.velocity.y;
- 
- var offset = Math.round((currMap.spriteSize / 2) -1);//Camera Offset
- 
- var tile = this.whatTile(
-    Math.round(goomba.location.x / goomba.spriteSize),
-    Math.round(goomba.location.y / goomba.spriteSize),
-    map,
-    currMap
- );
- 
- if(tile.gravity) {
+  
+function logon(e){
     
-    goomba.velocity.x += tile.gravity.x;
-    goomba.velocity.y += tile.gravity.y;
-    
- } else {
-    
-    goomba.velocity.x += currMap.gravity.x;
-    goomba.velocity.y += currMap.gravity.y;
- }
- 
- if (tile.friction) {
- 
-    goomba.velocity.x *= tile.friction.x;
-    goomba.velocity.y *= tile.friction.y;
- }
- 
- var t_y_up   = Math.floor(tY / goomba.spriteSize);
- var t_y_down = Math.ceil(tY / goomba.spriteSize);
- var y_near1  = Math.round((goomba.location.y - offset) / goomba.spriteSize);
- var y_near2  = Math.round((goomba.location.y + offset) / goomba.spriteSize);
- 
- var t_x_left  = Math.floor(tX / goomba.spriteSize);
- var t_x_right = Math.ceil(tX / goomba.spriteSize);
- var x_near1   = Math.round((goomba.location.x - offset) / goomba.spriteSize);
- var x_near2   = Math.round((goomba.location.x + offset) / goomba.spriteSize);
- 
- var top1    = this.whatTile(x_near1, t_y_up,
-     map,
-     currMap);
- var top2    = this.whatTile(x_near2, t_y_up,
-     map,
-     currMap);
- var bottom1 = this.whatTile(x_near1, t_y_down,
-     map,
-     currMap);
- var bottom2 = this.whatTile(x_near2, t_y_down,
-     map,
-     currMap);
- var left1   = this.whatTile(t_x_left, y_near1,
-     map,
-     currMap);
- var left2   = this.whatTile(t_x_left, y_near2,
-     map,
-     currMap);
- var right1  = this.whatTile(t_x_right, y_near1,
-     map,
-     currMap);
- var right2  = this.whatTile(t_x_right, y_near2,
-     map,
-     currMap);
-   
- 
- if (tile.jump &&playerStats.jump_switch > 15) {
- 
-    goomba.can_jump = true;
-    
-    goomba.jump_switch = 0;
-    
- } else goomba.jump_switch++;
- 
- goomba.velocity.x = Math.min(Math.max(goomba.velocity.x, - goomba.speed), goomba.speed);
- //playerStats.velocity.x = playerStats.speed;
- 
- goomba.velocity.y = Math.min(Math.max(goomba.velocity.y, - goomba.defaultVelocity.y), goomba.defaultVelocity.y);
- //console.log(playerStats.speed);
- goomba.location.x += goomba.velocity.x;
- goomba.location.y += goomba.velocity.y;
- 
- goomba.velocity.x *= .9;
- 
- if (left1.isSolid || left2.isSolid || right1.isSolid || right2.isSolid) {
- 
-    /* fix overlap */
- 
-    while (this.whatTile(Math.floor(goomba.location.x / goomba.spriteSize), y_near1,map,currMap).isSolid
-        || this.whatTile(Math.floor(goomba.location.x / goomba.spriteSize), y_near2,map,currMap).isSolid)
-        goomba.location.x += .1;
- 
-    while (this.whatTile(Math.ceil(goomba.location.x / goomba.spriteSize), y_near1,map,currMap).isSolid
-        || this.whatTile(Math.ceil(goomba.location.x / goomba.spriteSize), y_near2,map,currMap).isSolid)
-        goomba.location.x -= .1;
- 
-    /* tile bounce */
- 
-    var canAbsorb = 0;
- 
-    if (left1.isSolid && left1.canAbsorb > canAbsorb) canAbsorb = left1.canAbsorb;
-    if (left2.isSolid && left2.canAbsorb > canAbsorb) canAbsorb = left2.canAbsorb;
-    if (right1.isSolid && right1.canAbsorb > canAbsorb) canAbsorb = right1.canAbsorb;
-    if (right2.isSolid && right2.canAbsorb > canAbsorb) canAbsorb = right2.canAbsorb;
- 
-    goomba.velocity.x *= -canAbsorb || 0;
-    
- }
- 
- if (top1.isSolid || top2.isSolid || bottom1.isSolid || bottom2.isSolid) {
- 
-    /* fix overlap */
-    
-    while (this.whatTile(x_near1, Math.floor(goomba.location.y / goomba.spriteSize),map,currMap).isSolid
-        || this.whatTile(x_near2, Math.floor(goomba.location.y / goomba.spriteSize),map,currMap).isSolid)
-        goomba.location.y += .1;
- 
-    while (this.whatTile(x_near1, Math.ceil(goomba.location.y / goomba.spriteSize),map,currMap).isSolid
-        || this.whatTile(x_near2, Math.ceil(goomba.location.y / goomba.spriteSize),map,currMap).isSolid)
-        goomba.location.y -= .1;
- 
-    /* tile bounce */
-    
-    var canAbsorb = 0;
-    
-    if (top1.isSolid && top1.canAbsorb > canAbsorb) canAbsorb = top1.canAbsorb;
-    if (top2.isSolid && top2.canAbsorb > canAbsorb) canAbsorb = top2.canAbsorb;
-    if (bottom1.isSolid && bottom1.canAbsorb > canAbsorb) canAbsorb = bottom1.canAbsorb;
-    if (bottom2.isSolid && bottom2.canAbsorb > canAbsorb) canAbsorb = bottom2.canAbsorb;
-    
-    goomba.velocity.y *= -canAbsorb || 0;
- 
-    if ((bottom1.isSolid || bottom2.isSolid) && !tile.jump) {
-        
-        goomba.on_floor = true;
-        goomba.can_jump = true;
-    }
-    
- }
- 
- // adjust camera
- if (this.view){
- var c_x = Math.round(playerStats.location.x - currMap.viewport.x/4);
- var c_y = Math.round(playerStats.location.y - currMap.viewport.y/4);
- var x_dif = Math.abs(c_x - currMap.camera.x);
- var y_dif = Math.abs(c_y - currMap.camera.y);
- /*
- if(x_dif > 5) {
-    
-    var mag = Math.round(Math.max(1, x_dif * 0.1));
- 
-    if(c_x != currMap.camera.x) {
-        
-        currMap.camera.x += c_x > currMap.camera.x ? mag : -mag;
-        
-        if(this.viewPortLim) {
-            
-            currMap.camera.x = 
-                Math.min(
-                    currMap.widthNext - currMap.viewport.x + currMap.spriteSize,
-                    currMap.camera.x
-                );
-            
-            currMap.camera.x = 
-                Math.max(
-                    0,
-                    currMap.camera.x
-                );
-        }
-    }
- }
- 
- if(y_dif > 5) {
-    
-    var mag = Math.round(Math.max(1, y_dif * 0.1));
-    
-    if(c_y != currMap.camera.y) {
-        
-        currMap.camera.y += c_y > currMap.camera.y ? mag : -mag;
-    
-        if(this.viewPortLim) {
-            
-            currMap.camera.y = 
-                Math.min(
-                    currMap.heightNext - currMap.viewport.y + currMap.spriteSize,
-                    currMap.camera.y
-                );
-            
-            currMap.camera.y = 
-                Math.max(
-                    0,
-                    currMap.camera.y
-                );
-        }
-    }
- }
- */
- if(currMap.last_tile != tile.id && tile.script) {
- 
-    eval(currMap.scripts[tile.script]);
- }
- 
- currMap.last_tile = tile.id;
- }
- };
-Galaxy.prototype.update_goomba2 = function (goomba,map,currMap) {
-
-    if (goomba.key.left) {
-    
-       if (goomba.velocity.x > -goomba.speed){
-        goomba.velocity.x -= goomba.playerSpeed.left;
+console.log('Logging On');
+	var uemail=document.getElementById("uemail").value;
+	var upassword=document.getElementById("upassword").value;
+	event.preventDefault()
+	console.log(e.value,uemail,upassword)
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				console.log(this.responseText)
+				if(this.response==1){
+				window.location.href = "logged_in.html";
+				}
+				else{
+					alert("Login failed! Try again");
+				}
+				//alert(this.responseText);
             }
-    }
-       
+        }
+		//xmlhttp.open("GET", "../01_php_scripts/RabbitMQClientSample.php?type=Ulogin"+"&email="+uemail+"&password="+upassword, true);
+		xmlhttp.open("GET", "../RabbitMQClientSample.php?type=Ulogin"+"&uemail="+uemail+"&upassword="+upassword, true);
+        xmlhttp.send();
+	
+}    
+ 
+function register(e){
     
-    if (goomba.key.up) {
-    
-       if (goomba.can_jump && goomba.velocity.y > -goomba.speed) {
-           //console.log("Disable JUmp");
-           goomba.velocity.y -= goomba.jumpHeight;
-           goomba.can_jump = false;
-       }
-    }
-    
-    if (goomba.key.right) {
-      
-    
-    
-       if (goomba.velocity.x < goomba.speed)
-       goomba.velocity.x += goomba.playerSpeed.left;
-    }
-    //this.Goomba();
-    
-    this.move_goomba2(goomba,map,currMap);
-    
-    };
+    console.log('Registering');
+
+	var uemail=document.getElementById("uemail").value;
+	var upassword=document.getElementById("upassword").value;
+	event.preventDefault()
+	console.log(e.value,uemail,upassword)
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				console.log(this.responseText)
+				if(this.response==1){
+				window.location.href = "logged_in.html";
+				}
+				else{
+					alert("Login failed! Try again");
+				}
+				//alert(this.responseText);
+            }
+        }
+		//xmlhttp.open("GET", "../01_php_scripts/RabbitMQClientSample.php?type=Ulogin"+"&email="+uemail+"&password="+upassword, true);
+		xmlhttp.open("GET", "../RabbitMQClientSample.php?type=Ulogin"+"&uemail="+uemail+"&upassword="+upassword, true);
+        xmlhttp.send();
+	
+} 
 
 
 
+function playerAnim(){
+
+setInterval(function(){
+
+    context2.drawImage(marioR_smb1,20,20);
 
 
+if(playerRefresh == 1){playerRefresh = 0;}else{playerRefresh = 1;}
+if (playerPos == 'none'){
+context2.clearRect(0, 0,400, 800);//Yoshi
+
+context2.drawImage(marioR_smb1,20,20);
+
+}
+   
+   }, 1000/60);
+}
 
 
